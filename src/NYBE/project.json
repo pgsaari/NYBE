@@ -2,10 +2,6 @@
   "userSecretsId": "aspnet-NYBE-47772b4b-3e12-4aa7-b485-4e7b4f3b8611",
 
   "dependencies": {
-    "Microsoft.NETCore.App": {
-      "version": "1.0.1",
-      "type": "platform"
-    },
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
@@ -13,8 +9,8 @@
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.1",
     "Microsoft.AspNetCore.Razor.Tools": {
-      "version": "1.0.0-preview2-final",
-      "type": "build"
+      "type": "build",
+      "version": "1.0.0-preview2-final"
     },
     "Microsoft.AspNetCore.Routing": "1.0.1",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
@@ -36,12 +32,16 @@
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
+    "Microsoft.NETCore.App": {
+      "version": "1.0.1",
+      "type": "platform"
+    },
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
     "Microsoft.VisualStudio.Web.CodeGeneration.Tools": {
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc":  {
+    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview2-final",
       "type": "build"
     }
