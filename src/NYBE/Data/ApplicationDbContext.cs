@@ -14,6 +14,14 @@ namespace NYBE.Data
             : base(options)
         {
         }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<BookListing> BookListings { get; set; }
+        public DbSet<BookToCourse> BookToCourses { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<PendingBook> PendingBooks { get; set; }
+        public DbSet<PendingSchool> PendingSchools { get; set; }
+        public DbSet<School> Schools { get; set; }
+        public DbSet<TransactionLog> TransactionLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

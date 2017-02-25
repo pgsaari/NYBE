@@ -105,7 +105,8 @@ namespace NYBE.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                // TODO: Temporarily make the users school id 1, on registration they will need to add a school
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, SchoolID = 1 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
