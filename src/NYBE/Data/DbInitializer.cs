@@ -4,11 +4,22 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NYBE.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace NYBE.Models
 {
     public static class DbInitializer
     {
+
+        public enum Roles
+        {
+            Admin, // can approve & deny books or whatever
+            User, // regular user of the website
+            SuperUser // a 3rd role we may not use that would be one step above the admin role
+        }
+
         public static void Initialize(ApplicationDbContext context)
         {
             context.Database.EnsureCreated();
@@ -68,6 +79,18 @@ namespace NYBE.Models
                 context.SaveChanges();
             }
 
+        }
+
+        public static async Task SeedRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            foreach (var role in Enum.GetNames(typeof(Roles)))
+            {
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
         }
     }
 }

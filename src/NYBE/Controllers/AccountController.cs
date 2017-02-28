@@ -110,6 +110,10 @@ namespace NYBE.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var currentUser = await _userManager.FindByNameAsync(user.UserName); // find the current user
+                    var roleResult = await _userManager.AddToRoleAsync(currentUser, "User"); // default role is regular user, assumes roles have been seeded
+
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
