@@ -14,6 +14,11 @@ namespace NYBE.Data
             : base(options)
         {
         }
+
+        public ApplicationDbContext()
+        {
+        }
+
         public DbSet<Book> Books { get; set; }
         public DbSet<BookListing> BookListings { get; set; }
         public DbSet<BookToCourse> BookToCourses { get; set; }

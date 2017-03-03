@@ -4,6 +4,7 @@
   "dependencies": {
     "BundlerMinifier.Core": "2.3.327",
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
+    "Microsoft.DotNet.InternalAbstractions": "1.0.0",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.1.0",
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.1.0",

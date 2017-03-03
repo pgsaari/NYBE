@@ -9,12 +9,14 @@ using Microsoft.Extensions.Logging;
 using NYBE.Models;
 using NYBE.Models.ManageViewModels;
 using NYBE.Services;
+using NYBE.Data;
 
 namespace NYBE.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -26,6 +28,7 @@ namespace NYBE.Controllers
         SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ISmsSender smsSender,
+        ApplicationDbContext ctx,
         ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
@@ -33,13 +36,23 @@ namespace NYBE.Controllers
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
+            _context = ctx;
         }
+
+            
+
 
         //
         // GET: /Manage/Index
         [HttpGet]
         public async Task<IActionResult> Index(ManageMessageId? message = null)
         {
+
+            // TODO: example of how to do a linq query
+            //var listoBooks = _context.Books.Where(a => a.ID == 1).ToList();
+            //listoBooks.First().Title = "bad book";
+            //_context.SaveChanges();
+
             ViewData["StatusMessage"] =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."

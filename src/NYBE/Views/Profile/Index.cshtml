@@ -1,0 +1,13 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>User Name: @ViewData["UserName"]</h2>
+<p>Rating: @ViewData["Rating"]</p>
+<p>Phone Number: </p>
+<p>Email: </p>
+<p>Fav Book: @ViewData["Book"]</p>
+<a asp-controller="Manage" asp-action="Index">Manage Account</a>
