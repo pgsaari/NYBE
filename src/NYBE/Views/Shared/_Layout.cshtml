@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<ApplicationUser> SignInManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -16,26 +18,70 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+
+    <style>
+        .col-md-height {
+            display: table-cell;
+            float: none !important;
+            vertical-align: middle;
+        }
+
+        .row-same-height {
+            display: table;
+            width: 100%;
+        }
+
+        .nounderline {
+            text-decoration: none !important;
+        }
+
+        body { 
+            padding-top: 70px; 
+        }
+    </style>
 </head>
+
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">NYBE</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-                @await Html.PartialAsync("_LoginPartial")
+            <div class="row row-same-height">
+                <div class="col-md-4 col-md-height">
+                    @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>*@
+
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="nounderline">
+                        <h4 style="color:#4b4b4b">
+                            <img src="~/images/NYBE.svg" width="10%" height="10%" />
+                            NYBE
+                        </h4>
+                    </a>
+
+                </div>
+                <div class="col-md-4 col-md-height">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search Books">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button">Go!</button>
+                            </span>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-4 col-md-height">
+                    <div class="navbar-collapse collapse">
+                        @*<ul class="nav navbar-nav">
+                                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                            </ul>*@
+                        @await Html.PartialAsync("_LoginPartial")
+                    </div>
+                </div>
             </div>
         </div>
     </div>
