@@ -1,0 +1,82 @@
+﻿@model NYBE.Models.SearchViewModels.BookSearchViewModel
+
+@{
+    ViewData["Title"] = "Find Books";
+}
+
+<h2>Find Books</h2>
+<form asp-controller="Search" asp-action="Index">
+    <div>
+        Title: <input type="text" name="title" />
+    </div>
+    <div>
+        Author: <input type="text" name="author" />
+    </div>
+    <div>
+        ISBN: <input type="text" name="isbn" />
+    </div>
+    <div>
+        Course: <select name="courseName">
+                    <option value="">All</option>
+                    @foreach (var course in Model.courses)
+                    {
+                        <option value=@course.Name>@Html.DisplayFor(modelItem => course.Name)</option>
+                    }
+                </select>
+    </div>
+    <input type="submit" value="Search" />
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.bookList[0].Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookList[0].AuthorLName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookList[0].AuthorFName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookList[0].Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookList[0].Edition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookList[0].ISBN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookList[0].Publisher)
+        </th>
+    </tr>
+    <tbody>
+        @foreach(var book in Model.bookList)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => book.Title)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => book.AuthorLName)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => book.AuthorFName)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => book.Description)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => book.Edition)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => book.ISBN)
+                </th>
+                <th>
+                    @Html.DisplayFor(modmodelItemel => book.Publisher)
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
