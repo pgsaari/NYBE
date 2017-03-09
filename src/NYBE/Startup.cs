@@ -84,9 +84,6 @@ namespace NYBE
 
             app.UseIdentity();
 
-            // seed roles into the db
-            DbInitializer.SeedRoles(app.ApplicationServices).Wait();
-
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>
@@ -96,9 +93,17 @@ namespace NYBE
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // hopefull this line will add our dummy data to the database
-            // TODO: comment this out for deployment!!
+            // seed roles into the db
+            DbInitializer.SeedRoles(app.ApplicationServices).Wait();
+
+            // seed dummy data to the db
             DbInitializer.Initialize(context);
+
+            // seed dummy users to the db
+            DbInitializer.SeedUsers(app.ApplicationServices).Wait();
+
+            // seed relationships between entities and users
+            DbInitializer.SeedRelationships(context, app.ApplicationServices);
         }
     }
 }

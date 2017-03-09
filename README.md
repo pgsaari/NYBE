@@ -8,3 +8,12 @@ Capstone Project - New York Book Exchange
 - Make a new Database called "NYBE"
 - In VS2015 Package Manager Console type "Update-Database"
 - Hopefully this will make all the tables and columns needed for your local db (I had issues the first time)
+
+### Test Logins
+Email = user@test.com
+Password = Password1!
+Role = user
+
+Email = admin@test.com
+Password = Password1!
+Role = admin

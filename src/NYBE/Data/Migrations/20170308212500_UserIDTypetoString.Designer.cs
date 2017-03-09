@@ -8,9 +8,10 @@ using NYBE.Data;
 namespace NYBE.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170308212500_UserIDTypetoString")]
+    partial class UserIDTypetoString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -336,11 +337,7 @@ namespace NYBE.Data.Migrations
 
                     b.Property<string>("BuyerID");
 
-                    b.Property<string>("Condition");
-
                     b.Property<string>("SellerID");
-
-                    b.Property<double>("SoldPrice");
 
                     b.Property<int>("Status");
 

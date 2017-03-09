@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NYBE.Data;
 using NYBE.Models;
 using System;
@@ -23,14 +24,25 @@ namespace NYBE.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var view = new ProfileViewModel();
             var user = await GetCurrentUserAsync();
 
-            ViewData["UserName"] = user.UserName; // TODO: make this an actual user name instead of email address
-            ViewData["Rating"] = user.Rating;
-            var book = ctx.Books.Where(a => a.ID == 2).FirstOrDefault();
-            ViewData["Book"] = book.Title + " by " + book.AuthorFName + " " + book.AuthorLName;
+            view.isAdmin = await usrCtx.IsInRoleAsync(user, "Admin");
+            view.name = user.FirstName + " " + user.LastName;
+            view.email = user.Email;
+            view.phone = user.PhoneNumber;
+            view.rating = user.Rating;
+            view.school = ctx.Schools.Where(a => a.ID == user.SchoolID).FirstOrDefault();
 
-            return View();
+            // get all the user's book listings include the book and course objects to view in the table
+            view.listings = ctx.BookListings.Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID).ToList();
+
+            // get the transaction history for this user
+            view.transactions = ctx.TransactionLogs.Include("Seller").Include("Buyer").Include("Book").
+                //Where(a => (user.Id == a.BuyerID) || (user.Id == a.SellerID)).
+                OrderBy(a => a.TransDate).ToList();
+
+            return View(view);
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()

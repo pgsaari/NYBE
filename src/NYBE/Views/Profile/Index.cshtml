@@ -1,13 +1,94 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model NYBE.Models.ProfileViewModel
 @{
     ViewData["Title"] = "Profile";
 }
 
-<h2>User Name: @ViewData["UserName"]</h2>
-<p>Rating: @ViewData["Rating"]</p>
-<p>Phone Number: </p>
-<p>Email: </p>
-<p>Fav Book: @ViewData["Book"]</p>
-<a asp-controller="Manage" asp-action="Index">Manage Account</a>
+    <h1>@Model.name's Profile</h1>
+
+    @if (Model.isAdmin == true)
+    {
+        <h3 style="color: red">Admin</h3>
+    }
+
+    <p>Rating: @Model.rating</p>
+    <p>Phone Number: @Model.phone</p>
+    <p>Email: @Model.email</p>
+    <p>School: @Model.school.Name</p>
+
+<h3>Book Listings</h3>
+@if (Model.listings.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Book</th>
+                    <th>Course</th>
+                    <th>Condition</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (BookListing x in Model.listings)
+                {
+                    <tr>
+                        <td> @x.Book.Title </td>
+                        <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
+                        <td> @x.Condition </td>
+                        <td> @string.Format("{0:c}",x.AskingPrice) </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No Books Listed!</p>
+
+}
+
+<h3>Transaction History</h3>
+@if (Model.transactions.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Seller Name</th>
+                    <th>Seller Email</th>
+                    <th>Buyer Name</th>
+                    <th>Buyer Email</th>
+                    <th>Book</th>
+                    <th>Trans Amt</th>
+                    <th>Condition</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (TransactionLog x in Model.transactions)
+                {
+                    <tr>
+                        <td> @x.TransDate</td>
+                        <td> @x.Seller.FirstName @x.Seller.LastName</td>
+                        <td> @x.Seller.Email</td>
+                        <td> @x.Buyer.FirstName @x.Buyer.LastName</td>
+                        <td> @x.Buyer.Email</td>
+                        <td> @x.Book.Title</td>
+                        <td> @string.Format("{0:c}", x.SoldPrice)</td>
+                        <td> @x.Condition</td>
+                        <td> @x.TransRating</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No Transaction History!</p>
+    <p>Get out there and buy or sell some books!</p>
+
+}
+@*<a asp-controller="Manage" asp-action="Index">Manage Account</a>*@
