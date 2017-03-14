@@ -3,61 +3,65 @@
     ViewData["Title"] = "Profile";
 }
 
-    <h1>@Model.name's Profile</h1>
+<h1>@Model.name's Profile</h1>
 
-    @if (Model.isAdmin == true)
+@if (Model.isAdmin == true)
+{
+    <h3 style="color: red">Admin</h3>
+}
+
+<p>Rating: @Model.rating</p>
+<p>Phone Number: @Model.phone</p>
+<p>Email: @Model.email</p>
+<p>School: @Model.school.Name</p>
+<div class="container">
+    <h3>Book Listings</h3>
+    @if (Model.listings.Any())
     {
-        <h3 style="color: red">Admin</h3>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Book</th>
+                        <th>Course</th>
+                        <th>Condition</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (BookListing x in Model.listings)
+                {
+                        <tr>
+                            <td> @x.ID</td>
+                            <td> @x.Book.Title </td>
+                            <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
+                            <td> @x.Condition </td>
+                            <td> @string.Format("{0:c}", x.AskingPrice) </td>
+                            <td><a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a></td>
+                            <td><a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@x.ID" class="btn btn-danger">Delete</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>No Books Listed!</p>
+
     }
 
-    <p>Rating: @Model.rating</p>
-    <p>Phone Number: @Model.phone</p>
-    <p>Email: @Model.email</p>
-    <p>School: @Model.school.Name</p>
-
-<h3>Book Listings</h3>
-@if (Model.listings.Any())
-{
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Book</th>
-                    <th>Course</th>
-                    <th>Condition</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (BookListing x in Model.listings)
-                {
-                    <tr>
-                        <td> @x.Book.Title </td>
-                        <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
-                        <td> @x.Condition </td>
-                        <td> @string.Format("{0:c}",x.AskingPrice) </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-}
-else
-{
-    <p>No Books Listed!</p>
-
-}
-
+</div>
 <h3>Transaction History</h3>
-@if (Model.transactions.Any())
+<h4>Books you sold:</h4>
+@if (Model.soldTransactions.Any())
 {
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Date</th>
-                    <th>Seller Name</th>
-                    <th>Seller Email</th>
                     <th>Buyer Name</th>
                     <th>Buyer Email</th>
                     <th>Book</th>
@@ -67,12 +71,10 @@ else
                 </tr>
             </thead>
             <tbody>
-                @foreach (TransactionLog x in Model.transactions)
+                @foreach (TransactionLog x in Model.soldTransactions)
                 {
                     <tr>
                         <td> @x.TransDate</td>
-                        <td> @x.Seller.FirstName @x.Seller.LastName</td>
-                        <td> @x.Seller.Email</td>
                         <td> @x.Buyer.FirstName @x.Buyer.LastName</td>
                         <td> @x.Buyer.Email</td>
                         <td> @x.Book.Title</td>
@@ -88,7 +90,44 @@ else
 else
 {
     <p>No Transaction History!</p>
-    <p>Get out there and buy or sell some books!</p>
-
+    <p>Contribute to the economy and sell some books!</p>
 }
-@*<a asp-controller="Manage" asp-action="Index">Manage Account</a>*@
+
+<h4>Books you bought:</h4>
+@if (Model.boughtTransactions.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Seller Name</th>
+                    <th>Seller Email</th>
+                    <th>Book</th>
+                    <th>Trans Amt</th>
+                    <th>Condition</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (TransactionLog x in Model.boughtTransactions)
+                {
+                    <tr>
+                        <td> @x.TransDate</td>
+                        <td> @x.Seller.FirstName @x.Seller.LastName</td>
+                        <td> @x.Seller.Email</td>
+                        <td> @x.Book.Title</td>
+                        <td> @string.Format("{0:c}", x.SoldPrice)</td>
+                        <td> @x.Condition</td>
+                        <td> @x.TransRating</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No Transaction History!</p>
+    <p>Contribute to the economy and buy some books!</p>
+}

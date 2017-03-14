@@ -14,7 +14,8 @@ namespace NYBE.Models
         public School school { get; set; }
         public bool isAdmin { get; set; }
         public List<BookListing> listings { get; set; }
-        public List<TransactionLog> transactions { get; set; }
+        public List<TransactionLog> soldTransactions { get; set; }
+        public List<TransactionLog> boughtTransactions { get; set; }
 
     }
 }

@@ -1,0 +1,24 @@
+@model NYBE.Models.DataModels.EditListingViewModel
+
+@{
+    ViewData["Title"] = "Delete Listing";
+}
+
+<h2>Delete Listing?</h2>
+
+<h3>Are you sure you want to delete this listing?</h3>
+<div>
+    <h4><b>Title:</b> @Model.book.Title @Model.book.Edition Edition</h4>
+    <p><b>Author:</b> @Model.book.AuthorFName  @Model.book.AuthorLName</p>
+    <p><b>Description:</b> @Model.book.Description</p>
+    <p><b>Course:</b> @Model.course.Dept @Model.course.CourseNum - @Model.course.Name</p>  
+    <p><b>Price: </b>@string.Format("{0:c}", Model.price)</p>
+    <p><b>Condition: </b>@Model.condition</p>
+    
+    <form asp-controller="Profile" asp-action="DeleteListing">
+        <div class="form-actions no-color">
+            <a asp-action="Index" class="btn btn-default">Cancel</a>
+            <input type="submit" value="Delete" class="btn btn-danger" />  
+        </div>
+    </form>
+</div>

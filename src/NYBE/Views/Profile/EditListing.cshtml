@@ -1,0 +1,41 @@
+﻿@model  NYBE.Models.DataModels.EditListingViewModel
+@{
+    ViewData["Title"] = "Edit Listing";
+}
+<h2>Edit Listing</h2>
+<form asp-controller="Profile" asp-action="EditListing" data-ajax="true" data-ajax-method="POST" data-ajax-success="closeModal">
+    <div class="modal-body">
+
+        <h4><b>Title:</b> @Model.book.Title @Model.book.Edition Edition</h4>
+        <p><b>Author:</b> @Model.book.AuthorFName  @Model.book.AuthorLName</p>
+        <p><b>Description:</b> @Model.book.Description</p>
+        <!--TODO: Should we let them edit the course for the book?-->
+        <p><b>Course:</b> @Model.course.Dept @Model.course.CourseNum - @Model.course.Name</p>
+
+        <div class="form-group row">
+            <label class="col-lg-2" for="condition">Condition</label>
+            <div class="col-lg-10">
+                <select asp-for="condition" class="form-control" name="condition">
+                    <option selected disabled hidden>@Model.condition</option> <!--Show the previous condition-->
+                    <option value="New">New</option>
+                    <option value="Excellent">Excellent</option>
+                    <option value="Good">Good</option>
+                    <option value="Fair">Fair</option>
+                    <option value="Bad">Bad</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-2" for="price">Price</label>
+            <div class="col-lg-10">
+                <input asp-for="price" class="form-control" type="number" value="@Model.price" id="price" step="0.01" />
+            </div>
+        </div>
+    </div>
+
+    <a asp-controller="Profile" asp-action="Index" class="btn btn-default">Cancel</a>
+    <button type="submit" class="btn btn-success">Save</button>
+
+</form>
+
+

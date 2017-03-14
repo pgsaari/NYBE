@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NYBE.Models;
+using NYBE.Models.DataModels;
 
 namespace NYBE.Data
 {
@@ -35,5 +36,7 @@ namespace NYBE.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<EditListingViewModel> EditListingViewModel { get; set; }
     }
 }
