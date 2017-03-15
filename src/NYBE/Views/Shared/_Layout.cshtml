@@ -47,11 +47,11 @@
             <div class="row row-same-height">
                 <div class="col-md-4 col-md-height">
                     @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>*@
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>*@
 
                     <a asp-area="" asp-controller="Home" asp-action="Index" class="nounderline">
                         <h4 style="color:#4b4b4b">
@@ -74,11 +74,19 @@
                 </div>
                 <div class="col-md-4 col-md-height">
                     <div class="navbar-collapse collapse">
-                        @*<ul class="nav navbar-nav">
-                                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                            </ul>*@
+                        @if (User.IsInRole("Admin"))
+                        {
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-area="" asp-controller="User" asp-action="Index">Users</a></li>
+                                    <li><a href="#">Pending Books</a></li>
+                                    <li><a href="#">Pending Schools</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        }
                         @await Html.PartialAsync("_LoginPartial")
                     </div>
                 </div>

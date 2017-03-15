@@ -1,0 +1,40 @@
+﻿@model NYBE.Models.AdminViewModels.ManageUsersViewModel
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<h1>Manage Users</h1>
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>School</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int i = 0; }
+                @foreach(ApplicationUser user in Model.users)
+                {
+                    <tr>
+                        <td>@user.Email</td>
+                        <td>@Model.roles[i]</td> <!--Assume users only have one role-->
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.School.Name</td>
+                        <td>@user.Rating</td>
+                        <td><button class="btn btn-success">Edit</button></td>
+                        <td><button class="btn btn-danger">Delete</button></td>
+                    </tr>
+                    i++;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
