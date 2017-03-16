@@ -20,17 +20,6 @@
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
 
     <style>
-        .col-md-height {
-            display: table-cell;
-            float: none !important;
-            vertical-align: middle;
-        }
-
-        .row-same-height {
-            display: table;
-            width: 100%;
-        }
-
         .nounderline {
             text-decoration: none !important;
         }
@@ -38,61 +27,72 @@
         body { 
             padding-top: 70px; 
         }
+
+        .navbar-brand {
+            padding: 0px 0px; /* firefox bug fix */
+            margin-top: 0px;
+        }
+
+        /* Get rid of link padding to make the above easier */
+        .navbar-nav > li > a {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+
+        /* EDIT these but should be the same depending on on what font you're using */
+        .navbar-brand, .navbar-nav > li > a {
+            height: 70px;
+            line-height: 70px;
+        }
+
+        .navbar-brand > img {
+            height: 100%;
+            padding: 15px; /* firefox bug fix */
+            width: auto;
+        }
+
+        .center {
+            padding-top: 10px;
+            display: block;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="row row-same-height">
-                <div class="col-md-4 col-md-height">
-                    @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>*@
-
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="nounderline">
-                        <h4 style="color:#4b4b4b">
-                            <img src="~/images/NYBE.svg" width="10%" height="10%" />
-                            NYBE
-                        </h4>
-                    </a>
-
-                </div>
-                <div class="col-md-4 col-md-height">
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search Books">
-                            <span class="input-group-btn">
-                                <button class="btn btn-success" type="button">Go!</button>
-                            </span>
-                        </div>
-                    }
-                </div>
-                <div class="col-md-4 col-md-height">
-                    <div class="navbar-collapse collapse">
-                        @if (User.IsInRole("Admin"))
-                        {
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a asp-area="" asp-controller="User" asp-action="Index">Users</a></li>
-                                    <li><a href="#">Pending Books</a></li>
-                                    <li><a href="#">Pending Schools</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        }
-                        @await Html.PartialAsync("_LoginPartial")
-                    </div>
-                </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand nounderline">
+                    <img src="~/images/NYBE.svg" />
+                </a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-text nounderline">
+                    <h4 style="color:#4b4b4b;">NYBE</h4>
+                </a>
             </div>
-        </div>
-    </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    @await Html.PartialAsync("_LoginPartial")
+                </ul>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <div class="form-inline navbar-left col-sm-offset-4" role="search" style="padding-top:17px">
+                        <input type="text" class="form-control" placeholder="Search Books">
+                        <button class="btn btn-success" type="button">Go!</button>
+                    </div>
+                }
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />
