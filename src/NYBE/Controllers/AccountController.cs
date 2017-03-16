@@ -62,6 +62,14 @@ namespace NYBE.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = await _userManager.FindByEmailAsync(model.Email);
+                    if (user.Status == 0)
+                    {
+                        ModelState.AddModelError(string.Empty, "Account is deactivated. Please contact an Administrator.");
+                        await _signInManager.SignOutAsync();
+                        return View(model);
+                    }
+
                     _logger.LogInformation(1, "User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -106,7 +114,7 @@ namespace NYBE.Controllers
             if (ModelState.IsValid)
             {
                 // TODO: Temporarily make the users school id 1, on registration they will need to add a school
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, SchoolID = 1 };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, SchoolID = 1, Status = 1 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

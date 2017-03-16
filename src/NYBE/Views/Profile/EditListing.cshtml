@@ -3,8 +3,8 @@
     ViewData["Title"] = "Edit Listing";
 }
 <h2>Edit Listing</h2>
-<form asp-controller="Profile" asp-action="EditListing" data-ajax="true" data-ajax-method="POST" data-ajax-success="closeModal">
-    <div class="modal-body">
+<form asp-controller="Profile" asp-action="EditListing">
+  
 
         <h4><b>Title:</b> @Model.book.Title @Model.book.Edition Edition</h4>
         <p><b>Author:</b> @Model.book.AuthorFName  @Model.book.AuthorLName</p>
@@ -31,8 +31,7 @@
                 <input asp-for="price" class="form-control" type="number" value="@Model.price" id="price" step="0.01" />
             </div>
         </div>
-    </div>
-
+  
     <a asp-controller="Profile" asp-action="Index" class="btn btn-default">Cancel</a>
     <button type="submit" class="btn btn-success">Save</button>
 

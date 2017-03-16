@@ -13,6 +13,7 @@ namespace NYBE.Models
         public string LastName { get; set; }
         public double Rating { get; set; }
         public int SchoolID { get; set; }
+        public int Status { get; set; } // 0 for inactive, 1 for active
 
         public School School { get; set; }
 

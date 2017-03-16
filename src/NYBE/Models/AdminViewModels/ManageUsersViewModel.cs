@@ -8,7 +8,8 @@ namespace NYBE.Models.AdminViewModels
     public class ManageUsersViewModel
     {
 
-        public List<ApplicationUser> users;
-        public List<string> roles;
+        public List<ApplicationUser> users { get; set; }
+        public List<string> roles { get; set; }
+        public List<ApplicationUser> disabledUsers { get; set; }
     }
 }

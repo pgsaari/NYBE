@@ -49,7 +49,7 @@ namespace NYBE.Models
             {
                 var schools = new School[]
                 {
-                    new School{Name="University of Wisconsin Milwaukee",City="Milwaukee", State="Wisconsin"},
+                    new School{Name="UW - Milwaukee",City="Milwaukee", State="Wisconsin"},
                     new School{Name="Marquette University",City="Milwaukee", State="Wisconsin"},
                     new School{Name="MSOE",City="Milwaukee", State="Wisconsin"},
                     new School{Name="MIAD",City="Milwaukee", State="Wisconsin"},
@@ -95,9 +95,10 @@ namespace NYBE.Models
             user.LastName = "Test";
             user.Rating = 4.5;
             user.PhoneNumber = "111-555-5556";
-            user.SchoolID = 1;
+            user.SchoolID = 3;
             user.Email = "user@test.com";
             user.UserName = user.Email;
+            user.Status = 1;
             if (!(userManager.Users.Any(a => a.UserName == "user@test.com"))) // if the user doesn't exist then create them
             {
                 await userManager.CreateAsync(user, "Password1!");
@@ -113,6 +114,7 @@ namespace NYBE.Models
             user2.SchoolID = 1;
             user2.Email = "paul@test.com";
             user2.UserName = user2.Email;
+            user2.Status = 1;
             if (!(userManager.Users.Any(a => a.UserName == "paul@test.com"))) // if the user doesn't exist then create them
             {
                 await userManager.CreateAsync(user2, "Password1!");
@@ -128,6 +130,7 @@ namespace NYBE.Models
             admin.SchoolID = 2;
             admin.Email = "admin@test.com";
             admin.UserName = admin.Email;
+            admin.Status = 1;
             if (!(userManager.Users.Any(a => a.UserName == "admin@test.com")))
             {
                 await userManager.CreateAsync(admin, "Password1!");

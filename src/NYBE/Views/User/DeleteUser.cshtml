@@ -1,0 +1,27 @@
+﻿@model NYBE.Models.AdminViewModels.EditUserViewModel
+
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+<h1>Delete User?</h1>
+
+<h4>Deleting a User will de-activate their account.</h4>
+<h5>Is this what you want to do?</h5>
+<br />
+
+<form asp-controller="User" asp-action="DeleteUser">
+
+    <h4>@Model.name</h4>
+    <p><b>Role: </b>@Model.oldRole</p>
+    <p><b>Email: </b>@Model.email</p>
+    <p><b>Phone: </b>@Model.phone</p>
+    <p><b>School: </b>@Model.school</p>
+    <p><b>Rating: </b>@Model.rating</p>
+    <!--Weird, but you have to use Html.HiddenFor to get these fields in the post method-->
+    @Html.HiddenFor(Model => Model.userId)
+    @Html.HiddenFor(model => Model.oldRole)
+
+    <a asp-controller="User" asp-action="Index" class="btn btn-default">Cancel</a>
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
