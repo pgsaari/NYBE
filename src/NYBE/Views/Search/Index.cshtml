@@ -6,7 +6,9 @@
 
 <h2>Find Books</h2>
 <form asp-controller="Search" asp-action="Index">
-    <div>
+    Search: <input type ="text" name="generalSearch" />
+    <!-- Used for "advanced" search-->
+    <!-- <div>
         Title: <input type="text" name="title" />
     </div>
     <div>
@@ -14,7 +16,7 @@
     </div>
     <div>
         ISBN: <input type="text" name="isbn" />
-    </div>
+    </div>  -->
     <div>
         Course: <select name="courseName">
                     <option value="">All</option>
@@ -52,9 +54,9 @@
         </th>
     </tr>
     <tbody>
-        @foreach(var book in Model.bookList)
+        @foreach (var book in Model.bookList)
         {
-            <tr>
+            <tr style="cursor:pointer" onclick="location.href = '@(Url.Action("books", new { bookId = book.ID }))'">
                 <th>
                     @Html.DisplayFor(modelItem => book.Title)
                 </th>

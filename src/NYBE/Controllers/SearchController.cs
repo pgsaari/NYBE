@@ -22,9 +22,27 @@ namespace NYBE.Controllers
 
         //
         // GET: /search/
-        public IActionResult Index(string title, string author, string isbn, string courseName)
+        public IActionResult Index(string generalSearch, string courseName)
         {
             var bookList = new List<Book>();
+
+            //chars to split by
+            char[] delimiterChars = { ' ', ',', '.', ':' };
+
+            if(!String.IsNullOrEmpty(generalSearch))
+            {
+                string[] words = generalSearch.Split(delimiterChars);
+                foreach (string str in words)
+                {
+                    if (!String.IsNullOrEmpty(str))
+                    {
+                        bookList = bookList.Union(getBooksByGeneralString(str)).ToList();
+                    }
+                }
+            }
+            
+            
+            /* commented out to be used for advanced search
             if (!String.IsNullOrEmpty(title))
             {
                 bookList = getBooksByTitle(title, bookList);
@@ -36,11 +54,14 @@ namespace NYBE.Controllers
             if (!String.IsNullOrEmpty(isbn))
             {
                 bookList = getBooksByIsbn(isbn, bookList);
-            }
+            }*/
             if (!String.IsNullOrEmpty(courseName))
             {
                 bookList = getBooksByCourse(courseName, bookList);
             }
+            
+            
+
 
             var bookSearchViewModel = new BookSearchViewModel();
             //Switch Where() with courses for the school = User.school
@@ -48,6 +69,12 @@ namespace NYBE.Controllers
             bookSearchViewModel.bookList = bookList;
 
             return View(bookSearchViewModel);
+        }
+
+        public List<Book> getBooksByGeneralString(string searchTerm)
+        {
+            List<Book> books = _context.Books.Where(book => book.AuthorFName.Contains(searchTerm) || book.AuthorLName.Contains(searchTerm) || book.Title.Contains(searchTerm) || book.ISBN.Equals(searchTerm)).ToList();
+            return books;
         }
 
         /* Returns List<Book> where name is contained in first or last name of author.
