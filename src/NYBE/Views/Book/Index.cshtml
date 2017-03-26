@@ -1,0 +1,62 @@
+﻿@model NYBE.Models.BookViewModel.BookViewModel
+@{
+    ViewData["Title"] = "Book Details";
+}
+
+<h1>@Model.book.Title</h1>
+
+<br />
+
+<div class="col-md-12">
+    <div class="col-md-3">
+        <i class="glyphicon glyphicon-book" style="font-size:200px; color:dimgrey;"></i>
+    </div>
+    <div class="col-md-8">
+        <p>Author: @Model.book.AuthorFName @Model.book.AuthorLName</p>
+        <p>@Model.book.Edition Edition</p>
+        <p>ISBN: @Model.book.ISBN</p>
+        <p>Publisher: @Model.book.Publisher</p>
+        <p>@Model.book.Description</p>
+    </div>
+</div>
+
+
+
+<div class="container col-md-12">
+    <br />
+    <h4>Book Listings</h4>
+    @if (Model.listings.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Seller</th>
+                        <th>School</th>
+                        <th>Course</th>
+                        <th>Condition</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (BookListing x in Model.listings)
+                {
+                        <tr>
+                            <td> @x.User.FirstName @x.User.LastName </td>
+                            <td> @x.User.School.Name</td>
+                            <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
+                            <td> @x.Condition </td>
+                            <td> @string.Format("{0:c}", x.AskingPrice) </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>Book not listed on the market!</p>
+
+    }
+
+</div>

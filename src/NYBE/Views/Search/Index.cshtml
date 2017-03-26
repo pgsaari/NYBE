@@ -69,7 +69,8 @@
         <tbody>
             @foreach (var book in Model.bookList)
             {
-                <tr style="cursor:pointer" onclick="location.href = '@(Url.Action("books", new { bookId = book.ID }))'">
+                <tr style="cursor:pointer" onclick="location.href = '@(Url.Action("Index", "Book", new { bookId = book.ID }))'">
+                    
                     <th>
                         @Html.DisplayFor(modelItem => book.Title)
                     </th>
