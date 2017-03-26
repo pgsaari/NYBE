@@ -86,8 +86,10 @@
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <div class="form-inline navbar-left col-sm-offset-4" role="search" style="padding-top:17px">
-                        <input type="text" class="form-control" placeholder="Search Books">
-                        <button class="btn btn-success" type="button">Go!</button>
+                        <form asp-controller="Search" asp-action="Index">
+                            <input name="generalSearch"type="text" class="form-control" placeholder="Search Books">
+                            <button type="submit" class="btn btn-success">Go!</button>
+                        </form>
                     </div>
                 }
             </div><!-- /.navbar-collapse -->
