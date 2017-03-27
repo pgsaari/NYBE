@@ -119,7 +119,7 @@ namespace NYBE.Controllers
             if (ModelState.IsValid)
             {
                 // TODO: Temporarily make the users school id 1, on registration they will need to add a school
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, SchoolID = model.School, Status = 1 };
+                var user = new ApplicationUser { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, SchoolID = model.School, Status = 1 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
