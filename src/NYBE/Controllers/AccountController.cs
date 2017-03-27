@@ -22,19 +22,22 @@ namespace NYBE.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly Data.ApplicationDbContext _context;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            Data.ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _context = context;
         }
 
         //
@@ -100,7 +103,9 @@ namespace NYBE.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            var viewModel = new RegisterViewModel();
+            viewModel.Schools = _context.Schools.ToList();
+            return View(viewModel);
         }
 
         //
@@ -114,7 +119,7 @@ namespace NYBE.Controllers
             if (ModelState.IsValid)
             {
                 // TODO: Temporarily make the users school id 1, on registration they will need to add a school
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, SchoolID = 1, Status = 1 };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, SchoolID = model.School, Status = 1 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
