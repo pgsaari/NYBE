@@ -1,0 +1,22 @@
+﻿@model  NYBE.Models.BookViewModels.PendingBookViewModel
+
+@{
+    ViewData["Title"] = "Deny Pending Book";
+}
+
+<h2>Deny Book</h2>
+
+<h3>Are you sure you want to deny this book request?</h3>
+<div>
+    <h4><b>Title:</b> @Model.title @Model.edition Edition</h4>
+    <p><b>Author:</b> @Model.authorFName @Model.authorLName</p>
+    <p><b>ISBN:</b> @Model.isbn</p>
+    <p><b>Publisher:</b> @Model.publisher</p>
+    <p><b>Description:</b> @Model.description</p>
+    <form asp-controller="PendingBook" asp-action="Deny">
+        <div class="form-actions no-color">
+            <a asp-action="Manage" class="btn btn-default">Cancel</a>
+            <input type="submit" value="Deny" class="btn btn-danger" />
+        </div>
+    </form>
+</div>
