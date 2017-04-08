@@ -29,13 +29,23 @@
             <input type="text" name="isbn" class="form-control"/>
         </div>
     </div> <!-- end advanced search-->
+    <div  class="form-group row">
+        <label class="col-lg-1" for="condition">School: </label>
+        <select id ="schoolSelectBox" name="schoolName" class="form-control">
+            <option value="">All</option>
+            @foreach (var school in Model.schools)
+            {
+                <option value=@school.ID>@Html.DisplayFor(modelItem => school.Name)</option>
+            }
+        </select>
+    </div>
     <div class="form-group row">
         <label class="col-lg-1" for="condition">Course: </label>
-        <select name="courseName" class="form-control">
-            <option value="">All</option>
+        <select id="courseSelectBox" name="courseName" class="form-control">
+            <option class="-1" value="">All</option>
             @foreach (var course in Model.courses)
             {
-                <option value=@course.Name>@Html.DisplayFor(modelItem => course.Name)</option>
+                <option class=@course.SchoolID value=@course.Name>@Html.DisplayFor(modelItem => course.Name)</option>
             }
         </select>
     </div>

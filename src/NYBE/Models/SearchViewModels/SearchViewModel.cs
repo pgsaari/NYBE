@@ -8,7 +8,9 @@ namespace NYBE.Models.SearchViewModels
     public class BookSearchViewModel
     {
         public List<Book> bookList;
+        public List<School> schools;
         public List<Course> courses;
+        public string schoolSelected { get; set; }
         public string courseSelected { get; set; }
     }
 }

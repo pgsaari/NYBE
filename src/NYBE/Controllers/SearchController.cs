@@ -65,8 +65,10 @@ namespace NYBE.Controllers
 
             var bookSearchViewModel = new BookSearchViewModel();
             //Switch Where() with courses for the school = User.school
+            bookSearchViewModel.schools = _context.Schools.ToList();
             // bookSearchViewModel.courses = _context.Courses.Where(school => ).ToList();
             bookSearchViewModel.courses = _context.Courses.ToList();
+            
             bookSearchViewModel.bookList = bookList;
 
             return View(bookSearchViewModel);
