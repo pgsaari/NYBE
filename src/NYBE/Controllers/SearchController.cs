@@ -22,7 +22,7 @@ namespace NYBE.Controllers
 
         //
         // GET: /search/
-        public IActionResult Index(string generalSearch, string courseName)
+        public IActionResult Index(string generalSearch, string title, string author, string isbn, string courseName)
         {
             var bookList = new List<Book>();
 
@@ -42,7 +42,7 @@ namespace NYBE.Controllers
             }
             
             
-            /* commented out to be used for advanced search
+            // commented out to be used for advanced search
             if (!String.IsNullOrEmpty(title))
             {
                 bookList = getBooksByTitle(title, bookList);
@@ -54,7 +54,7 @@ namespace NYBE.Controllers
             if (!String.IsNullOrEmpty(isbn))
             {
                 bookList = getBooksByIsbn(isbn, bookList);
-            }*/
+            }
             if (!String.IsNullOrEmpty(courseName))
             {
                 bookList = getBooksByCourse(courseName, bookList);
@@ -65,6 +65,7 @@ namespace NYBE.Controllers
 
             var bookSearchViewModel = new BookSearchViewModel();
             //Switch Where() with courses for the school = User.school
+            // bookSearchViewModel.courses = _context.Courses.Where(school => ).ToList();
             bookSearchViewModel.courses = _context.Courses.ToList();
             bookSearchViewModel.bookList = bookList;
 

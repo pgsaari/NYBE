@@ -1,4 +1,8 @@
-﻿@model NYBE.Models.SearchViewModels.BookSearchViewModel
+﻿<head>
+
+</head>
+<body>
+@model NYBE.Models.SearchViewModels.BookSearchViewModel
 
 @{
     ViewData["Title"] = "Find Books";
@@ -6,20 +10,25 @@
 
 <h2>Find Books</h2>
 <form asp-controller="Search" asp-action="Index">
-    <div class="form-group row">
+    <div id="generalSearch" class="form-group row">
         <label class="col-lg-1" for="price">Search: </label>
         <input type="text" name="generalSearch" class="form-control"/>
     </div>
     <!-- Used for "advanced" search-->
-    <!-- <div>
-        Title: <input type="text" name="title" />
-    </div>
-    <div>
-        Author: <input type="text" name="author" />
-    </div>
-    <div>
-        ISBN: <input type="text" name="isbn" />
-    </div>  -->
+    <div id="advancedSearchFields" style="display:none">
+        <div class="form-group row">
+            <label class="col-lg-1" for="price"> Title: </label>
+            <input type="text" name="title" class="form-control" />
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-1" for="price"> Author: </label>
+            <input type="text" name="author" class="form-control"/>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-1" for="price"> ISBN: </label>
+            <input type="text" name="isbn" class="form-control"/>
+        </div>
+    </div> <!-- end advanced search-->
     <div class="form-group row">
         <label class="col-lg-1" for="condition">Course: </label>
         <select name="courseName" class="form-control">
@@ -31,13 +40,10 @@
         </select>
     </div>
 
-    <input type="submit" class="btn btn-success" value="Search" />
+    <input type="submit" class="btn btn-success" value="Search" /> <a id ="toggleAdvancedSearch" style="margin-left:30px; cursor:pointer">Show Advanced Search</a>
 </form>
 
 <br/>
-
-@if (Model.bookList.Any())
-{
 
 <div class="table-responsive">
     <table class="table table-striped">
@@ -94,12 +100,8 @@
                     </th>
                 </tr>
             }
-        </tbody>
+        </tbody>      
     </table>
-</div>
-}
-
-else{
-    <h4>No results</h4>
     <a asp-controller="PendingBook" asp-action="Index">Request to have your book added!</a>
-}
+</div>
+</body> 
