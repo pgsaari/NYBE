@@ -2,7 +2,7 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-    ViewData["Title"] = "Manage your account";
+    ViewData["Title"] = "Manage Account";
 }
 
 <head>
@@ -49,7 +49,7 @@
         <div class="form-group row">
             <h4 class="col-sm-1 col-sm-offset-2">Phone Number:</h4>
             <label class="col-sm-6 text-center">@Model.PhoneNumber</label>
-            <button type="submit" class="col-sm-1 btn btn-success">Edit</button>
+            <button type="button" onclick="location.href = '/Manage/ChangePhoneNumber'" class="col-sm-1 btn btn-success">Edit</button>
         </div>
         <div class="form-group row">
             <h4 class="col-sm-1 col-sm-offset-2">Password:</h4>
