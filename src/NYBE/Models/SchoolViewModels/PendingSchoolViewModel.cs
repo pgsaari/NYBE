@@ -8,6 +8,7 @@ namespace NYBE.Models.SchoolViewModels
 {
     public class PendingSchoolViewModel
     {
+        public int id { get; set; }
         [Required]
         public string name { get; set; }
         [Required]

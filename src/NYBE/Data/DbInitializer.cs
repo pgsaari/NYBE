@@ -49,11 +49,12 @@ namespace NYBE.Models
             {
                 var schools = new School[]
                 {
-                    new School{Name="UW - Milwaukee",City="Milwaukee", State="Wisconsin"},
-                    new School{Name="Marquette University",City="Milwaukee", State="Wisconsin"},
-                    new School{Name="MSOE",City="Milwaukee", State="Wisconsin"},
-                    new School{Name="MIAD",City="Milwaukee", State="Wisconsin"},
-                    new School{Name="UCLA",City="Los Angeles", State="California"}
+                    new School{Name="None", City="N/A", State="N/A" },
+                    new School{Name="UW - Milwaukee",City="Milwaukee", State="WI"},
+                    new School{Name="Marquette University",City="Milwaukee", State="WI"},
+                    new School{Name="MSOE",City="Milwaukee", State="WI"},
+                    new School{Name="MIAD",City="Milwaukee", State="WI"},
+                    new School{Name="UCLA",City="Los Angeles", State="CA"}
                 };
                 foreach (School e in schools)
                 {

@@ -1,0 +1,40 @@
+﻿@model NYBE.Models.AdminViewModels.ManageSchoolsViewModel
+@{
+    ViewData["Title"] = "Manage Pending Schools";
+}
+
+<h1>Manage Pending Schools</h1>
+
+@if (Model.pendingSchools.Any())
+{
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (PendingSchool pSchool in Model.pendingSchools)
+                {
+                    <tr>
+                        <td>@pSchool.Name</td>
+                        <td>@pSchool.City</td>
+                        <td>@pSchool.State</td>
+                        <td><a asp-controller="PendingSchool" asp-action="Approve" asp-route-id="@pSchool.ID" class="btn btn-success">Approve</a></td>
+                        <td><a asp-controller="PendingSchool" asp-action="Deny" asp-route-id="@pSchool.ID" class="btn btn-danger">Deny</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+}
+
+else
+{ 
+<h4>Currently no Pending Books!</h4>
+}
