@@ -19,32 +19,21 @@
 <hr />
   
    <div class="container">
-       @*<div class="row">
-           <div class="col-xs-1 col-xs-offset-2 col-md-1 col-md-offset-3 col-lg-1 col-lg-offset-3 vcenter">
-               <h4>Name:</h4>
-           </div>
-           <div class="col-xs-5 col-md-4 col-lg-4 vcenter text-center">
-               <label>@UserManager.GetUserName(User)</label>
-           </div>
-           <div class="col-xs-1 col-md-1 col-lg-1 vcenter">
-               <button type="submit" class="btn btn-success">Edit</button>
-           </div>
-       </div>*@
     <form>
         <div class="form-group row">
             <h4 class="col-sm-1 col-sm-offset-2">Name:</h4>
             <label class="col-sm-6 text-center">@Model.FirstName @Model.LastName</label>
-            <button type="submit" class="col-sm-1 btn btn-success">Edit</button>
+            <button type="button" onclick="location.href = '/Manage/ChangeName'" class="col-sm-1 btn btn-success">Edit</button>
         </div>
         <div class="form-group row">
             <h4 class="col-sm-1 col-sm-offset-2">Email:</h4>
             <label class="col-sm-6 text-center">@Model.Email</label>
-            <button type="submit" class="col-sm-1 btn btn-success">Edit</button>
+            <button type="button" onclick="location.href = '/Manage/ChangeEmail'" class="col-sm-1 btn btn-success">Edit</button>
         </div>
         <div class="form-group row">
             <h4 class="col-sm-1 col-sm-offset-2">School:</h4>
-            <label class="col-sm-6 text-center">@Model.School</label>
-            <button type="submit" class="col-sm-1 btn btn-success">Edit</button>
+            <label class="col-sm-6 text-center">@Model.School.Name</label>
+            <button type="button" onclick="location.href = '/Manage/ChangeSchool'" class="col-sm-1 btn btn-success">Edit</button>
         </div>
         <div class="form-group row">
             <h4 class="col-sm-1 col-sm-offset-2">Phone Number:</h4>

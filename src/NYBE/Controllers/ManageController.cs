@@ -54,11 +54,8 @@ namespace NYBE.Controllers
                 message == ManageMessageId.ChangeNameSuccess ? "Your name has been changed."
                 : message == ManageMessageId.ChangeEmailSuccess ? "Your email has been changed."
                 : message == ManageMessageId.ChangeSchoolSuccess ? "Your school has been changed."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.ChangePhoneSuccess ? "You phone number has changed."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
 
@@ -77,6 +74,116 @@ namespace NYBE.Controllers
                 Password = "•••••••••"
             };
             return View(model);
+        }
+
+        //
+        // GET: /Manage/ChangeName
+        [HttpGet]
+        public async Task<IActionResult> ChangeName()
+        {
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                return View("Error");
+            }
+            var model = new ChangeNameViewModel
+            {
+                OldFirstName = user.FirstName,
+                OldLastName = user.LastName
+            };
+            return View(model);
+        }
+
+        //
+        // POST: /Manage/ChangeName
+        [HttpPost]
+        public async Task<IActionResult> ChangeName(ChangeNameViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await GetCurrentUserAsync();
+            if (user != null)
+            {
+                var result = await _userManager.SetUserNameAsync(user, model.FirstName + " " + model.LastName);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangeNameSuccess });
+                }
+            }
+            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+        }
+
+        //
+        // GET: /Manage/ChangeEmail
+        [HttpGet]
+        public IActionResult ChangeEmail()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/ChangeEmail
+        [HttpPost]
+        public async Task<IActionResult> ChangeEmail(ChangeEmailViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await GetCurrentUserAsync();
+            if (user != null)
+            {
+                var result = await _userManager.SetEmailAsync(user, model.NewEmail);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangeEmailSuccess });
+                }
+            }
+            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+        }
+
+        //
+        // GET: /Manage/ChangeSchool
+        [HttpGet]
+        public async Task<IActionResult> ChangeSchool()
+        {
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                return View("Error");
+            }
+            var model = new ChangeSchoolViewModel
+            {
+                OldSchool = user.SchoolID,
+                Schools = _context.Schools.ToList()
+            };
+            return View(model);
+        }
+
+        //
+        // POST: /Manage/ChangeSchool
+        [HttpPost]
+        public async Task<IActionResult> ChangeSchool(ChangeSchoolViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await GetCurrentUserAsync();
+            //if (user != null)
+            //{
+            //    var result = await _userManager.SetSchoolAsync(user, model.School);
+            //    if (result.Succeeded)
+            //    {
+            //        await _signInManager.SignInAsync(user, isPersistent: false);
+            //        return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangeSchoolSuccess });
+            //    }
+            //}
+            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
 
         //
@@ -112,7 +219,7 @@ namespace NYBE.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.RemovePhoneSuccess });
+                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangePhoneSuccess });
                 }
             }
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
@@ -152,40 +259,6 @@ namespace NYBE.Controllers
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
 
-        //
-        // GET: /Manage/SetPassword
-        [HttpGet]
-        public IActionResult SetPassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Manage/SetPassword
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SetPassword(SetPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await GetCurrentUserAsync();
-            if (user != null)
-            {
-                var result = await _userManager.AddPasswordAsync(user, model.NewPassword);
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.SetPasswordSuccess });
-                }
-                AddErrors(result);
-                return View(model);
-            }
-            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
-        }
-
         #region Helpers
 
         private void AddErrors(IdentityResult result)
@@ -201,11 +274,8 @@ namespace NYBE.Controllers
             ChangeNameSuccess,
             ChangeEmailSuccess,
             ChangeSchoolSuccess,
-            AddPhoneSuccess,
             ChangePhoneSuccess,
-            RemovePhoneSuccess,
             ChangePasswordSuccess,
-            SetPasswordSuccess,
             Error
         }
 
