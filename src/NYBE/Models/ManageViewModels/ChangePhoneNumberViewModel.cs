@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace NYBE.Models.ManageViewModels
 {
-    public class AddPhoneNumberViewModel
+    public class ChangePhoneNumberViewModel
     {
+        public string OldPhoneNumber { get; set; }
+
         [Required]
         [Phone]
         [Display(Name = "Phone number")]
