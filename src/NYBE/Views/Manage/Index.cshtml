@@ -1,21 +1,68 @@
 ﻿@model IndexViewModel
+@inject UserManager<ApplicationUser> UserManager
+
 @{
     ViewData["Title"] = "Manage your account";
 }
 
-<h2>@ViewData["Title"].</h2>
-<p class="text-success">@ViewData["StatusMessage"]</p>
+<head>
+    <style>
+        .vcenter {
+            display: inline-block;
+            vertical-align: middle;
+            float: none;
+        }
+    </style>
+</head>
 
-<div>
-
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Add School:</dt>
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+  
+   <div class="container">
+       @*<div class="row">
+           <div class="col-xs-1 col-xs-offset-2 col-md-1 col-md-offset-3 col-lg-1 col-lg-offset-3 vcenter">
+               <h4>Name:</h4>
+           </div>
+           <div class="col-xs-5 col-md-4 col-lg-4 vcenter text-center">
+               <label>@UserManager.GetUserName(User)</label>
+           </div>
+           <div class="col-xs-1 col-md-1 col-lg-1 vcenter">
+               <button type="submit" class="btn btn-success">Edit</button>
+           </div>
+       </div>*@
+    <form>
+        <div class="form-group row">
+            <h4 class="col-sm-1 col-sm-offset-2">Name:</h4>
+            <label class="col-sm-6 text-center">@Model.FirstName @Model.LastName</label>
+            <button type="submit" class="col-sm-1 btn btn-success">Edit</button>
+        </div>
+        <div class="form-group row">
+            <h4 class="col-sm-1 col-sm-offset-2">Email:</h4>
+            <label class="col-sm-6 text-center">@Model.Email</label>
+            <button type="submit" class="col-sm-1 btn btn-success">Edit</button>
+        </div>
+        <div class="form-group row">
+            <h4 class="col-sm-1 col-sm-offset-2">School:</h4>
+            <label class="col-sm-6 text-center">@Model.School</label>
+            <button type="submit" class="col-sm-1 btn btn-success">Edit</button>
+        </div>
+        <div class="form-group row">
+            <h4 class="col-sm-1 col-sm-offset-2">Phone Number:</h4>
+            <label class="col-sm-6 text-center">@Model.PhoneNumber</label>
+            <button type="submit" class="col-sm-1 btn btn-success">Edit</button>
+        </div>
+        <div class="form-group row">
+            <h4 class="col-sm-1 col-sm-offset-2">Password:</h4>
+            <label class="col-sm-6 text-center">@Model.Password</label>
+            <button type="button" onclick="location.href = '/Manage/ChangePassword'" class="col-sm-1 btn btn-success">Edit</button>
+        </div>
+    </form>
+</div>
+        @*<dt>Add School:</dt>
         <dd>
             <a asp-controller="PendingSchool" asp-action="Index" class="btn-bracketed">Request School</a>
         </dd>
-    </dl>
+    
     <dl class="dl-horizontal">
         <dt>Password:</dt>
         <dd>
@@ -28,51 +75,4 @@
                 <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Create</a>
             }
         </dd>
-        @*<dt>External Logins:</dt>
-            <dd>
-
-                @Model.Logins.Count <a asp-controller="Manage" asp-action="ManageLogins" class="btn-bracketed">Manage</a>
-            </dd>
-            <dt>Phone Number:</dt>
-            <dd>
-                <p>
-                    Phone Numbers can used as a second factor of verification in two-factor authentication.
-                    See <a href="http://go.microsoft.com/fwlink/?LinkID=532713">this article</a>
-                    for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-                </p>
-                @(Model.PhoneNumber ?? "None")
-                    @if (Model.PhoneNumber != null)
-                    {
-                        <br />
-                        <a asp-controller="Manage" asp-action="AddPhoneNumber" class="btn-bracketed">Change</a>
-                        <form asp-controller="Manage" asp-action="RemovePhoneNumber" method="post">
-                            [<button type="submit" class="btn-link">Remove</button>]
-                        </form>
-                    }
-                    else
-                    {
-                        <a asp-controller="Manage" asp-action="AddPhoneNumber" class="btn-bracketed">Add</a>
-                    }
-            </dd>
-
-            <dt>Two-Factor Authentication:</dt>
-            <dd>
-                <p>
-                    There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkID=532713">this article</a>
-                    for setting up this application to support two-factor authentication.
-                </p>
-                @if (Model.TwoFactor)
-                    {
-                        <form asp-controller="Manage" asp-action="DisableTwoFactorAuthentication" method="post" class="form-horizontal">
-                            Enabled <button type="submit" class="btn-link btn-bracketed">Disable</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <form asp-controller="Manage" asp-action="EnableTwoFactorAuthentication" method="post" class="form-horizontal">
-                            <button type="submit" class="btn-link btn-bracketed">Enable</button> Disabled
-                        </form>
-                    }
-            </dd>*@
-    </dl>
-</div>
+    </dl>*@

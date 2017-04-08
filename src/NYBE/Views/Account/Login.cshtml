@@ -8,12 +8,10 @@
     ViewData["Title"] = "Log into NYBE";
 }
 
+<h2 class="text-center">@ViewData["Title"]</h2>
+
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        <div class="row">
-            <h2 class="text-center">@ViewData["Title"]</h2>
-        </div>
-
         <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
             <hr />
             <div class="col-md-6 col-md-offset-3">

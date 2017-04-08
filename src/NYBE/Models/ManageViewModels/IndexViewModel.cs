@@ -8,14 +8,17 @@ namespace NYBE.Models.ManageViewModels
 {
     public class IndexViewModel
     {
-        public bool HasPassword { get; set; }
+        
+        public string FirstName { get; set; }
 
-        public IList<UserLoginInfo> Logins { get; set; }
+        public string LastName { get; set; }
+
+        public string Email { get; set; }
+
+        public School School { get; set; }
 
         public string PhoneNumber { get; set; }
 
-        public bool TwoFactor { get; set; }
-
-        public bool BrowserRemembered { get; set; }
+        public string Password { get; set; }
     }
 }
