@@ -44,7 +44,8 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "Microsoft.jQuery.Unobtrusive.Ajax": "3.2.3"
+    "Microsoft.jQuery.Unobtrusive.Ajax": "3.2.3",
+    "Sendgrid": "9.1.0"
   },
 
   "tools": {
@@ -71,7 +72,8 @@
 
   "buildOptions": {
     "emitEntryPoint": true,
-    "preserveCompilationContext": true
+    "preserveCompilationContext": true,
+    "xmlDoc": false
   },
 
   "runtimeOptions": {

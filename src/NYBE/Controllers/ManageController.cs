@@ -44,12 +44,6 @@ namespace NYBE.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(ManageMessageId? message = null)
         {
-
-            // TODO: example of how to do a linq query
-            //var listoBooks = _context.Books.Where(a => a.ID == 1).ToList();
-            //listoBooks.First().Title = "bad book";
-            //_context.SaveChanges();
-
             ViewData["StatusMessage"] =
                 message == ManageMessageId.ChangeNameSuccess ? "Your name has been changed."
                 : message == ManageMessageId.ChangeEmailSuccess ? "Your email has been changed."
