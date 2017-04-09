@@ -23,45 +23,27 @@
         <div class="form-group row">
             <h4 class="col-sm-1 col-sm-offset-2">Name:</h4>
             <label class="col-sm-6 text-center">@Model.FirstName @Model.LastName</label>
-            <button type="button" onclick="location.href = '/Manage/ChangeName'" class="col-sm-1 btn btn-success">Edit</button>
+            <a asp-action="ChangeName" class="col-sm-1 btn btn-success">Edit</a>
         </div>
         <div class="form-group row">
             <h4 class="col-sm-1 col-sm-offset-2">Email:</h4>
             <label class="col-sm-6 text-center">@Model.Email</label>
-            <button type="button" onclick="location.href = '/Manage/ChangeEmail'" class="col-sm-1 btn btn-success">Edit</button>
+            <a asp-action="ChangeEmail" class="col-sm-1 btn btn-success">Edit</a>
         </div>
         <div class="form-group row">
             <h4 class="col-sm-1 col-sm-offset-2">School:</h4>
             <label class="col-sm-6 text-center">@Model.School.Name</label>
-            <button type="button" onclick="location.href = '/Manage/ChangeSchool'" class="col-sm-1 btn btn-success">Edit</button>
+            <a asp-action="ChangeSchool" class="col-sm-1 btn btn-success">Edit</a>
         </div>
         <div class="form-group row">
             <h4 class="col-sm-1 col-sm-offset-2">Phone Number:</h4>
             <label class="col-sm-6 text-center">@Model.PhoneNumber</label>
-            <button type="button" onclick="location.href = '/Manage/ChangePhoneNumber'" class="col-sm-1 btn btn-success">Edit</button>
+            <a asp-action="ChangePhoneNumber" class="col-sm-1 btn btn-success">Edit</a>
         </div>
         <div class="form-group row">
             <h4 class="col-sm-1 col-sm-offset-2">Password:</h4>
             <label class="col-sm-6 text-center">@Model.Password</label>
-            <button type="button" onclick="location.href = '/Manage/ChangePassword'" class="col-sm-1 btn btn-success">Edit</button>
+            <a asp-action="ChangePassword" class="col-sm-1 btn btn-success">Edit</a>
         </div>
     </form>
 </div>
-        @*<dt>Add School:</dt>
-        <dd>
-            <a asp-controller="PendingSchool" asp-action="Index" class="btn-bracketed">Request School</a>
-        </dd>
-    
-    <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
-            @if (Model.HasPassword)
-            {
-                <a asp-controller="Manage" asp-action="ChangePassword" class="btn-bracketed">Change</a>
-            }
-            else
-            {
-                <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Create</a>
-            }
-        </dd>
-    </dl>*@

@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using NYBE.Models.BookViewModels;
 using Microsoft.AspNetCore.Authorization;
 using NYBE.Models.AdminViewModels;
+using NYBE.Services;
 
 namespace NYBE.Controllers
 {
@@ -18,8 +19,11 @@ namespace NYBE.Controllers
     {
         private readonly ApplicationDbContext ctx;
         private readonly UserManager<ApplicationUser> usrCtx;
-        public PendingBookController(UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext)
+        private readonly IEmailSender _emailSender;
+
+        public PendingBookController(UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext, IEmailSender emailSender)
         {
+            _emailSender = emailSender;
             ctx = dbContext;
             usrCtx = userManager;
         }
@@ -35,10 +39,12 @@ namespace NYBE.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(PendingBookViewModel viewModel)
+        public async Task<IActionResult> Index(PendingBookViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                var user = await GetCurrentUserAsync();
+
                 PendingBook pBook = new PendingBook();
                 pBook.Title = viewModel.title;
                 pBook.AuthorFName = viewModel.authorFName;
@@ -47,6 +53,7 @@ namespace NYBE.Controllers
                 pBook.Edition = viewModel.edition;
                 pBook.Publisher = viewModel.publisher;
                 pBook.Description = viewModel.description;
+                pBook.UserID = user.Id;
 
                 ctx.PendingBooks.Add(pBook);
                 ctx.SaveChanges();
@@ -100,7 +107,7 @@ namespace NYBE.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult Approve(PendingBookViewModel viewModel)
+        public async Task<IActionResult> Approve(PendingBookViewModel viewModel)
         {
             // remove the pending book from that table
             var removeBook = ctx.PendingBooks.Where(a => a.ID == viewModel.id).FirstOrDefault();
@@ -118,6 +125,13 @@ namespace NYBE.Controllers
             ctx.Books.Add(newBook);
 
             ctx.SaveChanges();
+
+            // Send email notification to User that submitted the book.
+            var user = await usrCtx.FindByIdAsync(removeBook.UserID);
+
+            var callbackUrl = Url.Action("Login", "Account", null, protocol: HttpContext.Request.Scheme);
+            await _emailSender.SendEmailAsync(user.Email, "NYBE Book Approval",
+               $"Your recent book request for \"{removeBook.Title}\" has been approved!  <a href='{callbackUrl}'>Sign in</a> and check it out!");
 
             return RedirectToAction("Manage");
         }
@@ -148,7 +162,7 @@ namespace NYBE.Controllers
 
         [HttpPost]
         [Authorize(Roles ="Admin")]
-        public IActionResult Deny(PendingBookViewModel viewModel)
+        public async Task<IActionResult> Deny(PendingBookViewModel viewModel)
         {
             // remove the pending book from that table
             var removeBook = ctx.PendingBooks.Where(a => a.ID == viewModel.id).FirstOrDefault();
@@ -156,7 +170,19 @@ namespace NYBE.Controllers
 
             ctx.SaveChanges();
 
+            // Send email notification to User that submitted the book.
+            var user = await usrCtx.FindByIdAsync(removeBook.UserID);
+
+            var callbackUrl = Url.Action("Login", "Account", null, protocol: HttpContext.Request.Scheme);
+            await _emailSender.SendEmailAsync(user.Email, "NYBE Book Denial",
+               $"Your recent book request for \"{removeBook.Title}\" has been denied. =[  <a href='{callbackUrl}'>Sign in</a> and try a different book!");
+
             return RedirectToAction("Manage");
+        }
+
+        private Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return usrCtx.GetUserAsync(HttpContext.User);
         }
 
     }

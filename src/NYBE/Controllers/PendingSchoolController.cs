@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using NYBE.Models.AdminViewModels;
 using NYBE.Models.SchoolViewModels;
+using NYBE.Services;
 
 namespace NYBE.Controllers
 {
@@ -18,8 +19,10 @@ namespace NYBE.Controllers
     {
         private readonly ApplicationDbContext ctx;
         private readonly UserManager<ApplicationUser> usrCtx;
-        public PendingSchoolController(UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext)
+        private readonly IEmailSender _emailSender;
+        public PendingSchoolController(UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext, IEmailSender emailSender)
         {
+            _emailSender = emailSender;
             ctx = dbContext;
             usrCtx = userManager;
         }
@@ -34,14 +37,17 @@ namespace NYBE.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(PendingSchoolViewModel viewModel)
+        public async Task<IActionResult> Index(PendingSchoolViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                var user = await GetCurrentUserAsync();
+
                 PendingSchool pSchool = new PendingSchool();
                 pSchool.Name = viewModel.name;
                 pSchool.City = viewModel.city;
                 pSchool.State = viewModel.state;
+                pSchool.UserID = user.Id;
 
                 ctx.PendingSchools.Add(pSchool);
                 ctx.SaveChanges();
@@ -91,7 +97,7 @@ namespace NYBE.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult Approve(PendingSchoolViewModel viewModel)
+        public async Task<IActionResult> Approve(PendingSchoolViewModel viewModel)
         {
             // remove the pending book from that table
             var removeSchool = ctx.PendingSchools.Where(a => a.ID == viewModel.id).FirstOrDefault();
@@ -105,6 +111,13 @@ namespace NYBE.Controllers
             ctx.Schools.Add(newSchool);
 
             ctx.SaveChanges();
+
+            // Send email notification to User that submitted the school.
+            var user = await usrCtx.FindByIdAsync(removeSchool.UserID);
+
+            var callbackUrl = Url.Action("Login", "Account", null, protocol: HttpContext.Request.Scheme);
+            await _emailSender.SendEmailAsync(user.Email, "NYBE School Approval",
+               $"Your recent school request for \"{removeSchool.Name}\" has been approved!  <a href='{callbackUrl}'>Sign in</a> and check it out!");
 
             return RedirectToAction("Manage");
         }
@@ -131,7 +144,7 @@ namespace NYBE.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult Deny(PendingSchoolViewModel viewModel)
+        public async Task<IActionResult> Deny(PendingSchoolViewModel viewModel)
         {
             // remove the pending school from that table
             var removeSchool = ctx.PendingSchools.Where(a => a.ID == viewModel.id).FirstOrDefault();
@@ -139,7 +152,19 @@ namespace NYBE.Controllers
 
             ctx.SaveChanges();
 
+            // Send email notification to User that submitted the school.
+            var user = await usrCtx.FindByIdAsync(removeSchool.UserID);
+
+            var callbackUrl = Url.Action("Login", "Account", null, protocol: HttpContext.Request.Scheme);
+            await _emailSender.SendEmailAsync(user.Email, "NYBE School Denial",
+               $"Your recent school request for \"{removeSchool.Name}\" has been denied. =[  <a href='{callbackUrl}'>Sign in</a> and try a different school!");
+
             return RedirectToAction("Manage");
+        }
+
+        private Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return usrCtx.GetUserAsync(HttpContext.User);
         }
     }
 }

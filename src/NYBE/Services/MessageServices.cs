@@ -28,7 +28,7 @@ namespace NYBE.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("support@nybe.com", "Support Team"),
+                From = new EmailAddress("support@nybe.com", "NYBE Team"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
