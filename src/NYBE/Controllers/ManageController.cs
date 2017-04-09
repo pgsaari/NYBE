@@ -106,9 +106,12 @@ namespace NYBE.Controllers
             var user = await GetCurrentUserAsync();
             if (user != null)
             {
-                var result = await _userManager.SetUserNameAsync(user, model.FirstName + " " + model.LastName);
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
+                    await _context.SaveChangesAsync();
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangeNameSuccess });
                 }
@@ -174,15 +177,19 @@ namespace NYBE.Controllers
                 return View(model);
             }
             var user = await GetCurrentUserAsync();
-            //if (user != null)
-            //{
-            //    var result = await _userManager.SetSchoolAsync(user, model.School);
-            //    if (result.Succeeded)
-            //    {
-            //        await _signInManager.SignInAsync(user, isPersistent: false);
-            //        return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangeSchoolSuccess });
-            //    }
-            //}
+
+            if (user != null)
+            {
+                user.School = _context.Schools.Where(a => a.ID == model.School).FirstOrDefault();
+                user.SchoolID = model.School;
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    await _context.SaveChangesAsync();
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangeSchoolSuccess });
+                }
+            }
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
 

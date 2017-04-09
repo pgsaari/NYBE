@@ -16,6 +16,7 @@
             <hr />
             <div class="form-group">
                 <div class="col-sm-6 col-sm-offset-3">
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <input asp-for="Email" class="form-control" placeholder="Email" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
