@@ -67,9 +67,21 @@ namespace NYBE.Controllers
             var viewModel = new ManageSchoolsViewModel();
 
             List<PendingSchool> pSchools = ctx.PendingSchools.ToList();
+            List<School> allSchools = ctx.Schools.Where(a => a.Status == 1).ToList();
+            List<School> disabledSchools = ctx.Schools.Where(a => a.Status == 0).ToList();
             if (pSchools != null)
             {
                 viewModel.pendingSchools = pSchools;
+            }
+
+            if (allSchools != null)
+            {
+                viewModel.allSchools = allSchools;
+            }
+
+            if(disabledSchools != null)
+            {
+                viewModel.disabledSchools = disabledSchools;
             }
 
             return View(viewModel);
@@ -108,6 +120,7 @@ namespace NYBE.Controllers
             newSchool.Name = viewModel.name;
             newSchool.City = viewModel.city;
             newSchool.State = viewModel.state;
+            newSchool.Status = 1;
             ctx.Schools.Add(newSchool);
 
             ctx.SaveChanges();
@@ -158,6 +171,56 @@ namespace NYBE.Controllers
             var callbackUrl = Url.Action("Login", "Account", null, protocol: HttpContext.Request.Scheme);
             await _emailSender.SendEmailAsync(user.Email, "NYBE School Denial",
                $"Your recent school request for \"{removeSchool.Name}\" has been denied. =[  <a href='{callbackUrl}'>Sign in</a> and try a different school!");
+
+            return RedirectToAction("Manage");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Disable(int? id)
+        {
+            PendingSchoolViewModel viewModel = new PendingSchoolViewModel();
+            School school = ctx.Schools.Where(a => a.ID == id).FirstOrDefault();
+            viewModel.id = school.ID;
+            viewModel.name = school.Name;
+            viewModel.city = school.City;
+            viewModel.state = school.State;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Disable(PendingSchoolViewModel viewModel)
+        {
+            School school = ctx.Schools.Where(a => a.ID == viewModel.id).FirstOrDefault();
+            school.Status = 0;
+            ctx.SaveChanges();
+
+            return RedirectToAction("Manage");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Enable(int? id)
+        {
+            PendingSchoolViewModel viewModel = new PendingSchoolViewModel();
+            School school = ctx.Schools.Where(a => a.ID == id).FirstOrDefault();
+            viewModel.id = school.ID;
+            viewModel.name = school.Name;
+            viewModel.city = school.City;
+            viewModel.state = school.State;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Enable(PendingSchoolViewModel viewModel)
+        {
+            School school = ctx.Schools.Where(a => a.ID == viewModel.id).FirstOrDefault();
+            school.Status = 1;
+            ctx.SaveChanges();
 
             return RedirectToAction("Manage");
         }

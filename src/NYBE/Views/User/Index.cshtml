@@ -5,59 +5,66 @@
 
 <h1>Manage Users</h1>
 
-<div class="container">
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>School</th>
-                    <th>Rating</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{ int i = 0; }
-                @foreach(ApplicationUser user in Model.users)
-                {
-                    <tr>
-                        <td>@user.Email</td>
-                        <td>@Model.roles[i]</td> <!--Assume users only have one role-->
-                        <td>@user.FirstName</td>
-                        <td>@user.LastName</td>
-                        <td>@user.School.Name</td>
-                        <td>@user.Rating</td>
-                        <td><a asp-controller="User" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-success">Edit</a></td>
-                        <td><a asp-controller="User" asp-action="DeleteUser" asp-route-id="@user.Id" class="btn btn-danger">Delete</a></td>
-                    </tr>
-                    i++;
-                }
-            </tbody>
-        </table>
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#active">Active Users</a></li>
+    @if (Model.disabledUsers.Any())
+    {
+    <li><a data-toggle="tab" href="#inactive">Disabled Users</a></li>
+    }
+</ul>
+<div class="tab-content">
+    <div id="active" class="tab-pane fade in active">
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>School</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int i = 0; }
+                        @foreach (ApplicationUser user in Model.users)
+                        {
+                        <tr>
+                            <td>@user.Email</td>
+                            <td>@Model.roles[i]</td> <!--Assume users only have one role-->
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td>@user.School.Name</td>
+                            <td>@user.Rating</td>
+                            <td><a asp-controller="User" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-success">Edit</a></td>
+                            <td><a asp-controller="User" asp-action="DeleteUser" asp-route-id="@user.Id" class="btn btn-danger">Delete</a></td>
+                        </tr>
+                        i++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
+    <div id="inactive" class="tab-pane fade">
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>School</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-@if (Model.disabledUsers.Any())
-{
-    <h3>Disabled Users</h3>
-    <div class="container">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Email</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>School</th>
-                        <th>Rating</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    @foreach (ApplicationUser user in Model.disabledUsers)
-                {
+                        @foreach (ApplicationUser user in Model.disabledUsers)
+                        {
                         <tr>
                             <td>@user.Email</td>
                             <td>@user.FirstName</td>
@@ -68,9 +75,10 @@
 
                         </tr>
                         i++;
-                    }
-                </tbody>
-            </table>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-                        }
+</div>

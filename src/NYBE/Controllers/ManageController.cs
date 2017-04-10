@@ -156,7 +156,7 @@ namespace NYBE.Controllers
             var model = new ChangeSchoolViewModel
             {
                 OldSchool = user.SchoolID,
-                Schools = _context.Schools.ToList()
+                Schools = _context.Schools.Where(a => a.Status == 1).ToList()
             };
             return View(model);
         }

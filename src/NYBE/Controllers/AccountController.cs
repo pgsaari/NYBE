@@ -104,7 +104,7 @@ namespace NYBE.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
             var viewModel = new RegisterViewModel();
-            viewModel.Schools = _context.Schools.ToList();
+            viewModel.Schools = _context.Schools.Where(a => a.Status == 1).ToList();
             return View(viewModel);
         }
 
@@ -118,7 +118,6 @@ namespace NYBE.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                // TODO: Temporarily make the users school id 1, on registration they will need to add a school
                 var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, SchoolID = model.School, Status = 1 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -140,7 +139,7 @@ namespace NYBE.Controllers
                 AddErrors(result);
             }
 
-            model.Schools = _context.Schools.ToList();
+            model.Schools = _context.Schools.Where(a => a.Status == 1).ToList();
 
             // If we got this far, something failed, redisplay form
             return View(model);

@@ -28,15 +28,15 @@ namespace NYBE.Models
             {
                 var books = new Book[]
                 {
-                    new Book{ISBN="8323135460",Title="ASP.NET for Dummies",AuthorLName="Gates",AuthorFName="Bill",Description="Learn how to make an ASP.NET site in minutes!",Edition="2nd",Publisher="Microsoft"},
-                    new Book{ISBN="0676973760 ",Title="Life of Pi",AuthorLName="Martel",AuthorFName="Yann",Description="The protagonist, Piscine Molitor 'Pi' Patel, an Indian boy from Pondicherry, explores issues of spirituality and practicality from an early age. He survives 227 days after a shipwreck while stranded on a lifeboat in the Pacific Ocean with a Bengal tiger named Richard Parker.",Edition="1st",Publisher="Knopf Canada"},
-                    new Book{ISBN="0446310786",Title="To Kill a Mockingbird",AuthorLName="Lee",AuthorFName="Harper",Description="The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it, To Kill A Mockingbird became both an instant bestseller and a critical success when it was first published in 1960. It went on to win the Pulitzer Prize in 1961 and was later made into an Academy Award-winning film, also a classic.",Edition="3rd",Publisher="J. B. Lippincott & Co."},
-                    new Book{ISBN="1234563370",Title="Moby Dick",AuthorLName="Melville",AuthorFName="Herman",Description="Sailor Ishmael tells the story of the obsessive quest of Ahab, captain of the whaler the Pequod, for revenge on Moby Dick, the white whale that on the previous whaling voyage bit off Ahab's leg at the knee.",Edition="2nd",Publisher="Harper & Brothers"},
-                    new Book{ISBN="7654312210",Title="Adventures of Huckleberry Finn",AuthorLName="Twain",AuthorFName="Mark",Description="Set in a Southern antebellum society that had ceased to exist about 20 years before the work was published, Adventures of Huckleberry Finn is an often scathing satire on entrenched attitudes, particularly racism.",Edition="150th",Publisher="Charles L. Webster And Company."},
-                    new Book{ISBN="1233456740",Title="A Tale of Two Cities",AuthorLName="Dickens",AuthorFName="Charles",Description="The novel depicts the plight of the French peasantry demoralized by the French aristocracy in the years leading up to the revolution, the corresponding brutality demonstrated by the revolutionaries toward the former aristocrats in the early years of the revolution, and many unflattering social parallels with life in London during the same period",Edition="6th",Publisher="Chapman & Hall"},
-                    new Book{ISBN="0000001020",Title="The Tragedy of Hamlet",AuthorLName="Shakespeare",AuthorFName="William",Description="The story of ya boy hamlet",Edition="2nd",Publisher="16th Century Europe"},
-                    new Book{ISBN="3463754230",Title="The Adventures of Tom Sawyer",AuthorLName="Twain",AuthorFName="Mark",Description="1876 novel about a young boy growing up along the Mississippi River. It is set in the fictional town of St. Petersburg, inspired by Hannibal, Missouri, where Twain lived.",Edition="150th",Publisher="American Publishing Company"},
-                    new Book{ISBN="1234256704",Title="Charlotte's Web",AuthorLName="Williams",AuthorFName="Garth",Description="The novel tells the story of a pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as 'Some Pig') in her web in order to persuade the farmer to let him live.",Edition="9th",Publisher="Harper & Brothers"}
+                    new Book{ISBN="8323135460",Title="ASP.NET for Dummies",AuthorLName="Gates",AuthorFName="Bill",Description="Learn how to make an ASP.NET site in minutes!",Edition="2nd",Publisher="Microsoft", Status=1 },
+                    new Book{ISBN="0676973760 ",Title="Life of Pi",AuthorLName="Martel",AuthorFName="Yann",Description="The protagonist, Piscine Molitor 'Pi' Patel, an Indian boy from Pondicherry, explores issues of spirituality and practicality from an early age. He survives 227 days after a shipwreck while stranded on a lifeboat in the Pacific Ocean with a Bengal tiger named Richard Parker.",Edition="1st",Publisher="Knopf Canada", Status=1 },
+                    new Book{ISBN="0446310786",Title="To Kill a Mockingbird",AuthorLName="Lee",AuthorFName="Harper",Description="The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it, To Kill A Mockingbird became both an instant bestseller and a critical success when it was first published in 1960. It went on to win the Pulitzer Prize in 1961 and was later made into an Academy Award-winning film, also a classic.",Edition="3rd",Publisher="J. B. Lippincott & Co.", Status=1 },
+                    new Book{ISBN="1234563370",Title="Moby Dick",AuthorLName="Melville",AuthorFName="Herman",Description="Sailor Ishmael tells the story of the obsessive quest of Ahab, captain of the whaler the Pequod, for revenge on Moby Dick, the white whale that on the previous whaling voyage bit off Ahab's leg at the knee.",Edition="2nd",Publisher="Harper & Brothers", Status=1 },
+                    new Book{ISBN="7654312210",Title="Adventures of Huckleberry Finn",AuthorLName="Twain",AuthorFName="Mark",Description="Set in a Southern antebellum society that had ceased to exist about 20 years before the work was published, Adventures of Huckleberry Finn is an often scathing satire on entrenched attitudes, particularly racism.",Edition="150th",Publisher="Charles L. Webster And Company.", Status=1 },
+                    new Book{ISBN="1233456740",Title="A Tale of Two Cities",AuthorLName="Dickens",AuthorFName="Charles",Description="The novel depicts the plight of the French peasantry demoralized by the French aristocracy in the years leading up to the revolution, the corresponding brutality demonstrated by the revolutionaries toward the former aristocrats in the early years of the revolution, and many unflattering social parallels with life in London during the same period",Edition="6th",Publisher="Chapman & Hall", Status=1 },
+                    new Book{ISBN="0000001020",Title="The Tragedy of Hamlet",AuthorLName="Shakespeare",AuthorFName="William",Description="The story of ya boy hamlet",Edition="2nd",Publisher="16th Century Europe", Status=1 },
+                    new Book{ISBN="3463754230",Title="The Adventures of Tom Sawyer",AuthorLName="Twain",AuthorFName="Mark",Description="1876 novel about a young boy growing up along the Mississippi River. It is set in the fictional town of St. Petersburg, inspired by Hannibal, Missouri, where Twain lived.",Edition="150th",Publisher="American Publishing Company", Status=1 },
+                    new Book{ISBN="1234256704",Title="Charlotte's Web",AuthorLName="Williams",AuthorFName="Garth",Description="The novel tells the story of a pig named Wilbur and his friendship with a barn spider named Charlotte. When Wilbur is in danger of being slaughtered by the farmer, Charlotte writes messages praising Wilbur (such as 'Some Pig') in her web in order to persuade the farmer to let him live.",Edition="9th",Publisher="Harper & Brothers", Status=1 }
                 };
                 foreach (Book s in books)
                 {
@@ -49,12 +49,12 @@ namespace NYBE.Models
             {
                 var schools = new School[]
                 {
-                    new School{Name="None", City="N/A", State="N/A" },
-                    new School{Name="UW - Milwaukee",City="Milwaukee", State="WI"},
-                    new School{Name="Marquette University",City="Milwaukee", State="WI"},
-                    new School{Name="MSOE",City="Milwaukee", State="WI"},
-                    new School{Name="MIAD",City="Milwaukee", State="WI"},
-                    new School{Name="UCLA",City="Los Angeles", State="CA"}
+                    new School{Name="None", City="N/A", State="N/A", Status=1 },
+                    new School{Name="UW - Milwaukee",City="Milwaukee", State="WI", Status=1 },
+                    new School{Name="Marquette University",City="Milwaukee", State="WI", Status=1 },
+                    new School{Name="MSOE",City="Milwaukee", State="WI", Status=1 },
+                    new School{Name="MIAD",City="Milwaukee", State="WI", Status=1 },
+                    new School{Name="UCLA",City="Los Angeles", State="CA", Status=1 }
                 };
                 foreach (School e in schools)
                 {

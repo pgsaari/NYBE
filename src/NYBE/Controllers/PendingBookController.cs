@@ -122,6 +122,7 @@ namespace NYBE.Controllers
             newBook.Edition = viewModel.edition;
             newBook.Publisher = viewModel.publisher;
             newBook.Description = viewModel.description;
+            newBook.Status = 1;
             ctx.Books.Add(newBook);
 
             ctx.SaveChanges();

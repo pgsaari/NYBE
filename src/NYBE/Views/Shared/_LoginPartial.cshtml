@@ -32,9 +32,9 @@
                 @if (User.IsInRole("Admin"))
                 {
                     <li role="separator" class="divider"></li>
-                    <li><a asp-area="" asp-controller="User" asp-action="Index">Users</a></li>
-                    <li><a asp-area="" asp-controller="PendingBook" asp-action="Manage">Pending Books</a></li>
-                    <li><a asp-area="" asp-controller="PendingSchool" asp-action="Manage">Pending Schools</a></li>
+                    <li><a asp-area="" asp-controller="User" asp-action="Index">Manage Users</a></li>
+                    <li><a asp-area="" asp-controller="PendingBook" asp-action="Manage">Manage Books</a></li>
+                    <li><a asp-area="" asp-controller="PendingSchool" asp-action="Manage">Manage Schools</a></li>
                 }
                 <li role="separator" class="divider"></li>
                 <li><a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Settings</a></li>

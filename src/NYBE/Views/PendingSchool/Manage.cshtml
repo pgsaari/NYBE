@@ -1,40 +1,114 @@
 ﻿@model NYBE.Models.AdminViewModels.ManageSchoolsViewModel
 @{
-    ViewData["Title"] = "Manage Pending Schools";
+    ViewData["Title"] = "Manage Schools";
 }
 
-<h1>Manage Pending Schools</h1>
+<h1>Manage Schools</h1>
 
-@if (Model.pendingSchools.Any())
-{
-<div class="container">
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>City</th>
-                    <th>State</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (PendingSchool pSchool in Model.pendingSchools)
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#pending">Pending Schools</a></li>
+    <li><a data-toggle="tab" href="#all">All Schools</a></li>
+    @if (Model.disabledSchools.Any())
+    {
+        <li><a data-toggle="tab" href="#disabled">Disabled Schools</a></li>
+    }
+</ul>
+
+<div class="tab-content">
+    <div id="pending" class="tab-pane fade in active">
+        @if (Model.pendingSchools.Any())
+        {
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>City</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (PendingSchool pSchool in Model.pendingSchools)
+                            {
+                                <tr>
+                                    <td>@pSchool.Name</td>
+                                    <td>@pSchool.City</td>
+                                    <td>@pSchool.State</td>
+                                    <td><a asp-controller="PendingSchool" asp-action="Approve" asp-route-id="@pSchool.ID" class="btn btn-success">Approve</a></td>
+                                    <td><a asp-controller="PendingSchool" asp-action="Deny" asp-route-id="@pSchool.ID" class="btn btn-danger">Deny</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+
+        else
+        {
+            <h4>Currently no Pending Schools!</h4>
+        }
+    </div>
+    <div id="all" class="tab-pane fade">
+        @if (Model.allSchools.Any())
+        {
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>City</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (School school in Model.allSchools)
                 {
-                    <tr>
-                        <td>@pSchool.Name</td>
-                        <td>@pSchool.City</td>
-                        <td>@pSchool.State</td>
-                        <td><a asp-controller="PendingSchool" asp-action="Approve" asp-route-id="@pSchool.ID" class="btn btn-success">Approve</a></td>
-                        <td><a asp-controller="PendingSchool" asp-action="Deny" asp-route-id="@pSchool.ID" class="btn btn-danger">Deny</a></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                                <tr>
+                                    <td>@school.Name</td>
+                                    <td>@school.City</td>
+                                    <td>@school.State</td>
+                                    <td><a asp-controller="PendingSchool" asp-action="Disable" asp-route-id="@school.ID" class="btn btn-danger">Disable</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+
+        else
+        {
+            <h4>No Schools? Somehow...? How did you do this?</h4>
+        }
+    </div>
+    <div id="disabled" class="tab-pane fade">
+
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>City</th>
+                            <th>State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (School school in Model.disabledSchools)
+                        {
+                            <tr>
+                                <td>@school.Name</td>
+                                <td>@school.City</td>
+                                <td>@school.State</td>
+                                <td><a asp-controller="PendingSchool" asp-action="Enable" asp-route-id="@school.ID" class="btn btn-success">Enable</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
-}
-
-else
-{ 
-<h4>Currently no Pending Schools!</h4>
-}

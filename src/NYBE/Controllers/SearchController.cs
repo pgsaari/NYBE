@@ -65,7 +65,7 @@ namespace NYBE.Controllers
 
             var bookSearchViewModel = new BookSearchViewModel();
             //Switch Where() with courses for the school = User.school
-            bookSearchViewModel.schools = _context.Schools.ToList();
+            bookSearchViewModel.schools = _context.Schools.Where(a => a.Status == 1).ToList();
             // bookSearchViewModel.courses = _context.Courses.Where(school => ).ToList();
             bookSearchViewModel.courses = _context.Courses.ToList();
             
@@ -76,7 +76,7 @@ namespace NYBE.Controllers
 
         public List<Book> getBooksByGeneralString(string searchTerm)
         {
-            List<Book> books = _context.Books.Where(book => book.AuthorFName.Contains(searchTerm) || book.AuthorLName.Contains(searchTerm) || book.Title.Contains(searchTerm) || book.ISBN.Equals(searchTerm)).ToList();
+            List<Book> books = _context.Books.Where(book => (book.AuthorFName.Contains(searchTerm) || book.AuthorLName.Contains(searchTerm) || book.Title.Contains(searchTerm) || book.ISBN.Equals(searchTerm)) && book.Status == 1).ToList();
             return books;
         }
 
@@ -86,9 +86,9 @@ namespace NYBE.Controllers
         public List<Book> getBooksByAuthor(string name, List<Book> listToFilter)
         {
             if (listToFilter.Count == 0)
-                return _context.Books.Where(book => book.AuthorLName.Contains(name) || book.AuthorFName.Contains(name)).ToList();
+                return _context.Books.Where(book => (book.AuthorLName.Contains(name) || book.AuthorFName.Contains(name)) && book.Status == 1).ToList();
             else
-                return listToFilter.Where(book => book.AuthorLName.Contains(name) || book.AuthorFName.Contains(name)).ToList();
+                return listToFilter.Where(book => (book.AuthorLName.Contains(name) || book.AuthorFName.Contains(name)) && book.Status == 1).ToList();
         }
 
         /* Returns List<Book> where title is contained in book title.
@@ -97,9 +97,9 @@ namespace NYBE.Controllers
         public List<Book> getBooksByTitle(string title, List<Book> listToFilter)
         {
             if (listToFilter.Count == 0)
-                return _context.Books.Where(book => book.Title.Contains(title)).ToList();
+                return _context.Books.Where(book => (book.Title.Contains(title)) && book.Status == 1).ToList();
             else
-                return listToFilter.Where(book => book.Title.Contains(title)).ToList();
+                return listToFilter.Where(book => (book.Title.Contains(title)) && book.Status == 1).ToList();
         }
 
         /* Returns List<Book> where isbn is matched.
@@ -108,9 +108,9 @@ namespace NYBE.Controllers
         public List<Book> getBooksByIsbn(string isbn, List<Book> listToFilter)
         {
             if (listToFilter.Count == 0)
-                return _context.Books.Where(book => book.ISBN.Equals(isbn)).ToList();
+                return _context.Books.Where(book => (book.ISBN.Equals(isbn)) && book.Status == 1).ToList();
             else
-                return listToFilter.Where(book => book.ISBN.Equals(isbn)).ToList();
+                return listToFilter.Where(book => (book.ISBN.Equals(isbn)) && book.Status == 1).ToList();
         }
 
         
@@ -120,9 +120,9 @@ namespace NYBE.Controllers
             List<BookToCourse> bookIDs = _context.BookToCourses.Where(item => item.CourseID.Equals(selectedCourse.ID)).ToList();
 
             if (listToFilter.Count == 0)
-                return _context.Books.Where(book => bookIDs.Exists(item => item.BookID == book.ID)).ToList();
+                return _context.Books.Where(book => (bookIDs.Exists(item => item.BookID == book.ID)) && book.Status == 1).ToList();
             else
-                return listToFilter.Where(book => bookIDs.Exists(item => item.BookID == book.ID)).ToList();
+                return listToFilter.Where(book => (bookIDs.Exists(item => item.BookID == book.ID)) && book.Status == 1).ToList();
         }
     }
 }

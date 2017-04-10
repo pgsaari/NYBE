@@ -1,44 +1,59 @@
 ﻿@model NYBE.Models.AdminViewModels.ManageBooksViewModel
 @{
-    ViewData["Title"] = "Manage Pending Books";
+    ViewData["Title"] = "Manage Books";
 }
 
-<h1>Manage Pending Books</h1>
+<h1>Manage Books</h1>
 
-@if (Model.pendingBooks.Any())
-{
-<div class="container">
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>ISBN</th>
-                    <th>Edition</th>
-                    <th>Publisher</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (PendingBook book in Model.pendingBooks)
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#pending">Pending Books</a></li>
+    <li><a data-toggle="tab" href="#all">All Books</a></li>
+    <li><a data-toggle="tab" href="#disabled">Disabled Books</a></li>
+</ul>
+<div class="tab-content">
+    <div id="pending" class="tab-pane fade in active">
+        @if (Model.pendingBooks.Any())
+        {
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>ISBN</th>
+                                <th>Edition</th>
+                                <th>Publisher</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (PendingBook book in Model.pendingBooks)
                 {
-                    <tr>
-                        <td>@book.Title</td>
-                        <td>@book.AuthorFName @book.AuthorLName</td> <!--Assume users only have one role-->
-                        <td>@book.ISBN</td>
-                        <td>@book.Edition</td>
-                        <td>@book.Publisher</td>
-                        <td><a asp-controller="PendingBook" asp-action="Approve" asp-route-id="@book.ID" class="btn btn-success">Approve</a></td>
-                        <td><a asp-controller="PendingBook" asp-action="Deny" asp-route-id="@book.ID" class="btn btn-danger">Deny</a></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                                <tr>
+                                    <td>@book.Title</td>
+                                    <td>@book.AuthorFName @book.AuthorLName</td> <!--Assume users only have one role-->
+                                    <td>@book.ISBN</td>
+                                    <td>@book.Edition</td>
+                                    <td>@book.Publisher</td>
+                                    <td><a asp-controller="PendingBook" asp-action="Approve" asp-route-id="@book.ID" class="btn btn-success">Approve</a></td>
+                                    <td><a asp-controller="PendingBook" asp-action="Deny" asp-route-id="@book.ID" class="btn btn-danger">Deny</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+
+        else
+        {
+            <h4>Currently no Pending Books!</h4>
+        }
+    </div>
+    <div id="all" class="tab-pane fade">
+        <p>Gotta do dis still</p>
+    </div>
+    <div id="disabled" class="tab-pane fade">
+        <p>Gotta do dis still</p>
     </div>
 </div>
-}
-
-else
-{ 
-<h4>Currently no Pending Books!</h4>
-}
