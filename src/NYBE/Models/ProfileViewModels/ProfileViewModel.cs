@@ -10,6 +10,7 @@ namespace NYBE.Models
         public string name { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
+        public string preferredContact { get; set; }
         public double rating { get; set; }
         public School school { get; set; }
         public bool isAdmin { get; set; }

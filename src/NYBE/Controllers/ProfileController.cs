@@ -94,6 +94,20 @@ namespace NYBE.Controllers
             view.email = user.Email;
             view.phone = user.PhoneNumber;
             view.rating = user.Rating;
+
+            switch (user.PreferredContact)
+            {
+                case 0:
+                    view.preferredContact = "Email";
+                    break;
+                case 1:
+                    view.preferredContact = "Call";
+                    break;
+                case 2:
+                    view.preferredContact = "Text";
+                    break;
+            }
+
             view.school = ctx.Schools.Where(a => a.ID == user.SchoolID).FirstOrDefault();
 
             // get all the user's book listings include the book and course objects to view in the table

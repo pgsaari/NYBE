@@ -31,10 +31,27 @@
         </div>
     </div>
     <div class="form-group">
+        <label asp-for="Phone" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="PreferredContact" class="col-md-2 control-label"></label>
+        <div class="col-lg-10">
+            <select asp-for="PreferredContact" class="form-control" name="preferredContact">
+                <option value="0">Email</option>
+                <option value="1">Call</option>
+                <option value="2">Text</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
         <label class="col-md-2 control-label">School</label>
         <div class="col-md-10">
             <select asp-for="School" class="form-control">
-                @foreach(School school in Model.Schools)
+                @foreach (School school in Model.Schools)
                 {
                     <option value="@school.ID">@school.Name</option>
                 }

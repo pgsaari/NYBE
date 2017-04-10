@@ -99,6 +99,7 @@ namespace NYBE.Models
             user.SchoolID = 3;
             user.Email = "user@test.com";
             user.UserName = user.Email;
+            user.PreferredContact = 0;
             user.Status = 1;
             if (!(userManager.Users.Any(a => a.UserName == "user@test.com"))) // if the user doesn't exist then create them
             {
@@ -115,6 +116,7 @@ namespace NYBE.Models
             user2.SchoolID = 1;
             user2.Email = "paul@test.com";
             user2.UserName = user2.Email;
+            user2.PreferredContact = 2;
             user2.Status = 1;
             if (!(userManager.Users.Any(a => a.UserName == "paul@test.com"))) // if the user doesn't exist then create them
             {
@@ -131,6 +133,7 @@ namespace NYBE.Models
             admin.SchoolID = 2;
             admin.Email = "admin@test.com";
             admin.UserName = admin.Email;
+            admin.PreferredContact = 1;
             admin.Status = 1;
             if (!(userManager.Users.Any(a => a.UserName == "admin@test.com")))
             {

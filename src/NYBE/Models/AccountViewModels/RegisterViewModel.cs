@@ -24,6 +24,14 @@ namespace NYBE.Models.AccountViewModels
         public string Email { get; set; }
 
         [Required]
+        [Phone]
+        [Display(Name = "Phone")]
+        public string Phone { get; set; }
+
+        [Display(Name = "Preferred Contact")]
+        public int PreferredContact { get; set; }
+
+        [Required]
         [Display(Name = "School")]
         public int School { get; set; }
 
