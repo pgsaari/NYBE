@@ -1,0 +1,25 @@
+﻿@model  NYBE.Models.BookViewModels.PendingBookViewModel
+
+@{
+    ViewData["Title"] = "Disable Book";
+}
+
+<h2>Disable Book</h2>
+
+<h3>Are you sure you want to disable this book?</h3>
+<p>User's will not be able to find this book in search results.</p>
+<p>It will however, remain in users' transaction history.</p>
+<br/>
+<div>
+    <h4><b>Title:</b> @Model.title @Model.edition Edition</h4>
+    <p><b>Author:</b> @Model.authorFName @Model.authorLName</p>
+    <p><b>ISBN:</b> @Model.isbn</p>
+    <p><b>Publisher:</b> @Model.publisher</p>
+    <p><b>Description:</b> @Model.description</p>
+    <form asp-controller="PendingBook" asp-action="Disable">
+        <div class="form-actions no-color">
+            <a asp-action="Manage" class="btn btn-default">Cancel</a>
+            <input type="submit" value="Disable" class="btn btn-danger" />
+        </div>
+    </form>
+</div>

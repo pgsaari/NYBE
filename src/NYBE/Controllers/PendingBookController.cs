@@ -72,10 +72,20 @@ namespace NYBE.Controllers
         {
             var viewModel = new ManageBooksViewModel();
 
-            List<PendingBook> books = ctx.PendingBooks.ToList();
-            if(books != null)
+            List<PendingBook> pBooks = ctx.PendingBooks.ToList();
+            List<Book> allBooks = ctx.Books.Where(a => a.Status == 1).ToList();
+            List<Book> disabledBooks = ctx.Books.Where(a => a.Status == 0).ToList();
+            if (pBooks != null)
             {
-                viewModel.pendingBooks = books;
+                viewModel.pendingBooks = pBooks;
+            }
+            if (allBooks != null)
+            {
+                viewModel.allBooks = allBooks;
+            }
+            if (disabledBooks != null)
+            {
+                viewModel.disabledBooks = disabledBooks;
             }
 
             return View(viewModel);
@@ -177,6 +187,73 @@ namespace NYBE.Controllers
             var callbackUrl = Url.Action("Login", "Account", null, protocol: HttpContext.Request.Scheme);
             await _emailSender.SendEmailAsync(user.Email, "NYBE Book Denial",
                $"Your recent book request for \"{removeBook.Title}\" has been denied. =[  <a href='{callbackUrl}'>Sign in</a> and try a different book!");
+
+            return RedirectToAction("Manage");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Disable(int? id)
+        {
+            var viewModel = new PendingBookViewModel();
+            Book book = ctx.Books.Where(a => a.ID == id).FirstOrDefault();
+
+            // make sure we found the book
+            if (book != null)
+            {
+                viewModel.id = book.ID;
+                viewModel.title = book.Title;
+                viewModel.authorLName = book.AuthorLName;
+                viewModel.authorFName = book.AuthorFName;
+                viewModel.isbn = book.ISBN;
+                viewModel.edition = book.Edition;
+                viewModel.publisher = book.Publisher;
+                viewModel.description = book.Description;
+            }
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Disable(PendingBookViewModel viewModel)
+        {
+            Book book = ctx.Books.Where(a => a.ID == viewModel.id).FirstOrDefault();
+            book.Status = 0;
+            ctx.SaveChanges();
+
+            return RedirectToAction("Manage");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Enable(int? id)
+        {
+            var viewModel = new PendingBookViewModel();
+            Book book = ctx.Books.Where(a => a.ID == id).FirstOrDefault();
+
+            // make sure we found the book
+            if (book != null)
+            {
+                viewModel.id = book.ID;
+                viewModel.title = book.Title;
+                viewModel.authorLName = book.AuthorLName;
+                viewModel.authorFName = book.AuthorFName;
+                viewModel.isbn = book.ISBN;
+                viewModel.edition = book.Edition;
+                viewModel.publisher = book.Publisher;
+                viewModel.description = book.Description;
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Enable(PendingBookViewModel viewModel)
+        {
+            Book book = ctx.Books.Where(a => a.ID == viewModel.id).FirstOrDefault();
+            book.Status = 1;
+            ctx.SaveChanges();
 
             return RedirectToAction("Manage");
         }

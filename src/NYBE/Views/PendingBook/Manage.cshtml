@@ -8,7 +8,10 @@
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#pending">Pending Books</a></li>
     <li><a data-toggle="tab" href="#all">All Books</a></li>
+    @if (Model.disabledBooks.Any())
+    {
     <li><a data-toggle="tab" href="#disabled">Disabled Books</a></li>
+    }
 </ul>
 <div class="tab-content">
     <div id="pending" class="tab-pane fade in active">
@@ -51,9 +54,63 @@
         }
     </div>
     <div id="all" class="tab-pane fade">
-        <p>Gotta do dis still</p>
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>ISBN</th>
+                            <th>Edition</th>
+                            <th>Publisher</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Book book in Model.allBooks)
+                        {
+                            <tr>
+                                <td>@book.Title</td>
+                                <td>@book.AuthorFName @book.AuthorLName</td> <!--Assume users only have one role-->
+                                <td>@book.ISBN</td>
+                                <td>@book.Edition</td>
+                                <td>@book.Publisher</td>
+                                <td><a asp-controller="PendingBook" asp-action="Disable" asp-route-id="@book.ID" class="btn btn-success">Disable</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div id="disabled" class="tab-pane fade">
-        <p>Gotta do dis still</p>
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>ISBN</th>
+                            <th>Edition</th>
+                            <th>Publisher</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Book book in Model.disabledBooks)
+                        {
+                            <tr>
+                                <td>@book.Title</td>
+                                <td>@book.AuthorFName @book.AuthorLName</td> <!--Assume users only have one role-->
+                                <td>@book.ISBN</td>
+                                <td>@book.Edition</td>
+                                <td>@book.Publisher</td>
+                                <td><a asp-controller="PendingBook" asp-action="Enable" asp-route-id="@book.ID" class="btn btn-success">Enable</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
