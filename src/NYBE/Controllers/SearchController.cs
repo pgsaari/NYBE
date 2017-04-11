@@ -42,7 +42,7 @@ namespace NYBE.Controllers
             }
             
             
-            // commented out to be used for advanced search
+            // To be used for advanced search
             if (!String.IsNullOrEmpty(title))
             {
                 bookList = getBooksByTitle(title, bookList);
@@ -64,9 +64,7 @@ namespace NYBE.Controllers
 
 
             var bookSearchViewModel = new BookSearchViewModel();
-            //Switch Where() with courses for the school = User.school
             bookSearchViewModel.schools = _context.Schools.Where(a => a.Status == 1).ToList();
-            // bookSearchViewModel.courses = _context.Courses.Where(school => ).ToList();
             bookSearchViewModel.courses = _context.Courses.ToList();
             
             bookSearchViewModel.bookList = bookList;
@@ -74,7 +72,7 @@ namespace NYBE.Controllers
             return View(bookSearchViewModel);
         }
 
-        public List<Book> getBooksByGeneralString(string searchTerm)
+        private List<Book> getBooksByGeneralString(string searchTerm)
         {
             List<Book> books = _context.Books.Where(book => (book.AuthorFName.Contains(searchTerm) || book.AuthorLName.Contains(searchTerm) || book.Title.Contains(searchTerm) || book.ISBN.Equals(searchTerm)) && book.Status == 1).ToList();
             return books;

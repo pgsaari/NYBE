@@ -25,17 +25,22 @@
 <div class="container col-md-12">
     <br />
     <h4>Book Listings</h4>
+    
     @if (Model.listings.Any())
     {
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped" id="bookListingTable">
                 <thead>
                     <tr>
                         <th>Seller</th>
                         <th>School</th>
                         <th>Course</th>
-                        <th>Condition</th>
-                        <th>Price</th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["ConditionSortParm"]" asp-route-bookId="@Model.book.ID">Condition</a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-bookId="@Model.book.ID">Price</a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

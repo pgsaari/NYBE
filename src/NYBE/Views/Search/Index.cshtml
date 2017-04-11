@@ -11,28 +11,28 @@
 <h2>Find Books</h2>
 <form asp-controller="Search" asp-action="Index">
     <div id="generalSearch" class="form-group row">
-        <label class="col-lg-1" for="price">Search: </label>
+        <label class="col-lg-1" for="generalSearch">Search: </label>
         <input type="text" name="generalSearch" class="form-control"/>
     </div>
     <!-- Used for "advanced" search-->
     <div id="advancedSearchFields" style="display:none">
         <div class="form-group row">
-            <label class="col-lg-1" for="price"> Title: </label>
+            <label class="col-lg-1" for="title"> Title: </label>
             <input type="text" name="title" class="form-control" />
         </div>
         <div class="form-group row">
-            <label class="col-lg-1" for="price"> Author: </label>
+            <label class="col-lg-1" for="author"> Author: </label>
             <input type="text" name="author" class="form-control"/>
         </div>
         <div class="form-group row">
-            <label class="col-lg-1" for="price"> ISBN: </label>
+            <label class="col-lg-1" for="isbn"> ISBN: </label>
             <input type="text" name="isbn" class="form-control"/>
         </div>
     </div> <!-- end advanced search-->
     <div  class="form-group row">
-        <label class="col-lg-1" for="condition">School: </label>
+        <label class="col-lg-1" for="schoolName">School: </label>
         <select id ="schoolSelectBox" name="schoolName" class="form-control">
-            <option value="">All</option>
+            <option value="-1">All</option>
             @foreach (var school in Model.schools)
             {
                 <option value=@school.ID>@Html.DisplayFor(modelItem => school.Name)</option>
@@ -40,7 +40,7 @@
         </select>
     </div>
     <div class="form-group row">
-        <label class="col-lg-1" for="condition">Course: </label>
+        <label class="col-lg-1" for="courseName">Course: </label>
         <select id="courseSelectBox" name="courseName" class="form-control">
             <option class="-1" value="">All</option>
             @foreach (var course in Model.courses)
@@ -68,9 +68,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.bookList[0].AuthorFName)
                 </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.bookList[0].Description)
-                </th>*@
                 <th>
                     @Html.DisplayNameFor(model => model.bookList[0].Edition)
                 </th>
@@ -96,9 +93,6 @@
                     <th>
                         @Html.DisplayFor(modelItem => book.AuthorFName)
                     </th>
-                    @*<th>
-                        @Html.DisplayFor(modelItem => book.Description)
-                    </th>*@
                     <th>
                         @Html.DisplayFor(modelItem => book.Edition)
                     </th>
