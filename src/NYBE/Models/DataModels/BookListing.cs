@@ -13,13 +13,14 @@ namespace NYBE.Models
 
         }
 
-        public BookListing(int bookID, string userID, int courseID, string cond, double price)
+        public BookListing(int bookID, string userID, int courseID, string cond, double price, int type)
         {
             this.BookID = bookID;
             ApplicationUserID = userID;
             CourseID = courseID;
             Condition = cond;
             AskingPrice = price;
+            Type = type;
         }
 
         public int ID { get; set; }
@@ -27,6 +28,7 @@ namespace NYBE.Models
         public string ApplicationUserID { get; set; }
         public int CourseID { get; set; }
         public string Condition { get; set; }
+        public int Type { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public double AskingPrice { get; set; }

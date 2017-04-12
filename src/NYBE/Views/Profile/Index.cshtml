@@ -21,6 +21,7 @@
     <li class="active"><a data-toggle="tab" href="#listings">Listings</a></li>
     <li><a data-toggle="tab" href="#sold">Sold Books</a></li>
     <li><a data-toggle="tab" href="#bought">Bought Books</a></li>
+    <li><a data-toggle="tab" href="#wish">Wish List</a></li>
 </ul>
 <div class="tab-content">
     <div id="listings" class="tab-pane fade in active">
@@ -140,6 +141,41 @@
         {
             <p>No Transaction History!</p>
             <p>Contribute to the economy and buy some books!</p>
+        }
+    </div>
+    <div id="wish" class="tab-pane fade">
+        <h4>Books you want:</h4>
+        @if (Model.wishList.Any())
+            {
+            <div class="table-responsive">
+                <table class="table table-striped" id="bookListingTable">
+                    <thead>
+                        <tr>
+                            <th>Buyer</th>
+                            <th>School</th>
+                            <th>Course</th>
+                            <th>Condition </th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (BookListing x in Model.wishList)
+                        {
+                            <tr>
+                                <td> @x.User.FirstName @x.User.LastName </td>
+                                <td> @x.User.School.Name</td>
+                                <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
+                                <td> @x.Condition </td>
+                                <td> @string.Format("{0:c}", x.AskingPrice) </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <h5>Contribute to the economy and buy some books!</h5>
         }
     </div>
 </div>

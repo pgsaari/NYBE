@@ -17,6 +17,7 @@
         <p>ISBN: @Model.book.ISBN</p>
         <p>Publisher: @Model.book.Publisher</p>
         <p>@Model.book.Description</p>
+        <a asp-action="WishList" asp-route-bookId="@Model.book.ID">Add to Wish List</a>
     </div>
 </div>
 
@@ -24,44 +25,89 @@
 
 <div class="container col-md-12">
     <br />
-    <h4>Book Listings</h4>
-    
-    @if (Model.listings.Any())
-    {
-        <div class="table-responsive">
-            <table class="table table-striped" id="bookListingTable">
-                <thead>
-                    <tr>
-                        <th>Seller</th>
-                        <th>School</th>
-                        <th>Course</th>
-                        <th>
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["ConditionSortParm"]" asp-route-bookId="@Model.book.ID">Condition</a>
-                        </th>
-                        <th>
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-bookId="@Model.book.ID">Price</a>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (BookListing x in Model.listings)
-                {
-                        <tr>
-                            <td> @x.User.FirstName @x.User.LastName </td>
-                            <td> @x.User.School.Name</td>
-                            <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
-                            <td> @x.Condition </td>
-                            <td> @string.Format("{0:c}", x.AskingPrice) </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#selling">Selling</a></li>
+        <li><a data-toggle="tab" href="#buying">Buying</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="selling" class="tab-pane fade in active">
+            @if (Model.forSaleListings.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped" id="bookListingTable">
+                        <thead>
+                            <tr>
+                                <th>Seller</th>
+                                <th>School</th>
+                                <th>Course</th>
+                                <th>
+                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ConditionSortParm"]" asp-route-bookId="@Model.book.ID">Condition</a>
+                                </th>
+                                <th>
+                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-bookId="@Model.book.ID">Price</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (BookListing x in Model.forSaleListings)
+                            {
+                                <tr>
+                                    <td> @x.User.FirstName @x.User.LastName </td>
+                                    <td> @x.User.School.Name</td>
+                                    <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
+                                    <td> @x.Condition </td>
+                                    <td> @string.Format("{0:c}", x.AskingPrice) </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>Book not listed on the market!</p>
+
+            }
         </div>
-    }
-    else
-    {
-        <p>Book not listed on the market!</p>
 
-    }
+        <div id="buying" class="tab-pane fade in active">
+            @if (Model.toBuyListings.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped" id="bookListingTable">
+                        <thead>
+                            <tr>
+                                <th>Buyer</th>
+                                <th>School</th>
+                                <th>Course</th>
+                                <th>
+                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ConditionSortParm"]" asp-route-bookId="@Model.book.ID">Condition</a>
+                                </th>
+                                <th>
+                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-bookId="@Model.book.ID">Price</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (BookListing x in Model.toBuyListings)
+                            {
+                                <tr>
+                                    <td> @x.User.FirstName @x.User.LastName </td>
+                                    <td> @x.User.School.Name</td>
+                                    <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
+                                    <td> @x.Condition </td>
+                                    <td> @string.Format("{0:c}", x.AskingPrice) </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <h5>Book not listed on the market!</h5>
 
+            }
+        </div>
+    </div>
 </div>

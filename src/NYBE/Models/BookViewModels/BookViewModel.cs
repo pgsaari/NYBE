@@ -8,7 +8,7 @@ namespace NYBE.Models.BookViewModel
     public class BookViewModel
     {
         public Book book { get; set; }
-        public List<BookListing> listings { get; set; }
-
+        public List<BookListing> forSaleListings { get; set; }
+        public List<BookListing> toBuyListings { get; set; }
     }
 }

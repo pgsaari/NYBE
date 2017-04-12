@@ -156,11 +156,11 @@ namespace NYBE.Models
             {
                 var bookListings = new BookListing[]
                 {
-                    new BookListing(1, user.Id, 1, "Good", 45.99),
-                    new BookListing(3, user.Id, 2, "Fair", 10.00),
-                    new BookListing(2, user2.Id, 3, "Fair", 15.49),
-                    new BookListing(4, user.Id, 4, "Excellent", 14.00),
-                    new BookListing(4, user2.Id, 4, "Fair", 22.95)
+                    new BookListing(1, user.Id, 1, "Good", 45.99, 1),
+                    new BookListing(3, user.Id, 2, "Fair", 10.00, 0),
+                    new BookListing(2, user2.Id, 3, "Fair", 15.49, 0),
+                    new BookListing(4, user.Id, 4, "Excellent", 14.00, 1),
+                    new BookListing(4, user2.Id, 4, "Fair", 22.95, 0)
                 };
                 foreach (BookListing listing in bookListings)
                 {

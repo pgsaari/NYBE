@@ -123,6 +123,8 @@ namespace NYBE.Controllers
             view.boughtTransactions = ctx.TransactionLogs.Include("Seller").Include("Book").
                 Where(a => user.Id == a.BuyerID).
                 OrderByDescending(a => a.TransDate).ToList();
+            
+            view.wishList = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => user.Id==a.ApplicationUserID && a.Type == 1).ToList();
 
             return view;
         }

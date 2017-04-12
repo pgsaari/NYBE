@@ -35,26 +35,37 @@ namespace NYBE.Controllers
                 return NotFound();
             }
             viewModel.book = book;
-            var listings = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => a.BookID == bookId);
+            //type == 0(selling)
+            var forSaleListings = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => a.BookID == bookId && a.Type == 0);
             
 
             switch(sortOrder)
             {
                 case "cond_desc":
-                    viewModel.listings = orderByCondition(listings, true);
+                    viewModel.forSaleListings = orderByCondition(forSaleListings, true);
                     break;
                 case "Condition":
-                    viewModel.listings = orderByCondition(listings, false);
+                    viewModel.forSaleListings = orderByCondition(forSaleListings, false);
                     break;
                 case "price_desc":
-                    viewModel.listings = listings.OrderByDescending(b => b.AskingPrice).ToList();
+                    viewModel.forSaleListings = forSaleListings.OrderByDescending(b => b.AskingPrice).ToList();
                     break;
                 default:
-                    viewModel.listings = listings.OrderBy(b => b.AskingPrice).ToList();
+                    viewModel.forSaleListings = forSaleListings.OrderBy(b => b.AskingPrice).ToList();
                     break;
             }
-            
+
+            //type == 1(buying)
+            var toBuyListings = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => a.BookID == bookId && a.Type == 1);
+            viewModel.toBuyListings = toBuyListings.ToList();
+
             return View(viewModel);
+        }
+
+        public ActionResult WishList(string bookId)
+        {
+            //TODO: add to wishlist
+            return RedirectToAction("Index", "Profile");
         }
 
         private List<BookListing> orderByCondition(IQueryable<BookListing> listings, bool isDescending)
