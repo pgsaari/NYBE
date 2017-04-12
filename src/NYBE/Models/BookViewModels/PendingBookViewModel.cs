@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using NYBE.Models.DataModels;
 
 namespace NYBE.Models.BookViewModels
 {
@@ -25,5 +26,6 @@ namespace NYBE.Models.BookViewModels
         public string description { get; set; }
         public string edition { get; set; }
         public string publisher { get; set; }
+        public GoogleBook googleBook { get; set; }
     }
 }

@@ -1,0 +1,133 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model  NYBE.Models.BookViewModels.PendingBookViewModel
+@{
+    var gb = Model.googleBook;
+}
+
+<h2>
+    Pending Book - @Model.title
+    <a class="btn btn-danger pull-right">Deny Book</a>
+</h2>
+<p>Approve this book with either the Manually entered data or the Google Books data</p>
+<hr />
+
+<h4>Manual Data</h4>
+<form asp-controller="PendingBook" asp-action="Approve">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group row">
+        <label class="col-md-2" for="price">Title</label>
+        <div class="col-md-3">
+            <input asp-for="title" value="@Model.title" class="form-control" id="title" data-val-required="Title is required." />
+        </div>
+        <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="title"></span>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2" for="price">Author Last Name</label>
+        <div class="col-md-3">
+            <input asp-for="authorLName" value="@Model.authorLName" class="form-control" id="authorLName" data-val-required="Author's last name is required." />
+            <span class="text-danger field-validation-valid" data-valmsg-for="authorLName" data-valmsg-replace="true"></span>
+        </div>
+        <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="authorLName"></span>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2" for="price">Author First Name</label>
+        <div class="col-md-3">
+            <input asp-for="authorFName" value="@Model.authorFName" class="form-control" id="authorFName" data-val-required="Author's first name is required." />
+            <span class="text-danger field-validation-valid" data-valmsg-for="authorFName" data-valmsg-replace="true"></span>
+        </div>
+        <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="authorFName"></span>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2" for="price">ISBN</label>
+        <div class="col-md-3">
+            <input asp-for="isbn" value="@Model.isbn" class="form-control" id="isbn" data-val-required="ISBN is required." />
+            <span class="text-danger field-validation-valid" data-valmsg-for="isbn" data-valmsg-replace="true"></span>
+        </div>
+        <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="isbn"></span>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2" for="price">Edition</label>
+        <div class="col-md-3">
+            <input asp-for="edition" value="@Model.edition" class="form-control" id="edition" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2" for="price">Publisher</label>
+        <div class="col-md-3">
+            <input asp-for="publisher" value="@Model.publisher" class="form-control" id="publisher" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2" for="price">Description</label>
+        <div class="col-md-3">
+            <input asp-for="description" value="@Model.description" class="form-control" id="description" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Use Manual Data</button>
+
+</form>
+
+<br />
+
+@if (gb != null)
+{
+    <h4>Google Books API Data</h4>
+    <form asp-controller="PendingBook" asp-action="Approve">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <label class="col-md-2" for="price">Title</label>
+            <div class="col-md-3">
+                <input asp-for="title" value="@gb.title" class="form-control" id="title" data-val-required="Title is required." />
+            </div>
+            <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="title"></span>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="price">Author Last Name</label>
+            <div class="col-md-3">
+                <input asp-for="authorLName" value="@gb.authorLName" class="form-control" id="authorLName" data-val-required="Author's last name is required." />
+                <span class="text-danger field-validation-valid" data-valmsg-for="authorLName" data-valmsg-replace="true"></span>
+            </div>
+            <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="authorLName"></span>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="price">Author First Name</label>
+            <div class="col-md-3">
+                <input asp-for="authorFName" value="@gb.authorFName" class="form-control" id="authorFName" data-val-required="Author's first name is required." />
+                <span class="text-danger field-validation-valid" data-valmsg-for="authorFName" data-valmsg-replace="true"></span>
+            </div>
+            <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="authorFName"></span>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="price">ISBN</label>
+            <div class="col-md-3">
+                <input asp-for="isbn" value="@gb.isbn" class="form-control" id="isbn" data-val-required="ISBN is required." />
+                <span class="text-danger field-validation-valid" data-valmsg-for="isbn" data-valmsg-replace="true"></span>
+            </div>
+            <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="isbn"></span>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="price">Edition</label>
+            <div class="col-md-3">
+                <input asp-for="edition" value="" class="form-control" id="edition" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="price">Publisher</label>
+            <div class="col-md-3">
+                <input asp-for="publisher" value="" class="form-control" id="publisher" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2" for="price">Description</label>
+            <div class="col-md-3">
+                <input asp-for="description" value="@gb.description" class="form-control" id="description" />
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Use API Data</button>
+
+    </form>
+}

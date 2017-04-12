@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Formatting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NYBE.Data;
 using NYBE.Models;
+using NYBE.Models.DataModels;
 using Microsoft.AspNetCore.Identity;
-using NYBE.Models.BookViewModel;
-using Microsoft.EntityFrameworkCore;
 using NYBE.Models.BookViewModels;
 using Microsoft.AspNetCore.Authorization;
 using NYBE.Models.AdminViewModels;
 using NYBE.Services;
+using Newtonsoft.Json.Linq;
 
 namespace NYBE.Controllers
 {
@@ -53,7 +57,7 @@ namespace NYBE.Controllers
                 pBook.Edition = viewModel.edition;
                 pBook.Publisher = viewModel.publisher;
                 pBook.Description = viewModel.description;
-                pBook.UserID = user.Id;
+                pBook.UserID = user.Id; 
 
                 ctx.PendingBooks.Add(pBook);
                 ctx.SaveChanges();
@@ -92,16 +96,34 @@ namespace NYBE.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public IActionResult Approve(int? id)
+        [Authorize(Roles="Admin")]
+        public async Task<IActionResult> ViewBook(int? id)
         {
             if (id == null) return NotFound();
 
             var viewModel = new PendingBookViewModel();
             PendingBook book = ctx.PendingBooks.Where(a => a.ID == id).FirstOrDefault();
 
+            // Add in search with google books api for first/best result
+            HttpClient client = new HttpClient();
+            string api_url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + book.ISBN + "&key=AIzaSyAFr1FsZceoWiIHKFdSnMPeixy_ePvMG6U";
+            client.BaseAddress = new Uri(api_url);
+
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync(api_url);
+            if(response.IsSuccessStatusCode)
+            {
+                var formatters = new List<MediaTypeFormatter>() { new JsonMediaTypeFormatter() };
+                GoogleBooksAPIResponse responseObject = await response.Content.ReadAsAsync<GoogleBooksAPIResponse>(formatters);
+                if(responseObject.totalItems > 0)
+                {
+                    viewModel.googleBook = responseObject.getBooks()[0];
+                }
+            }
+
             // make sure we found the book
-            if(book != null)
+            if (book != null)
             {
                 viewModel.id = book.ID;
                 viewModel.title = book.Title;
@@ -262,6 +284,5 @@ namespace NYBE.Controllers
         {
             return usrCtx.GetUserAsync(HttpContext.User);
         }
-
     }
 }

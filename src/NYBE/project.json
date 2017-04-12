@@ -45,7 +45,9 @@
       "type": "build"
     },
     "Microsoft.jQuery.Unobtrusive.Ajax": "3.2.3",
-    "Sendgrid": "9.1.0"
+    "Sendgrid": "9.1.0",
+    "Newtonsoft.Json": "10.0.2",
+    "Microsoft.AspNet.WebApi.Client": "5.2.3"
   },
 
   "tools": {
