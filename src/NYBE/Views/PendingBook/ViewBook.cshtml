@@ -6,10 +6,15 @@
     var gb = Model.googleBook;
 }
 
-<h2>
-    Pending Book - @Model.title
-    <a class="btn btn-danger pull-right">Deny Book</a>
-</h2>
+<div>
+    <h2>Pending Book - @Model.title</h2>
+    <form asp-controller="PendingBook" asp-action="Deny" class="pull-right">
+        <input asp-for="id" id="id" type="hidden" />
+        <div class="form-actions no-color">
+            <input type="submit" value="Deny" class="btn btn-danger" />
+        </div>
+    </form>
+</div>
 <p>Approve this book with either the Manually entered data or the Google Books data</p>
 <hr />
 
@@ -65,6 +70,8 @@
             <input asp-for="description" value="@Model.description" class="form-control" id="description" />
         </div>
     </div>
+
+    <input asp-for="id" value="@Model.id" type="hidden" id="id" />
 
     <button type="submit" class="btn btn-success">Use Manual Data</button>
 
@@ -126,6 +133,8 @@
                 <input asp-for="description" value="@gb.description" class="form-control" id="description" />
             </div>
         </div>
+
+        <input asp-for="id" value="@Model.id" type="hidden" id="id" />
 
         <button type="submit" class="btn btn-success">Use API Data</button>
 

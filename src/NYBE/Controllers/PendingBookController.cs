@@ -213,28 +213,6 @@ namespace NYBE.Controllers
             return RedirectToAction("Manage");
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public IActionResult Disable(int? id)
-        {
-            var viewModel = new PendingBookViewModel();
-            Book book = ctx.Books.Where(a => a.ID == id).FirstOrDefault();
-
-            // make sure we found the book
-            if (book != null)
-            {
-                viewModel.id = book.ID;
-                viewModel.title = book.Title;
-                viewModel.authorLName = book.AuthorLName;
-                viewModel.authorFName = book.AuthorFName;
-                viewModel.isbn = book.ISBN;
-                viewModel.edition = book.Edition;
-                viewModel.publisher = book.Publisher;
-                viewModel.description = book.Description;
-            }
-            return View(viewModel);
-        }
-
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public IActionResult Disable(PendingBookViewModel viewModel)
