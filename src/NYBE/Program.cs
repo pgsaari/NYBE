@@ -13,6 +13,8 @@ namespace NYBE
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
+                .CaptureStartupErrors(true)
+                .UseSetting("detailedErrors", "true")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
