@@ -27,5 +27,6 @@ namespace NYBE.Models.BookViewModels
         public string edition { get; set; }
         public string publisher { get; set; }
         public GoogleBook googleBook { get; set; }
+        public string image { get; set; }
     }
 }

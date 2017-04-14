@@ -12,6 +12,7 @@ namespace NYBE.Models.DataModels
         public string authorLName { get; set; }
         public string isbn { get; set; }
         public string description { get; set; }
+        public string image { get; set; }
 
     }
 }

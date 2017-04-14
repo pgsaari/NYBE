@@ -8,9 +8,10 @@ using NYBE.Data;
 namespace NYBE.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170414012706_BookCover")]
+    partial class BookCover
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -317,8 +318,6 @@ namespace NYBE.Data.Migrations
                     b.Property<string>("Edition");
 
                     b.Property<string>("ISBN");
-
-                    b.Property<string>("Image");
 
                     b.Property<string>("Publisher");
 

@@ -7,9 +7,16 @@
 
 <br />
 
-<div class="col-md-12">
+<div class="container col-md-12">
     <div class="col-md-3">
+        @if (Model.book.Image != null)
+        {
+        <img src="@Model.book.Image" class="img-responsive" />
+        }
+        else
+        {
         <i class="glyphicon glyphicon-book" style="font-size:200px; color:dimgrey;"></i>
+        }
     </div>
     <div class="col-md-8">
         <p>Author: @Model.book.AuthorFName @Model.book.AuthorLName</p>

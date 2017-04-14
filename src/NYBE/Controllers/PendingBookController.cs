@@ -57,7 +57,8 @@ namespace NYBE.Controllers
                 pBook.Edition = viewModel.edition;
                 pBook.Publisher = viewModel.publisher;
                 pBook.Description = viewModel.description;
-                pBook.UserID = user.Id; 
+                pBook.UserID = user.Id;
+                pBook.Image = viewModel.image;
 
                 ctx.PendingBooks.Add(pBook);
                 ctx.SaveChanges();
@@ -133,6 +134,7 @@ namespace NYBE.Controllers
                 viewModel.edition = book.Edition;
                 viewModel.publisher = book.Publisher;
                 viewModel.description = book.Description;
+                viewModel.image = book.Image;
             }
             return View(viewModel);
         }
@@ -154,6 +156,7 @@ namespace NYBE.Controllers
             newBook.Edition = viewModel.edition;
             newBook.Publisher = viewModel.publisher;
             newBook.Description = viewModel.description;
+            newBook.Image = viewModel.image;
             newBook.Status = 1;
             ctx.Books.Add(newBook);
 

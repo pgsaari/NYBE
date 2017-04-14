@@ -2,6 +2,21 @@
 @{
     ViewData["Title"] = "Request Book";
 }
+
+<!-- Java script code, use jquery library. -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+
+<script type="text/javascript">
+    function showimagepreview(input)
+    {
+        console.log(input.value);
+      if (input.value)
+      {
+            $('#imgDisplayarea').attr('src', input.value);
+      }
+    }
+</script>
+
 <h2>Request a Book</h2>
 <p>Sorry we don't have the book you're looking for. You can request to have it added here!</p>
 <br/>
@@ -9,14 +24,14 @@
 <form asp-controller="PendingBook" asp-action="Index">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group row">
-        <label class="col-md-2" for="price">Title</label>
+        <label class="col-md-2" for="title">Title</label>
         <div class="col-md-3">
             <input asp-for="title" class="form-control" id="title" data-val-required="Title is required."/>   
         </div>
         <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="title"></span>
     </div>
     <div class="form-group row">
-        <label class="col-md-2" for="price">Author Last Name</label>
+        <label class="col-md-2" for="authorFName">Author Last Name</label>
         <div class="col-md-3">
             <input asp-for="authorLName" class="form-control" id="authorLName" data-val-required="Author's last name is required."/>
             <span class="text-danger field-validation-valid" data-valmsg-for="authorLName" data-valmsg-replace="true"></span>
@@ -24,7 +39,7 @@
         <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="authorLName"></span>
     </div>
     <div class="form-group row">
-        <label class="col-md-2" for="price">Author First Name</label>
+        <label class="col-md-2" for="authorFName">Author First Name</label>
         <div class="col-md-3">
             <input asp-for="authorFName" class="form-control" id="authorFName" data-val-required="Author's first name is required."/>
             <span class="text-danger field-validation-valid" data-valmsg-for="authorFName" data-valmsg-replace="true"></span>
@@ -32,7 +47,7 @@
         <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="authorFName"></span>
     </div>
     <div class="form-group row">
-        <label class="col-md-2" for="price">ISBN</label>
+        <label class="col-md-2" for="isbn">ISBN</label>
         <div class="col-md-3">
             <input asp-for="isbn" class="form-control" id="isbn" data-val-required="ISBN is required."/>
             <span class="text-danger field-validation-valid" data-valmsg-for="isbn" data-valmsg-replace="true"></span>
@@ -40,24 +55,34 @@
         <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="isbn"></span>
     </div>
     <div class="form-group row">
-        <label class="col-md-2" for="price">Edition</label>
+        <label class="col-md-2" for="edition">Edition</label>
         <div class="col-md-3">
             <input asp-for="edition" class="form-control" id="edition" />
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-md-2" for="price">Publisher</label>
+        <label class="col-md-2" for="publisher">Publisher</label>
         <div class="col-md-3">
             <input asp-for="publisher" class="form-control" id="publisher" />
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-md-2" for="price">Description</label>
+        <label class="col-md-2" for="description">Description</label>
         <div class="col-md-3">
-            <input asp-for="description" class="form-control" id="description" />
+            <textarea asp-for="description" rows="5" class="form-control" id="description" ></textarea>
         </div>
     </div>
-
+    <div class="form-group row">
+        <label class="col-md-2" for="image">Image URL</label>
+        <div class="col-md-3">
+            <input asp-for="image" class="form-control" id="image" onchange="showimagepreview(this)"/>
+        </div>
+    </div>
+    <div class="row">
+        <label class="col-md-2" for="price">Cover</label>
+        <img class="col-md-3" id="imgDisplayarea" />
+    </div>
+    <br/>
     <a asp-controller="Home" asp-action="Index" class="btn btn-default">Cancel</a>
     <button type="submit" class="btn btn-success">Request</button>
 

@@ -16,5 +16,6 @@ namespace NYBE.Models
         public string Edition { get; set; }
         public string Publisher { get; set; }
         public string UserID { get; set; }
+        public string Image { get; set; }
     }
 }

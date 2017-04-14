@@ -29,6 +29,7 @@ namespace NYBE.Models.DataModels
                         book.isbn = ii.identifier;
                     }
                 }
+                book.image = info.imageLinks.thumbnail;
                 string author = info.authors[0];
                 book.authorFName = author.Substring(0, author.IndexOf(' '));
                 book.authorLName = author.Substring(author.IndexOf(' ') + 1);
@@ -87,8 +88,6 @@ namespace NYBE.Models.DataModels
         [JsonIgnore]
         public Object contentVersion { get; set; }
         [JsonIgnore]
-        public Object imageLinks { get; set; }
-        [JsonIgnore]
         public Object language { get; set; }
         [JsonIgnore]
         public Object previewLink { get; set; }
@@ -99,6 +98,7 @@ namespace NYBE.Models.DataModels
         public string title { get; set; }
         public List<String> authors { get; set; }
         public string description { get; set; }
+        public GoogleBooksAPIImageLink imageLinks { get; set; }
         public List<GoogleBooksAPIIndustryIdentifier> industryIdentifiers { get; set; }
     }
 
@@ -106,5 +106,15 @@ namespace NYBE.Models.DataModels
     {
         public string type { get; set; }
         public string identifier { get; set; }
+    }
+
+    public class GoogleBooksAPIImageLink
+    {
+        public string smallThumbnail { get; set; }
+        public string thumbnail { get; set; }
+        public string small { get; set; }
+        public string medium { get; set; }
+        public string large { get; set; }
+        public string extraLarge { get; set; }
     }
 }

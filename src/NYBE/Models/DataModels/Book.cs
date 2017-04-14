@@ -16,6 +16,7 @@ namespace NYBE.Models
         public string Description { get; set; }
         public string Edition { get; set; }
         public string Publisher { get; set; }
+        public string Image { get; set; }
         [Required]
         public int Status { get; set; } // 0 for inactive; 1 for active
 
