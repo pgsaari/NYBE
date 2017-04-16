@@ -12,5 +12,7 @@ namespace NYBE.Models.DataModels
         public double price { get; set; }
         public Book book { get; set; }
         public Course course { get; set; }
+        public int courseID { get; set; }
+        public List<Course> courses {get; set;}
     }
 }

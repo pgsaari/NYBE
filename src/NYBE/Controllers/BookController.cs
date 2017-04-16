@@ -8,11 +8,14 @@ using NYBE.Models;
 using Microsoft.AspNetCore.Identity;
 using NYBE.Models.BookViewModel;
 using Microsoft.EntityFrameworkCore;
+using NYBE.Models.DataModels;
 
 namespace NYBE.Controllers
 {
     public class BookController : Controller
     {
+        public const int SELL = 0;
+        public const int WISHLIST = 1;
         private readonly ApplicationDbContext ctx;
         private readonly UserManager<ApplicationUser> usrCtx;
         public BookController(UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext)
@@ -62,7 +65,38 @@ namespace NYBE.Controllers
             return View(viewModel);
         }
 
-        public ActionResult WishList(string bookId)
+        [HttpGet]
+        public ActionResult Listing(int bookId)
+        {
+            EditListingViewModel viewModel = new EditListingViewModel();
+            viewModel.book = ctx.Books.Where(a => a.ID == bookId).FirstOrDefault();
+            viewModel.courses = ctx.Courses.ToList();
+
+            return View("Listing", viewModel);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Listing(EditListingViewModel viewModel)
+        {
+            ApplicationUser user = await usrCtx.GetUserAsync(HttpContext.User);
+
+            BookListing newListing = new BookListing();
+            newListing.ApplicationUserID = user.Id;
+            newListing.AskingPrice = viewModel.price;
+            newListing.Condition = viewModel.condition;
+            newListing.BookID = viewModel.book.ID;
+            // TODO: course id is coming back null / 0 WHY!?!@?!?!?!?!?@$R?arzdfgihdsflkh
+            //newListing.CourseID = viewModel.courseID;
+            newListing.CourseID = 1; // just set to 1 because i'm losing my mind over this
+            newListing.Type = SELL;
+            ctx.BookListings.Add(newListing);
+            ctx.SaveChanges();
+
+            return RedirectToAction("Index", "Profile");
+        }
+
+        [HttpGet]
+        public ActionResult WishList(int bookId)
         {
             //TODO: add to wishlist
             return RedirectToAction("Index", "Profile");

@@ -8,9 +8,10 @@ using NYBE.Data;
 namespace NYBE.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170416182448_somethingIsBrokenButIDontKnowWhat")]
+    partial class somethingIsBrokenButIDontKnowWhat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -270,15 +271,41 @@ namespace NYBE.Data.Migrations
 
                     b.Property<string>("Dept");
 
+                    b.Property<int?>("EditListingViewModelID");
+
                     b.Property<string>("Name");
 
                     b.Property<int>("SchoolID");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("EditListingViewModelID");
+
                     b.HasIndex("SchoolID");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("NYBE.Models.DataModels.EditListingViewModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("bookID");
+
+                    b.Property<string>("condition");
+
+                    b.Property<int?>("courseID");
+
+                    b.Property<double>("price");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("bookID");
+
+                    b.HasIndex("courseID");
+
+                    b.ToTable("EditListingViewModel");
                 });
 
             modelBuilder.Entity("NYBE.Models.PendingBook", b =>
@@ -454,10 +481,25 @@ namespace NYBE.Data.Migrations
 
             modelBuilder.Entity("NYBE.Models.Course", b =>
                 {
+                    b.HasOne("NYBE.Models.DataModels.EditListingViewModel")
+                        .WithMany("courses")
+                        .HasForeignKey("EditListingViewModelID");
+
                     b.HasOne("NYBE.Models.School", "School")
                         .WithMany()
                         .HasForeignKey("SchoolID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NYBE.Models.DataModels.EditListingViewModel", b =>
+                {
+                    b.HasOne("NYBE.Models.Book", "book")
+                        .WithMany()
+                        .HasForeignKey("bookID");
+
+                    b.HasOne("NYBE.Models.Course", "course")
+                        .WithMany()
+                        .HasForeignKey("courseID");
                 });
 
             modelBuilder.Entity("NYBE.Models.TransactionLog", b =>

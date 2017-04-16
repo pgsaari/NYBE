@@ -22,12 +22,16 @@
         <p>Author: @Model.book.AuthorFName @Model.book.AuthorLName</p>
         <p>@Model.book.Edition Edition</p>
         <p>ISBN: @Model.book.ISBN</p>
+        <p>Description: @Model.book.Description</p>
         <p>Publisher: @Model.book.Publisher</p>
-        <p>@Model.book.Description</p>
-        <a asp-action="WishList" asp-route-bookId="@Model.book.ID">Add to Wish List</a>
     </div>
 </div>
 
+<div class="row col-md-12">
+    <br />
+    <a asp-action="Listing" asp-route-bookId="@Model.book.ID" class="btn btn-default">Sell Book</a>
+    <a asp-action="WishList" asp-route-bookId="@Model.book.ID" class="btn btn-default">Add to Wish List</a>
+</div>
 
 
 <div class="container col-md-12">

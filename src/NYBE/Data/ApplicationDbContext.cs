@@ -37,6 +37,6 @@ namespace NYBE.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-        public DbSet<EditListingViewModel> EditListingViewModel { get; set; }
+        //public DbSet<EditListingViewModel> EditListingViewModel { get; set; }
     }
 }
