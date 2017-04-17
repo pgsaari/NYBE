@@ -41,6 +41,27 @@
             <a asp-action="ChangePhoneNumber" class="col-sm-1 btn btn-success">Edit</a>
         </div>
         <div class="form-group row">
+            <h4 class="col-sm-1 col-sm-offset-2">Preferred Contact:</h4>
+            @switch (Model.PreferredContact)
+            {
+                case 0:
+                    <label class="col-sm-6 text-center">Email</label>
+                    break;
+                case 1:
+                    <label class="col-sm-6 text-center">Call</label>
+                    break;
+                case 2:
+                    <label class="col-sm-6 text-center">Text</label>
+                    break;
+                default:
+                    <label class="col-sm-6 text-center">Other?</label>
+                    break;
+
+            }
+            <a asp-action="ChangePreferredContact" class="col-sm-1 btn btn-success">Edit</a>
+        </div>
+
+        <div class="form-group row">
             <h4 class="col-sm-1 col-sm-offset-2">Password:</h4>
             <label class="col-sm-6 text-center">@Model.Password</label>
             <a asp-action="ChangePassword" class="col-sm-1 btn btn-success">Edit</a>
