@@ -10,16 +10,20 @@
     <p><b>Description:</b> @Model.book.Description</p>
 
     <div class="form-group row">
-        <label class="col-lg-2" for="course">Course</label>
-        <div class="col-lg-10">
-            <select asp-for="courseID" class="form-control" name="course">
+        <label class="col-lg-2" for="courseID">Course</label>
+        <div class="col-lg-4">
+            <select asp-for="courseID" id="courseID" class="form-control" name="courseID">
+                <option value="-1">Select a Course</option>
                 @foreach (Course course in Model.courses)
                 {
                     <option value="@course.ID">@course.Dept - @course.CourseNum @course.Name</option>
                 }
             </select>
         </div>
+        <span class="text-danger field-validation-valid col-lg-4 text-left" asp-validation-for="courseID"></span>
     </div>
+    
+
 
     <div class="form-group row">
         <label class="col-lg-2" for="condition">Condition</label>

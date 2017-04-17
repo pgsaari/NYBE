@@ -78,21 +78,28 @@ namespace NYBE.Controllers
         [HttpPost]
         public async Task<ActionResult> Listing(EditListingViewModel viewModel)
         {
-            ApplicationUser user = await usrCtx.GetUserAsync(HttpContext.User);
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = await usrCtx.GetUserAsync(HttpContext.User);
 
-            BookListing newListing = new BookListing();
-            newListing.ApplicationUserID = user.Id;
-            newListing.AskingPrice = viewModel.price;
-            newListing.Condition = viewModel.condition;
-            newListing.BookID = viewModel.book.ID;
-            // TODO: course id is coming back null / 0 WHY!?!@?!?!?!?!?@$R?arzdfgihdsflkh
-            //newListing.CourseID = viewModel.courseID;
-            newListing.CourseID = 1; // just set to 1 because i'm losing my mind over this
-            newListing.Type = SELL;
-            ctx.BookListings.Add(newListing);
-            ctx.SaveChanges();
+                BookListing newListing = new BookListing();
+                newListing.ApplicationUserID = user.Id;
+                newListing.AskingPrice = viewModel.price;
+                newListing.Condition = viewModel.condition;
+                newListing.BookID = viewModel.book.ID;
+                newListing.CourseID = viewModel.courseID;
+                newListing.Type = SELL;
+                ctx.BookListings.Add(newListing);
+                ctx.SaveChanges();
 
-            return RedirectToAction("Index", "Profile");
+                return RedirectToAction("Index", "Profile");
+            }
+            else
+            {
+                viewModel.book = ctx.Books.Where(a => a.ID == viewModel.book.ID).FirstOrDefault();
+                viewModel.courses = ctx.Courses.ToList();
+                return View(viewModel);
+            }
         }
 
         [HttpGet]
