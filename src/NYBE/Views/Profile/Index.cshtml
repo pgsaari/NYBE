@@ -32,7 +32,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
+
                             <th>Book</th>
                             <th>Course</th>
                             <th>Condition</th>
@@ -43,7 +43,6 @@
                         @foreach (BookListing x in Model.listings)
                 {
                             <tr>
-                                <td> @x.ID</td>
                                 <td> @x.Book.Title </td>
                                 <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
                                 <td> @x.Condition </td>

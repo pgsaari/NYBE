@@ -105,8 +105,37 @@ namespace NYBE.Controllers
         [HttpGet]
         public ActionResult WishList(int bookId)
         {
-            //TODO: add to wishlist
-            return RedirectToAction("Index", "Profile");
+            EditListingViewModel viewModel = new EditListingViewModel();
+            viewModel.book = ctx.Books.Where(a => a.ID == bookId).FirstOrDefault();
+            viewModel.courses = ctx.Courses.ToList();
+
+            return View("WishList", viewModel);
+        }
+
+        public async Task<ActionResult> WishList(EditListingViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = await usrCtx.GetUserAsync(HttpContext.User);
+
+                BookListing newListing = new BookListing();
+                newListing.ApplicationUserID = user.Id;
+                newListing.AskingPrice = viewModel.price;
+                newListing.Condition = viewModel.condition;
+                newListing.BookID = viewModel.book.ID;
+                newListing.CourseID = viewModel.courseID;
+                newListing.Type = WISHLIST;
+                ctx.BookListings.Add(newListing);
+                ctx.SaveChanges();
+
+                return RedirectToAction("Index", "Profile");
+            }
+            else
+            {
+                viewModel.book = ctx.Books.Where(a => a.ID == viewModel.book.ID).FirstOrDefault();
+                viewModel.courses = ctx.Courses.ToList();
+                return View(viewModel);
+            }
         }
 
         private List<BookListing> orderByCondition(IQueryable<BookListing> listings, bool isDescending)
