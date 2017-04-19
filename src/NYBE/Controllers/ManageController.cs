@@ -65,7 +65,8 @@ namespace NYBE.Controllers
                 Email = user.Email,
                 School = _context.Schools.Where(a => a.ID == user.SchoolID).FirstOrDefault(),
                 PhoneNumber = user.PhoneNumber,
-                Password = "•••••••••"
+                Password = "•••••••••",
+                PreferredContact = user.PreferredContact
             };
             return View(model);
         }
@@ -141,6 +142,29 @@ namespace NYBE.Controllers
                 }
             }
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+        }
+
+        [HttpGet]
+        public IActionResult ChangePreferredContact()
+        {
+            return View("ChangePreferredContact");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePreferredContact(int contactPref)
+        {
+            var user = await GetCurrentUserAsync();
+            user.PreferredContact = contactPref;
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                await _context.SaveChangesAsync();
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangeSchoolSuccess });
+            }
+
+            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+
         }
 
         //
@@ -277,6 +301,7 @@ namespace NYBE.Controllers
             ChangeSchoolSuccess,
             ChangePhoneSuccess,
             ChangePasswordSuccess,
+            ChangePreferredContactSuccess,
             Error
         }
 
