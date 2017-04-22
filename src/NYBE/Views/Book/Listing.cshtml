@@ -2,6 +2,16 @@
 @{
     ViewData["Title"] = "Add Listing";
 }
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#newCourseChbx').change(function () {
+            $('#courseForm').toggleClass('hidden');
+        });
+    });
+</script>
+
+
 <h2>Add Listing</h2>
 <form asp-controller="Book" asp-action="Listing">
     
@@ -19,12 +29,33 @@
                     <option value="@course.ID">@course.Dept - @course.CourseNum @course.Name</option>
                 }
             </select>
+            <input type="checkbox" asp-for="newCourse" id="newCourseChbx" />
+            <label for="newCourse">Add new Course</label>
         </div>
         <span class="text-danger field-validation-valid col-lg-4 text-left" asp-validation-for="courseID"></span>
     </div>
     
-
-
+    <div id="courseForm" class="hidden">
+        <div class="form-group row">
+            <label class="col-lg-2" for="courseDept">Department</label>
+            <div class="col-lg-10">
+                <input asp-for="courseDept" class="form-control" id="courseDept" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-2" for="courseNum">Course Number</label>
+            <div class="col-lg-10">
+                <input asp-for="courseNum" class="form-control" type="number" id="courseNum" step="1" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-lg-2" for="courseName">Course Name</label>
+            <div class="col-lg-10">
+                <input asp-for="courseName" class="form-control" id="courseName" />
+            </div>
+        </div>
+    </div>
+    
     <div class="form-group row">
         <label class="col-lg-2" for="condition">Condition</label>
         <div class="col-lg-10">

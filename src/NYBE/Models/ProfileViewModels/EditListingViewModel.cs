@@ -16,8 +16,13 @@ namespace NYBE.Models.DataModels
         public Book book { get; set; }
         
         public Course course { get; set; }
-        [Range(1,int.MaxValue, ErrorMessage = "Error in choosing Course")]
+        //[Range(1,int.MaxValue, ErrorMessage = "Error in choosing Course")]
         public int courseID { get; set; }
         public List<Course> courses {get; set;}
+
+        public string courseDept { get; set; }
+        public string courseNum { get; set; }
+        public string courseName { get; set; }
+        public bool newCourse { get; set; }
     }
 }

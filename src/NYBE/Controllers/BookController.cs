@@ -87,8 +87,23 @@ namespace NYBE.Controllers
                 newListing.AskingPrice = viewModel.price;
                 newListing.Condition = viewModel.condition;
                 newListing.BookID = viewModel.book.ID;
-                newListing.CourseID = viewModel.courseID;
                 newListing.Type = SELL;
+                if (!viewModel.newCourse)// if they picked a course from the dropdown
+                {
+                    newListing.CourseID = viewModel.courseID;
+                }
+                else // if they created a new course
+                {
+                    Course newCourse = new Course();
+                    newCourse.Dept = viewModel.courseDept;
+                    newCourse.CourseNum = Int16.Parse(viewModel.courseNum);
+                    newCourse.Name = viewModel.courseName;
+                    newCourse.SchoolID = user.SchoolID;
+                    //newCourse.BookToCourses.Add();
+                    ctx.Courses.Add(newCourse);
+                    newListing.Course = newCourse;
+                }
+                
                 ctx.BookListings.Add(newListing);
                 ctx.SaveChanges();
 
@@ -123,8 +138,22 @@ namespace NYBE.Controllers
                 newListing.AskingPrice = viewModel.price;
                 newListing.Condition = viewModel.condition;
                 newListing.BookID = viewModel.book.ID;
-                newListing.CourseID = viewModel.courseID;
                 newListing.Type = WISHLIST;
+                if (!viewModel.newCourse)
+                {
+                    newListing.CourseID = viewModel.courseID;
+                }
+                else
+                {
+                    Course newCourse = new Course();
+                    newCourse.Dept = viewModel.courseDept;
+                    newCourse.CourseNum = Int16.Parse(viewModel.courseNum);
+                    newCourse.Name = viewModel.courseName;
+                    newCourse.SchoolID = user.SchoolID;
+                    //newCourse.BookToCourses.Add();
+                    ctx.Courses.Add(newCourse);
+                    newListing.Course = newCourse;
+                }
                 ctx.BookListings.Add(newListing);
                 ctx.SaveChanges();
 
