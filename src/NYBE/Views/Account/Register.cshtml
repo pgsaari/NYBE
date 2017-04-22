@@ -3,6 +3,14 @@
     ViewData["Title"] = "Register";
 }
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+</script>
+
+
 <h2>@ViewData["Title"].</h2>
 
 <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
@@ -56,6 +64,7 @@
                     <option value="@school.ID">@school.Name</option>
                 }
             </select>
+            <a href="#" data-toggle="popover" data-content="Just leave it as ''None.'' You can request to have your school added in your account settings!">Don't see your school?</a>
         </div>
     </div>
     <div class="form-group">

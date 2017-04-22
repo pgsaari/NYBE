@@ -1,12 +1,12 @@
 ﻿@model NYBE.Models.AdminViewModels.EditUserViewModel
 
 @{
-    ViewData["Title"] = "Delete User";
+    ViewData["Title"] = "Disable User";
 }
 
-<h1>Delete User?</h1>
+<h1>Disable User?</h1>
 
-<h4>Deleting a User will de-activate their account.</h4>
+<h4>Disabling a User will deactivate their account.</h4>
 <h5>Is this what you want to do?</h5>
 <br />
 
@@ -23,5 +23,5 @@
     @Html.HiddenFor(model => Model.oldRole)
 
     <a asp-controller="User" asp-action="Index" class="btn btn-default">Cancel</a>
-    <button type="submit" class="btn btn-danger">Delete</button>
+    <button type="submit" class="btn btn-danger">Disable</button>
 </form>

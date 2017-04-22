@@ -67,7 +67,7 @@ namespace NYBE.Controllers
             var viewModel = new ManageSchoolsViewModel();
 
             List<PendingSchool> pSchools = ctx.PendingSchools.ToList();
-            List<School> allSchools = ctx.Schools.Where(a => a.Status == 1).ToList();
+            List<School> allSchools = ctx.Schools.Where(a => a.Status == 1 && a.ID != 1).ToList();
             List<School> disabledSchools = ctx.Schools.Where(a => a.Status == 0).ToList();
             if (pSchools != null)
             {
