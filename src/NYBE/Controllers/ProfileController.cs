@@ -18,12 +18,58 @@ namespace NYBE.Controllers
             ctx = dbContext;
             usrCtx = userManager;
         }
+
         // 
-        // GET: /Profile/
+        // GET: /Profile/UserID
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string UserId)
         {
-            var view = await loadProfile();
+            ApplicationUser user;
+            ProfileViewModel view = new ProfileViewModel();
+            if (UserId == null)
+            {
+                user = await GetCurrentUserAsync();
+                view.ownProfile = true;
+            }
+            else
+            {
+                user = await usrCtx.FindByIdAsync(UserId);
+                view.ownProfile = false;
+            }
+            view.isAdmin = await usrCtx.IsInRoleAsync(user, "Admin");
+            view.name = user.FirstName + " " + user.LastName;
+            view.email = user.Email;
+            view.phone = user.PhoneNumber;
+            view.rating = user.Rating;
+
+            switch (user.PreferredContact)
+            {
+                case 0:
+                    view.preferredContact = "Email";
+                    break;
+                case 1:
+                    view.preferredContact = "Call";
+                    break;
+                case 2:
+                    view.preferredContact = "Text";
+                    break;
+            }
+            view.school = ctx.Schools.Where(a => a.ID == user.SchoolID).FirstOrDefault();
+
+            // get all the user's book listings include the book and course objects to view in the table
+            view.listings = ctx.BookListings.Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID && a.Type == 0).ToList();
+
+            // get the sold transaction history for this user
+            view.soldTransactions = ctx.TransactionLogs.Include("Buyer").Include("Book").
+                Where(a => user.Id == a.SellerID).
+                OrderByDescending(a => a.TransDate).ToList();
+
+            // get the bought transaction history for this user
+            view.boughtTransactions = ctx.TransactionLogs.Include("Seller").Include("Book").
+                Where(a => user.Id == a.BuyerID).
+                OrderByDescending(a => a.TransDate).ToList();
+
+            view.wishList = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID && a.Type == 1).ToList();
 
             return View(view);
         }
@@ -82,51 +128,6 @@ namespace NYBE.Controllers
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
             return usrCtx.GetUserAsync(HttpContext.User);
-        }
-
-        private async Task<ProfileViewModel> loadProfile()
-        {
-            ProfileViewModel view = new ProfileViewModel();
-            var user = await GetCurrentUserAsync();
-
-            view.isAdmin = await usrCtx.IsInRoleAsync(user, "Admin");
-            view.name = user.FirstName + " " + user.LastName;
-            view.email = user.Email;
-            view.phone = user.PhoneNumber;
-            view.rating = user.Rating;
-
-            switch (user.PreferredContact)
-            {
-                case 0:
-                    view.preferredContact = "Email";
-                    break;
-                case 1:
-                    view.preferredContact = "Call";
-                    break;
-                case 2:
-                    view.preferredContact = "Text";
-                    break;
-            }
-
-            view.school = ctx.Schools.Where(a => a.ID == user.SchoolID).FirstOrDefault();
-
-            // get all the user's book listings include the book and course objects to view in the table
-            view.listings = ctx.BookListings.Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID && a.Type == 0).ToList();
-
-
-            // get the sold transaction history for this user
-            view.soldTransactions = ctx.TransactionLogs.Include("Buyer").Include("Book").
-                Where(a => user.Id == a.SellerID).
-                OrderByDescending(a => a.TransDate).ToList();
-
-            // get the bought transaction history for this user
-            view.boughtTransactions = ctx.TransactionLogs.Include("Seller").Include("Book").
-                Where(a => user.Id == a.BuyerID).
-                OrderByDescending(a => a.TransDate).ToList();
-            
-            view.wishList = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => user.Id==a.ApplicationUserID && a.Type == 1).ToList();
-
-            return view;
         }
     }
 }

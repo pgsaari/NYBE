@@ -47,8 +47,11 @@
                                 <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
                                 <td> @x.Condition </td>
                                 <td> @string.Format("{0:c}", x.AskingPrice) </td>
-                                <td><a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a></td>
-                                <td><a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@x.ID" class="btn btn-danger">Delete</a></td>
+                                @if (Model.ownProfile)
+                                {
+                                    <td><a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a></td>
+                                    <td><a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@x.ID" class="btn btn-danger">Delete</a></td>
+                                }
                             </tr>
                         }
                     </tbody>
@@ -57,13 +60,12 @@
         }
         else
         {
-            <p>No Books Listed!</p>
+            <h5>No Books Listed!</h5>
         }
     </div>
 
 
     <div id="sold" class="tab-pane fade">
-        <h4>Books you sold:</h4>
         @if (Model.soldTransactions.Any())
         {
             <div class="table-responsive">
@@ -98,8 +100,7 @@
         }
         else
         {
-            <p>No Transaction History!</p>
-            <p>Contribute to the economy and sell some books!</p>
+            <h5>No Transaction History!</h5>
         }
     </div>
     <div id="bought" class="tab-pane fade">
@@ -138,12 +139,10 @@
         }
         else
         {
-            <p>No Transaction History!</p>
-            <p>Contribute to the economy and buy some books!</p>
+            <h5>No Transaction History!</h5>
         }
     </div>
     <div id="wish" class="tab-pane fade">
-        <h4>Books you want:</h4>
         @if (Model.wishList.Any())
             {
             <div class="table-responsive">
@@ -164,8 +163,11 @@
                                 <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
                                 <td> @x.Condition </td>
                                 <td> @string.Format("{0:c}", x.AskingPrice) </td>
-                                <td><a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a></td>
-                                <td><a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@x.ID" class="btn btn-danger">Delete</a></td>
+                                @if (Model.ownProfile)
+                                {
+                                    <td><a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a></td>
+                                    <td><a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@x.ID" class="btn btn-danger">Delete</a></td>
+                                }
                             </tr>
                         }
                     </tbody>
@@ -174,7 +176,7 @@
         }
         else
         {
-            <h5>Contribute to the economy and buy some books!</h5>
+            <h5>No books in Wish List!</h5>
         }
     </div>
 </div>
