@@ -2,110 +2,120 @@
 
 </head>
 <body>
-@model NYBE.Models.SearchViewModels.BookSearchViewModel
+    @model NYBE.Models.SearchViewModels.BookSearchViewModel
 
-@{
-    ViewData["Title"] = "Find Books";
-}
+    @{
+        ViewData["Title"] = "Find Books";
+    }
 
-<h2>Find Books</h2>
-<form asp-controller="Search" asp-action="Index">
-    <div id="generalSearch" class="form-group row">
-        <label class="col-lg-1" for="generalSearch">Search: </label>
-        <input type="text" name="generalSearch" class="form-control"/>
-    </div>
-    <!-- Used for "advanced" search-->
-    <div id="advancedSearchFields" style="display:none">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css" />
+    <script>
+        var jquery = jQuery.noConflict();
+        jquery(document).ready(function () {
+            jquery('#book-table').DataTable();
+        });
+    </script>
+
+    <h2>Find Books</h2>
+    <form asp-controller="Search" asp-action="Index">
+        <div id="generalSearch" class="form-group row">
+            <label class="col-lg-1" for="generalSearch">Search: </label>
+            <input type="text" name="generalSearch" class="form-control" />
+        </div>
+        <!-- Used for "advanced" search-->
+        <div id="advancedSearchFields" style="display:none">
+            <div class="form-group row">
+                <label class="col-lg-1" for="title"> Title: </label>
+                <input type="text" name="title" class="form-control" />
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-1" for="author"> Author: </label>
+                <input type="text" name="author" class="form-control" />
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-1" for="isbn"> ISBN: </label>
+                <input type="text" name="isbn" class="form-control" />
+            </div>
+        </div> <!-- end advanced search-->
         <div class="form-group row">
-            <label class="col-lg-1" for="title"> Title: </label>
-            <input type="text" name="title" class="form-control" />
+            <label class="col-lg-1" for="schoolName">School: </label>
+            <select id="schoolSelectBox" name="schoolName" class="form-control">
+                <option value="-1">All</option>
+                @foreach (var school in Model.schools)
+            {
+                    <option value=@school.ID>@Html.DisplayFor(modelItem => school.Name)</option>
+                }
+            </select>
         </div>
         <div class="form-group row">
-            <label class="col-lg-1" for="author"> Author: </label>
-            <input type="text" name="author" class="form-control"/>
+            <label class="col-lg-1" for="courseName">Course: </label>
+            <select id="courseSelectBox" name="courseName" class="form-control">
+                <option class="-1" value="">All</option>
+                @foreach (var course in Model.courses)
+            {
+                    <option class=@course.SchoolID value=@course.Name>@Html.DisplayFor(modelItem => course.Name)</option>
+                }
+            </select>
         </div>
-        <div class="form-group row">
-            <label class="col-lg-1" for="isbn"> ISBN: </label>
-            <input type="text" name="isbn" class="form-control"/>
-        </div>
-    </div> <!-- end advanced search-->
-    <div  class="form-group row">
-        <label class="col-lg-1" for="schoolName">School: </label>
-        <select id ="schoolSelectBox" name="schoolName" class="form-control">
-            <option value="-1">All</option>
-            @foreach (var school in Model.schools)
-            {
-                <option value=@school.ID>@Html.DisplayFor(modelItem => school.Name)</option>
-            }
-        </select>
-    </div>
-    <div class="form-group row">
-        <label class="col-lg-1" for="courseName">Course: </label>
-        <select id="courseSelectBox" name="courseName" class="form-control">
-            <option class="-1" value="">All</option>
-            @foreach (var course in Model.courses)
-            {
-                <option class=@course.SchoolID value=@course.Name>@Html.DisplayFor(modelItem => course.Name)</option>
-            }
-        </select>
-    </div>
 
-    <input type="submit" class="btn btn-success" value="Search" /> <a id ="toggleAdvancedSearch" style="margin-left:30px; cursor:pointer">Show Advanced Search</a>
-</form>
+        <input type="submit" class="btn btn-success" value="Search" /> <a id="toggleAdvancedSearch" style="margin-left:30px; cursor:pointer">Show Advanced Search</a>
+    </form>
 
-<br/>
+    <br />
 
-<div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.bookList[0].Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.bookList[0].AuthorLName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.bookList[0].AuthorFName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.bookList[0].Edition)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.bookList[0].ISBN)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.bookList[0].Publisher)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var book in Model.bookList)
-            {
-                <tr style="cursor:pointer" onclick="location.href = '@(Url.Action("Index", "Book", new { bookId = book.ID }))'">
-                    
+    <div class="table-responsive">
+        <table id="book-table" class="table table-striped">
+            <thead>
+                <tr>
                     <th>
-                        @Html.DisplayFor(modelItem => book.Title)
+                        @Html.DisplayNameFor(model => model.bookList[0].Title)
                     </th>
                     <th>
-                        @Html.DisplayFor(modelItem => book.AuthorLName)
+                        @Html.DisplayNameFor(model => model.bookList[0].AuthorLName)
                     </th>
                     <th>
-                        @Html.DisplayFor(modelItem => book.AuthorFName)
+                        @Html.DisplayNameFor(model => model.bookList[0].AuthorFName)
                     </th>
                     <th>
-                        @Html.DisplayFor(modelItem => book.Edition)
+                        @Html.DisplayNameFor(model => model.bookList[0].Edition)
                     </th>
                     <th>
-                        @Html.DisplayFor(modelItem => book.ISBN)
+                        @Html.DisplayNameFor(model => model.bookList[0].ISBN)
                     </th>
                     <th>
-                        @Html.DisplayFor(modmodelItemel => book.Publisher)
+                        @Html.DisplayNameFor(model => model.bookList[0].Publisher)
                     </th>
                 </tr>
-            }
-        </tbody>      
-    </table>
-    <a asp-controller="PendingBook" asp-action="Index">Request to have your book added!</a>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var book in Model.bookList)
+            {
+                    <tr style="cursor:pointer" onclick="location.href = '@(Url.Action("Index", "Book", new { bookId = book.ID }))'">
+
+                        <th>
+                            @Html.DisplayFor(modelItem => book.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayFor(modelItem => book.AuthorLName)
+                        </th>
+                        <th>
+                            @Html.DisplayFor(modelItem => book.AuthorFName)
+                        </th>
+                        <th>
+                            @Html.DisplayFor(modelItem => book.Edition)
+                        </th>
+                        <th>
+                            @Html.DisplayFor(modelItem => book.ISBN)
+                        </th>
+                        <th>
+                            @Html.DisplayFor(modmodelItemel => book.Publisher)
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-controller="PendingBook" asp-action="Index">Request to have your book added!</a>
+    </div>
 </body> 

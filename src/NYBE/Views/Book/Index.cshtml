@@ -3,6 +3,16 @@
     ViewData["Title"] = "Book Details";
 }
 
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css" />
+<script>
+        var jquery = jQuery.noConflict();
+        jquery(document).ready(function () {
+            jquery('#bookListingTable').DataTable();
+        });
+</script>
+
 <h1>@Model.book.Title</h1>
 
 <br />
@@ -42,6 +52,7 @@
     </ul>
     <div class="tab-content">
         <div id="selling" class="tab-pane fade in active">
+            <br/>
             @if (Model.forSaleListings.Any())
             {
                 <div class="table-responsive">
@@ -51,12 +62,9 @@
                                 <th>Seller</th>
                                 <th>School</th>
                                 <th>Course</th>
-                                <th>
-                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ConditionSortParm"]" asp-route-bookId="@Model.book.ID">Condition</a>
-                                </th>
-                                <th>
-                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-bookId="@Model.book.ID">Price</a>
-                                </th>
+                                <th>Condition</th>
+                                <th>Price</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,6 +91,7 @@
         </div>
 
         <div id="buying" class="tab-pane fade">
+            <br />
             @if (Model.toBuyListings.Any())
             {
                 <div class="table-responsive">

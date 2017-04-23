@@ -3,6 +3,35 @@
     ViewData["Title"] = "Manage Books";
 }
 
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css" />
+<script>
+    var jquery = jQuery.noConflict();
+    jquery(document).ready(function () {
+        jquery('#all-books').DataTable();
+    });
+</script>
+@if (Model.pendingBooks.Any())
+{
+<script>
+    var jquery = jQuery.noConflict();
+    jquery(document).ready(function () {
+        jquery('#pending-books').DataTable();
+    });
+</script>
+}
+@if (Model.disabledBooks.Any())
+{
+    <script>
+    var jquery = jQuery.noConflict();
+    jquery(document).ready(function () {
+        jquery('#disabled-books').DataTable();
+    });
+    </script>
+}
+
+
 <h1>Manage Books</h1>
 
 <ul class="nav nav-tabs">
@@ -14,12 +43,13 @@
     }
 </ul>
 <div class="tab-content">
+    <br/>
     <div id="pending" class="tab-pane fade in active">
         @if (Model.pendingBooks.Any())
         {
             <div class="container">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table id="pending-books" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Title</th>
@@ -58,9 +88,10 @@
         }
     </div>
     <div id="all" class="tab-pane fade">
+        <br/>
         <div class="container">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table id="all-books" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -68,6 +99,7 @@
                             <th>ISBN</th>
                             <th>Edition</th>
                             <th>Publisher</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,9 +120,10 @@
         </div>
     </div>
     <div id="disabled" class="tab-pane fade">
+        <br/>
         <div class="container">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table id="disabled-books" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -98,6 +131,7 @@
                             <th>ISBN</th>
                             <th>Edition</th>
                             <th>Publisher</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>

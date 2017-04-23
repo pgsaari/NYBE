@@ -3,6 +3,34 @@
     ViewData["Title"] = "Manage Schools";
 }
 
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css" />
+<script>
+    var jquery = jQuery.noConflict();
+    jquery(document).ready(function () {
+        jquery('#all-schools').DataTable();
+    });
+</script>
+@if (Model.pendingSchools.Any())
+{
+    <script>
+    var jquery = jQuery.noConflict();
+    jquery(document).ready(function () {
+        jquery('#pending-schools').DataTable();
+    });
+    </script>
+}
+@if (Model.disabledSchools.Any())
+{
+    <script>
+    var jquery = jQuery.noConflict();
+    jquery(document).ready(function () {
+        jquery('#disabled-schools').DataTable();
+    });
+    </script>
+}
+
 <h1>Manage Schools</h1>
 
 <ul class="nav nav-tabs">
@@ -16,16 +44,19 @@
 
 <div class="tab-content">
     <div id="pending" class="tab-pane fade in active">
+        <br/>
         @if (Model.pendingSchools.Any())
         {
             <div class="container">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table id="pending-schools" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>City</th>
                                 <th>State</th>
+                                <th>Approve</th>
+                                <th>Deny</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,16 +82,18 @@
         }
     </div>
     <div id="all" class="tab-pane fade">
+        <br/>
         @if (Model.allSchools.Any())
         {
             <div class="container">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table id="all-schools" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>City</th>
                                 <th>State</th>
+                                <th>Disable</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,15 +118,16 @@
         }
     </div>
     <div id="disabled" class="tab-pane fade">
-
+        <br/>
         <div class="container">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table id="disabled-schools" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>City</th>
                             <th>State</th>
+                            <th>Enable</th>
                         </tr>
                     </thead>
                     <tbody>
