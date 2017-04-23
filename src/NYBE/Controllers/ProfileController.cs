@@ -26,15 +26,11 @@ namespace NYBE.Controllers
         {
             ApplicationUser user;
             ProfileViewModel view = new ProfileViewModel();
-            if (UserId == null)
-            {
-                user = await GetCurrentUserAsync();
-                view.ownProfile = true;
-            }
-            else
+            user = await GetCurrentUserAsync();
+            view.ownProfile = (user.Id == UserId) || UserId == null;
+            if (!view.ownProfile)
             {
                 user = await usrCtx.FindByIdAsync(UserId);
-                view.ownProfile = false;
             }
             view.isAdmin = await usrCtx.IsInRoleAsync(user, "Admin");
             view.name = user.FirstName + " " + user.LastName;
