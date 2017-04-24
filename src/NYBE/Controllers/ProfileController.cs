@@ -57,12 +57,12 @@ namespace NYBE.Controllers
 
             // get the sold transaction history for this user
             view.soldTransactions = ctx.TransactionLogs.Include("Buyer").Include("Book").
-                Where(a => user.Id == a.SellerID).
+                Where(a => 0 == a.Status && user.Id == a.SellerID).
                 OrderByDescending(a => a.TransDate).ToList();
 
             // get the bought transaction history for this user
             view.boughtTransactions = ctx.TransactionLogs.Include("Seller").Include("Book").
-                Where(a => user.Id == a.BuyerID).
+                Where(a => 0 == a.Status && user.Id == a.BuyerID).
                 OrderByDescending(a => a.TransDate).ToList();
 
             view.wishList = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID && a.Type == 1).ToList();

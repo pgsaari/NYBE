@@ -49,34 +49,13 @@
                                 <td> @string.Format("{0:c}", x.AskingPrice) </td>
                                 @if (Model.ownProfile)
                                 {
+                                    <td><a asp-controller="Transaction" asp-action="Sold" asp-route-id="@x.ID" class="btn btn-primary">Sold</a></td>
                                     <td><a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a></td>
                                     <td><a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@x.ID" class="btn btn-danger">Delete</a></td>
-                                } else
+                                }
+                                else
                                 {
-                                    <td><button class="btn btn-success" data-toggle="modal" data-target="#myModal">Buy</button></td>
-                                    <td class="modal fade" id="myModal" role="dialog">
-                                        <div class="modal-dialog">
-
-                                            <!-- Modal content-->
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Contact @Model.name</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    @if (Model.preferredContact.Equals("Email")) {
-                                                        <p><b>@Model.preferredContact :</b> @Model.email</p>
-                                                    } else {
-                                                        <p><b>@Model.preferredContact :</b> @Model.phone</p>
-                                                    }
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </td>
+                                    <td><a asp-controller="Transaction" asp-action="Buy" asp-route-id="@x.ID" class="btn btn-success">Buy</a></td>
                                 }
                             </tr>
                         }
