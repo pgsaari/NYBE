@@ -89,12 +89,36 @@ namespace NYBE.Controllers
         public async Task<IActionResult> Sold(SoldViewModel model)
         {
             System.Diagnostics.Debug.WriteLine("Buyer Id: " + model.buyerId);
-
+            var buyer = await _userManager.FindByIdAsync(model.buyerId);
+            var oldListing = _context.BookListings.Where(a => a.ID == model.listingId).FirstOrDefault();
+            oldListing.Status = 1;
+            await _context.SaveChangesAsync();
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
             
+            return RedirectToAction(nameof(Survey), "Transaction");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Survey(int id)
+        {
+           
+            var model = new SurveyViewModel();
+            
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Survey(SoldViewModel model)
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             return RedirectToAction(nameof(ProfileController.Index), "Profile");
         }
 

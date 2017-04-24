@@ -38,8 +38,8 @@ namespace NYBE.Controllers
                 return NotFound();
             }
             viewModel.book = book;
-            //type == 0(selling)
-            var forSaleListings = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => a.BookID == bookId && a.Type == 0);
+            //type == 0(selling) && status == 0(open)
+            var forSaleListings = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => a.BookID == bookId && a.Type == 0 && a.Status == 0);
             
 
             switch(sortOrder)
@@ -58,8 +58,8 @@ namespace NYBE.Controllers
                     break;
             }
 
-            //type == 1(buying)
-            var toBuyListings = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => a.BookID == bookId && a.Type == 1);
+            //type == 1(buying) && status == 0(open)
+            var toBuyListings = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => a.BookID == bookId && a.Type == 1 && a.Status == 0);
             viewModel.toBuyListings = toBuyListings.ToList();
 
             return View(viewModel);

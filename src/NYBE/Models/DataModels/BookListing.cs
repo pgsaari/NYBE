@@ -21,6 +21,7 @@ namespace NYBE.Models
             Condition = cond;
             AskingPrice = price;
             Type = type;
+            Status = 0; // Defaults to open
         }
 
         public int ID { get; set; }
@@ -28,7 +29,8 @@ namespace NYBE.Models
         public string ApplicationUserID { get; set; }
         public int CourseID { get; set; }
         public string Condition { get; set; }
-        public int Type { get; set; }
+        public int Type { get; set; } // 0 for sell 1 for buy
+        public int Status { get; set; } // 0 for open and 1 for pending survey (when completed, it will be removed)
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public double AskingPrice { get; set; }
