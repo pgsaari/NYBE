@@ -67,7 +67,7 @@ namespace NYBE.Controllers
                 OrderByDescending(a => a.TransDate).ToList();
 
             //view.wishList = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID && a.Type == 1).ToList();
-            List<BookListing> wishList = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID && a.Type == 1).ToList();
+            List<BookListing> wishList = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID && a.Type == 1 && a.Status == 0).ToList();
             view.wishList = new Dictionary<BookListing, bool>();
             foreach (BookListing b in wishList)
             {
@@ -87,7 +87,7 @@ namespace NYBE.Controllers
         public ActionResult EditListing(int id)
         {
             var viewModel = new EditListingViewModel();
-            var temp = ctx.BookListings.Include("Book").Include("Course").Where(a => a.ID == id).FirstOrDefault();
+            var temp = ctx.BookListings.Include("Book").Include("Course").Where(a => a.ID == id && a.Status == 0).FirstOrDefault();
             viewModel.ID = id;
             viewModel.book = temp.Book;
             viewModel.course = temp.Course;
@@ -99,7 +99,7 @@ namespace NYBE.Controllers
         [HttpPost]
         public ActionResult EditListing(EditListingViewModel viewModel)
         {
-            var temp = ctx.BookListings.Where(a => a.ID == viewModel.ID).FirstOrDefault();
+            var temp = ctx.BookListings.Where(a => a.ID == viewModel.ID && a.Status == 0).FirstOrDefault();
             temp.Condition = viewModel.condition;
             if(Request.Form["editTradeCheckBox"] == "on")
             {
@@ -120,7 +120,7 @@ namespace NYBE.Controllers
             if (id == null) return NotFound();
 
             var viewModel = new EditListingViewModel();
-            var temp = ctx.BookListings.Include("Book").Include("Course").Where(a => a.ID == id).FirstOrDefault();
+            var temp = ctx.BookListings.Include("Book").Include("Course").Where(a => a.ID == id && a.Status == 0).FirstOrDefault();
             if (temp == null) return NotFound();
             viewModel.ID = temp.ID;
             viewModel.book = temp.Book;
@@ -133,7 +133,7 @@ namespace NYBE.Controllers
         [HttpPost]
         public ActionResult DeleteListing(EditListingViewModel viewModel)
         {
-            var temp = ctx.BookListings.Where(a => a.ID == viewModel.ID).FirstOrDefault();
+            var temp = ctx.BookListings.Where(a => a.ID == viewModel.ID && a.Status == 0).FirstOrDefault();
             ctx.BookListings.Remove(temp);
             ctx.SaveChanges();
 
