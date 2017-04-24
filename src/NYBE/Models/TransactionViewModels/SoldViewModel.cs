@@ -8,7 +8,8 @@ namespace NYBE.Models.TransactionViewModels
 {
     public class SoldViewModel
     {
-        public int buyerId { get; set; }
+        public string buyerId { get; set; }
+        public int listingId { get; set; }
 
         public List<TransactionLog> openLogs { get; set; }
         public List<ApplicationUser> buyers { get; set; }
