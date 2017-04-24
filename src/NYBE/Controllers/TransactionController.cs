@@ -70,6 +70,33 @@ namespace NYBE.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Sold(int id)
+        {
+            var listing = _context.BookListings.Where(a => a.ID == id).FirstOrDefault();
+            var model = new SoldViewModel();
+            model.buyers = new List<ApplicationUser>();
+            model.openLogs = _context.TransactionLogs.Where(a => a.SellerID == listing.ApplicationUserID && a.Status == 1 && a.BookID == listing.BookID).OrderByDescending(a => a.TransDate).ToList();
+            foreach (TransactionLog tl in model.openLogs) {
+                var buyer = await _userManager.FindByIdAsync(tl.BuyerID);
+                model.buyers.Add(buyer);
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Sold(SoldViewModel model)
+        {
+            System.Diagnostics.Debug.WriteLine("Transaction Completed!!");
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            
+            return RedirectToAction(nameof(ProfileController.Index), "Profile");
+        }
+
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
             return _userManager.GetUserAsync(HttpContext.User);

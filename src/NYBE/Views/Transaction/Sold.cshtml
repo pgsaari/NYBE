@@ -1,0 +1,59 @@
+@model NYBE.Models.TransactionViewModels.SoldViewModel
+
+@{
+    ViewData["Title"] = "Sold";
+}
+
+<h2 class="text-center">@ViewData["Title"] To</h2>
+
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-2">
+        <form asp-controller="Transaction" asp-action="Sold" method="post" class="form-horizontal">
+            <hr />
+            <div class="form-group">
+                @if (Model.buyers != null && Model.buyers.Any())
+                {
+                    @foreach (ApplicationUser user in Model.buyers)
+                {
+                        <div class="col-sm-8 col-sm-offset-4">
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">@user.FirstName @user.LastName</button>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <h4>You have no buyers for this book!</h4>
+                    </div>
+                }
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Confirm Buyer</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Make sure this is your buyer! You will not be able to change the buyer until they deny this purchase.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Accept</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr />
+        <div class="col-sm-8 col-sm-offset-4">
+            <button type="button" onclick="history.go(-1)" class="btn btn-primary">Cancel</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
