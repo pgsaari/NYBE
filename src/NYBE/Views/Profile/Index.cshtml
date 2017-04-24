@@ -179,27 +179,37 @@
                             <th>Course</th>
                             <th>Condition</th>
                             <th>Price</th>
+                            <th>Is For Sale?</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (BookListing x in Model.wishList)
+                        @foreach (KeyValuePair<BookListing, bool> entry in Model.wishList)
                         {
                             <tr>
-                                <td> @x.Book.Title </td>
-                                <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
-                                <td> @x.Condition </td>
-                                @if (x.AskingPrice > 0)
+                                <td> @entry.Key.Book.Title </td>
+                                <td> @entry.Key.Course.Dept @entry.Key.Course.CourseNum - @entry.Key.Course.Name </td>
+                                <td> @entry.Key.Condition </td>
+                                @if (entry.Key.AskingPrice > 0)
                                 {
-                                 <td> @string.Format("{0:c}", x.AskingPrice) </td>
+                                 <td> @string.Format("{0:c}", entry.Key.AskingPrice) </td>
                                 }
                                 else {
                                   <td>Trade</td>
                                 }
+                                @if (entry.Value)
+                                {
+                                    <td>Yes</td>
+                                }
+                                else
+                                {
+                                    <td>No</td>
+                                }
                                 @if (Model.ownProfile)
                                 {
-                                    <td><a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a></td>
-                                    <td><a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@x.ID" class="btn btn-danger">Delete</a></td>
+                                    <td><a asp-controller="Profile" asp-action="EditListing" asp-route-id="@entry.Key.ID" class="btn btn-success">Edit</a></td>
+                                    <td><a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@entry.Key.ID" class="btn btn-danger">Delete</a></td>
                                 }
+                                
                             </tr>
                         }
                     </tbody>

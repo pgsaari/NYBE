@@ -6,6 +6,7 @@ using NYBE.Models;
 using NYBE.Models.DataModels;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace NYBE.Controllers
 {
@@ -65,7 +66,19 @@ namespace NYBE.Controllers
                 Where(a => 0 == a.Status && user.Id == a.BuyerID).
                 OrderByDescending(a => a.TransDate).ToList();
 
-            view.wishList = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID && a.Type == 1).ToList();
+            //view.wishList = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID && a.Type == 1).ToList();
+            List<BookListing> wishList = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID && a.Type == 1).ToList();
+            view.wishList = new Dictionary<BookListing, bool>();
+            foreach (BookListing b in wishList)
+            {
+                if(ctx.BookListings.Where(i => i.Book.ID == b.Book.ID && i.Type == 0).FirstOrDefault() != null)
+                {
+                    view.wishList.Add(b, true);
+                } else
+                {
+                    view.wishList.Add(b, false);
+                }
+            }
 
             return View(view);
         }
