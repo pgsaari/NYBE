@@ -8,11 +8,10 @@ namespace NYBE.Models.TransactionViewModels
 {
     public class BuyViewModel
     {
-        [Required]
+        public int listingId { get; set; }
+
         public BookListing listing { get; set; }
-        [Required]
         public Book book { get; set; }
-        [Required]
         public ApplicationUser seller { get; set; }
     }
 }

@@ -44,13 +44,28 @@ namespace NYBE.Controllers
         [HttpPost]
         public async Task<IActionResult> Buy(BuyViewModel model)
         {
-            var listing = model.listing;
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var listing = _context.BookListings.Where(a => a.ID == model.listingId).FirstOrDefault();
             if (listing != null)
             {
                 var user = await GetCurrentUserAsync();
-                var newLog = new TransactionLog(listing.ApplicationUserID, user.Id, listing.BookID, 0, 0, listing.AskingPrice, listing.Condition, DateTime.Now);
-                //_context.Add(newLog);
-                //await _context.SaveChangesAsync();
+                var newLog = new TransactionLog(listing.ApplicationUserID, user.Id, listing.BookID, 0, 1, listing.AskingPrice, listing.Condition, DateTime.Now);
+                _context.Add(newLog);
+                await _context.SaveChangesAsync();
+
+                // Send email notification to User that is selling book.\
+                var contact = "Phone: " + user.PhoneNumber;
+                if (user.PreferredContact.Equals("Email"))
+                {
+                    contact = "Email: " + user.Email;
+                }
+                var seller = await _userManager.FindByIdAsync(listing.ApplicationUserID);
+                var book = _context.Books.Where(a => a.ID == listing.BookID).FirstOrDefault();
+                await _emailSender.SendEmailAsync(seller.Email, "NYBE Book Interest",
+                   $"User <b>{user.FirstName} {user.LastName}</b> is interested in <b>{book.Title}</b> that you have for sale!  They should be contacting you shortly, however feel free to contact them by <b>{contact}</b>.");
             }
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
