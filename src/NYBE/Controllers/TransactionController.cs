@@ -75,6 +75,7 @@ namespace NYBE.Controllers
         {
             var listing = _context.BookListings.Where(a => a.ID == id).FirstOrDefault();
             var model = new SoldViewModel();
+            model.listingId = id;
             model.buyers = new List<ApplicationUser>();
             model.openLogs = _context.TransactionLogs.Where(a => a.SellerID == listing.ApplicationUserID && a.Status == 1 && a.BookID == listing.BookID).OrderByDescending(a => a.TransDate).ToList();
             foreach (TransactionLog tl in model.openLogs) {
@@ -87,7 +88,7 @@ namespace NYBE.Controllers
         [HttpPost]
         public async Task<IActionResult> Sold(SoldViewModel model)
         {
-            System.Diagnostics.Debug.WriteLine("Transaction Completed!!");
+            System.Diagnostics.Debug.WriteLine("Buyer Id: " + model.buyerId);
 
             if (!ModelState.IsValid)
             {

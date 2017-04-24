@@ -4,16 +4,6 @@
     ViewData["Title"] = "Buy";
 }
 
-<script src="//code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css" />
-<script>
-    var jquery = jQuery.noConflict();
-    jquery(document).ready(function () {
-        jquery('#bookListingTable').DataTable();
-    });
-</script>
-
 <h2 class="text-center">@ViewData["Title"] @Model.listing.Book.Title</h2>
 
     <div class="row">
