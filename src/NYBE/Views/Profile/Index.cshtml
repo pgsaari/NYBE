@@ -11,8 +11,8 @@
 }
 
 <p>Rating: @Model.rating</p>
-<p>Phone Number: @Model.phone</p>
-<p>Email: @Model.email</p>
+<p>Phone Number: <a href="tel:+@Model.phone">@Model.phone</a></p>
+<p>Email: <a href="mailto:@Model.email">@Model.email</a></p>
 <p>Preferred Contact: @Model.preferredContact</p>
 <p>School: @Model.school.Name</p>
 
@@ -46,7 +46,14 @@
                                 <td> @x.Book.Title </td>
                                 <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
                                 <td> @x.Condition </td>
-                                <td> @string.Format("{0:c}", x.AskingPrice) </td>
+                                @if (x.AskingPrice > 0)
+                                {
+                                    <td> @string.Format("{0:c}", x.AskingPrice) </td>
+                                }
+                                else
+                                {
+                                    <td>Trade</td>
+                                }
                                 @if (Model.ownProfile)
                                 {
                                     <td><a asp-controller="Transaction" asp-action="Sold" asp-route-id="@x.ID" class="btn btn-primary">Sold</a></td>
@@ -94,7 +101,14 @@
                                 <td> @x.Buyer.FirstName @x.Buyer.LastName</td>
                                 <td> @x.Buyer.Email</td>
                                 <td> @x.Book.Title</td>
-                                <td> @string.Format("{0:c}", x.SoldPrice)</td>
+                                @if (x.SoldPrice > 0)
+                                {
+                                    <td> @string.Format("{0:c}", x.SoldPrice) </td>
+                                }
+                                else
+                                {
+                                    <td>Trade</td>
+                                }
                                 <td> @x.Condition</td>
                                 <td> @x.TransRating</td>
                             </tr>
@@ -133,7 +147,14 @@
                                 <td> @x.Seller.FirstName @x.Seller.LastName</td>
                                 <td> @x.Seller.Email</td>
                                 <td> @x.Book.Title</td>
-                                <td> @string.Format("{0:c}", x.SoldPrice)</td>
+                                @if (x.SoldPrice > 0)
+                                {
+                                    <td> @string.Format("{0:c}", x.SoldPrice) </td>
+                                }
+                                else
+                                {
+                                    <td>Trade</td>
+                                }
                                 <td> @x.Condition</td>
                                 <td> @x.TransRating</td>
                             </tr>
@@ -167,7 +188,13 @@
                                 <td> @x.Book.Title </td>
                                 <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
                                 <td> @x.Condition </td>
-                                <td> @string.Format("{0:c}", x.AskingPrice) </td>
+                                @if (x.AskingPrice > 0)
+                                {
+                                 <td> @string.Format("{0:c}", x.AskingPrice) </td>
+                                }
+                                else {
+                                  <td>Trade</td>
+                                }
                                 @if (Model.ownProfile)
                                 {
                                     <td><a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a></td>

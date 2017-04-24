@@ -88,7 +88,13 @@ namespace NYBE.Controllers
         {
             var temp = ctx.BookListings.Where(a => a.ID == viewModel.ID).FirstOrDefault();
             temp.Condition = viewModel.condition;
-            temp.AskingPrice = viewModel.price;
+            if(Request.Form["editTradeCheckBox"] == "on")
+            {
+                temp.AskingPrice = -1;
+            } else {
+                temp.AskingPrice = viewModel.price;
+            }
+            
             ctx.Update(temp);
             var success = ctx.SaveChanges();
 
