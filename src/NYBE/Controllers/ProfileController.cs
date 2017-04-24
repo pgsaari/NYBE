@@ -53,8 +53,8 @@ namespace NYBE.Controllers
             }
             view.school = ctx.Schools.Where(a => a.ID == user.SchoolID).FirstOrDefault();
 
-            // get all the user's book listings include the book and course objects to view in the table
-            view.listings = ctx.BookListings.Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID && a.Type == 0).ToList();
+            // get all the user's (open) book listings include the book and course objects to view in the table
+            view.listings = ctx.BookListings.Include("Book").Include("Course").Where(a => user.Id == a.ApplicationUserID && a.Type == 0 && a.Status == 0).ToList();
 
             // get the sold transaction history for this user
             view.soldTransactions = ctx.TransactionLogs.Include("Buyer").Include("Book").
