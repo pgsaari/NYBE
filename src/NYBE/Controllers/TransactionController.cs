@@ -73,7 +73,7 @@ namespace NYBE.Controllers
         [HttpGet]
         public async Task<IActionResult> Sold(int id)
         {
-            var listing = _context.BookListings.Where(a => a.ID == id).FirstOrDefault();
+            var listing = _context.BookListings.Where(a => a.ID == id && a.Status == 0).FirstOrDefault();
             var model = new SoldViewModel();
             model.listingId = id;
             model.buyers = new List<ApplicationUser>();
@@ -104,9 +104,19 @@ namespace NYBE.Controllers
         [HttpGet]
         public async Task<IActionResult> Survey(int id)
         {
-           
+            var listing = _context.BookListings.Where(a => a.ID == id && a.Status == 0).FirstOrDefault();
             var model = new SurveyViewModel();
-            
+            model.listing = listing;
+            model.listingId = id;
+            model.courses = _context.Courses.ToList();
+            model.condition = listing.Condition;
+            model.buyers = new List<ApplicationUser>();
+            model.openLogs = _context.TransactionLogs.Where(a => a.SellerID == listing.ApplicationUserID && a.Status == 1 && a.BookID == listing.BookID).OrderByDescending(a => a.TransDate).ToList();
+            foreach (TransactionLog tl in model.openLogs)
+            {
+                var buyer = await _userManager.FindByIdAsync(tl.BuyerID);
+                model.buyers.Add(buyer);
+            }
             return View(model);
         }
 

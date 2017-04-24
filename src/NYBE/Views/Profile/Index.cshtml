@@ -56,7 +56,7 @@
                                 }
                                 @if (Model.ownProfile)
                                 {
-                                    <td><a asp-controller="Transaction" asp-action="Sold" asp-route-id="@x.ID" class="btn btn-primary">Sold</a></td>
+                                    <td><a asp-controller="Transaction" asp-action="Survey" asp-route-id="@x.ID" class="btn btn-primary">Sold</a></td>
                                     <td><a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a></td>
                                     <td><a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@x.ID" class="btn btn-danger">Delete</a></td>
                                 }
