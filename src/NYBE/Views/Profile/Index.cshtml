@@ -92,24 +92,12 @@
                                 {
                                     <td>Trade</td>
                                 }
-<<<<<<< HEAD
-                                @if (Model.ownProfile)
-                                {
-                                    <td><a asp-controller="Transaction" asp-action="Survey" asp-route-id="@x.ID" class="btn btn-primary">Sold</a></td>
-                                    <td><a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a></td>
-                                    <td><a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@x.ID" class="btn btn-danger">Delete</a></td>
-                                }
-                                else
-                                {
-                                    <td><a asp-controller="Transaction" asp-action="Buy" asp-route-id="@x.ID" class="btn btn-success">Buy</a></td>
-                                }
-=======
                                 <td>
                                     <div class="btn-group">
                                         @if (Model.ownProfile)
                                         {
 
-                                            <a asp-controller="Transaction" asp-action="Sold" asp-route-id="@x.ID" class="btn btn-primary">Sold</a>
+                                            <a asp-controller="Transaction" asp-action="Survey" asp-route-id="@x.ID" class="btn btn-primary">Sold</a>
                                             <a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a>
                                             <a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@x.ID" class="btn btn-danger">Delete</a>
                                         }
@@ -119,7 +107,6 @@
                                         }
                                     </div>
                                 </td>
->>>>>>> 4e2c86db93594507fa99a6a86bc3d86455a10585
                             </tr>
                         }
                     </tbody>
@@ -248,10 +235,11 @@
                                 <td> @entry.Key.Condition </td>
                                 @if (entry.Key.AskingPrice > 0)
                                 {
-                                 <td> @string.Format("{0:c}", entry.Key.AskingPrice) </td>
+                                    <td> @string.Format("{0:c}", entry.Key.AskingPrice) </td>
                                 }
-                                else {
-                                  <td>Trade</td>
+                                else
+                                {
+                                    <td>Trade</td>
                                 }
                                 @if (entry.Value)
                                 {
