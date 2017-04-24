@@ -26,9 +26,15 @@
             </div>
         </div>
         <div class="form-group row">
+            <label class="col-lg-2" for="price">Trade</label>
+            <div class="col-lg-10">
+                <input name="editTradeCheckBox" id ="editTradeCheckBox" type="checkbox" data-toggle="toggle" @(Model.price<0 ? "checked": "")>   
+            </div>
+        </div>
+        <div id="editListingPrice" class="form-group row" @(Model.price<0 ? "hidden":"")>
             <label class="col-lg-2" for="price">Price</label>
             <div class="col-lg-10">
-                <input asp-for="price" class="form-control" type="number" value="@Model.price" id="price" step="0.01" />
+                <input asp-for="price" class="form-control" type="number" min="0" value="@Model.price" id="price" step="0.01" />
             </div>
         </div>
   

@@ -84,7 +84,14 @@ namespace NYBE.Controllers
 
                 BookListing newListing = new BookListing();
                 newListing.ApplicationUserID = user.Id;
-                newListing.AskingPrice = viewModel.price;
+                if (Request.Form["listingTradeCheckBox"] == "on")
+                {
+                    newListing.AskingPrice = -1;
+                } else
+                {
+                    newListing.AskingPrice = viewModel.price;
+                }
+                
                 newListing.Condition = viewModel.condition;
                 newListing.BookID = viewModel.book.ID;
                 newListing.Type = SELL;
@@ -135,7 +142,14 @@ namespace NYBE.Controllers
 
                 BookListing newListing = new BookListing();
                 newListing.ApplicationUserID = user.Id;
-                newListing.AskingPrice = viewModel.price;
+                if (Request.Form["wishTradeCheckBox"] == "on")
+                {
+                    newListing.AskingPrice = -1;
+                }
+                else
+                {
+                    newListing.AskingPrice = viewModel.price;
+                }
                 newListing.Condition = viewModel.condition;
                 newListing.BookID = viewModel.book.ID;
                 newListing.Type = WISHLIST;
