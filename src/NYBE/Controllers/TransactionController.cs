@@ -163,6 +163,9 @@ namespace NYBE.Controllers
             else
             {
                 var listing = _context.BookListings.Where(a => a.ID == model.listingId).FirstOrDefault();
+                listing.CourseID = model.courseID;
+                listing.Condition = model.condition;
+                listing.AskingPrice = model.finalPrice;
                 listing.Status = 1;
                 var log = _context.TransactionLogs.Where(a => a.SellerID == listing.ApplicationUserID && a.BuyerID == model.buyerId && a.BookID == listing.BookID && a.Status == 1).FirstOrDefault();
                 log.Condition = model.condition;
