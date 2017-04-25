@@ -10,10 +10,15 @@ namespace NYBE.Models.TransactionViewModels
 
         public string buyerId { get; set; }
         public int listingId { get; set; }
-        public int logId { get; set; }
-        public int finalPrice { get; set; }
+        public double finalPrice { get; set; }
         public int courseID { get; set; }
         public string condition { get; set; }
+        public double rating { get; set; }
+        public string comments { get; set; }
+        public Boolean buyer { get; set; }
+        public Boolean canceled { get; set; }
+
+        public string token { get; set; }
 
         public List<TransactionLog> openLogs { get; set; }
         public List<ApplicationUser> buyers { get; set; }

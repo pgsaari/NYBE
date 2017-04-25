@@ -62,3 +62,13 @@ $("#wishTradeCheckBox").click(function () {
         $("#idealPrice").show();
     }
 });
+
+$("#surveyTradeCheckBox").click(function () {
+    console.log("Clicked!");
+    if (document.getElementById('surveyTradeCheckBox').checked) {
+        $("#surveyPriceDiv").hide();
+        $("#surveyPrice").val(-1);
+    } else {
+        $("#surveyPriceDiv").show();
+    }
+});

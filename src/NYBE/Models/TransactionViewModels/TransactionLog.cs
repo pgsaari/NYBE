@@ -32,6 +32,7 @@ namespace NYBE.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public double SoldPrice { get; set; } // how did i forget this...? -ps
         public string Condition { get; set; }
+        public string Comments { get; set; }
         public DateTime TransDate { get; set; }
 
         public ApplicationUser Seller { get; set; }

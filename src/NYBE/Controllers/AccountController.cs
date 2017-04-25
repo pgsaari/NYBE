@@ -62,11 +62,11 @@ namespace NYBE.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByEmailAsync(model.Email);
-                    if (user.Status == 0)
+                    if (user == null || user.Status == 0)
                     {
                         ModelState.AddModelError(string.Empty, "Account is deactivated. Please contact an Administrator.");
                         await _signInManager.SignOutAsync();
@@ -78,7 +78,7 @@ namespace NYBE.Controllers
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl });
                 }
                 if (result.IsLockedOut)
                 {
