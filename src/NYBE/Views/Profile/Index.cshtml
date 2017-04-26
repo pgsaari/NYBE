@@ -3,6 +3,12 @@
     ViewData["Title"] = "Profile";
 }
 
+<!-- default styles -->
+<link href="~/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+<!-- important mandatory libraries -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
+<script src="~/js/star-rating.js" type="text/javascript"></script>
+
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css" />
@@ -40,31 +46,42 @@
     </script>
 }
 
-<h1>@Model.name's Profile</h1>
+<head>
+    <style>
+        .inline-headers h1, .inline-headers h3 {
+            display: inline-block;
+            vertical-align: baseline;
+        }
+    </style>
+</head>
 
-@if (Model.isAdmin == true)
-{
-    <h3 style="color: red">Admin</h3>
-}
+<div class="inline-headers">
+    <h1>@Model.name's Profile</h1>
+    @if (Model.isAdmin == true)
+    {
+        <h3 style="color:red;padding-left:10px;">Admin</h3>
+    }
+</div>
+<input class="rating rating-loading" value="@Model.rating" data-min="0" data-max="5" data-step="0.1" data-size="xs" data-readonly="true">
+<p><b>Phone Number:</b> <a href="tel:+@Model.phone">@Model.phone</a></p>
+<p><b>Email:</b> <a href="mailto:@Model.email">@Model.email</a></p>
+<p><b>Preferred Contact:</b> @Model.preferredContact</p>
+<p><b>School:</b> @Model.school.Name</p>
 
-<p>Rating: @Model.rating</p>
-<p>Phone Number: <a href="tel:+@Model.phone">@Model.phone</a></p>
-<p>Email: <a href="mailto:@Model.email">@Model.email</a></p>
-<p>Preferred Contact: @Model.preferredContact</p>
-<p>School: @Model.school.Name</p>
-
+<hr />
 
 <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#listings">Listings</a></li>
-    <li><a data-toggle="tab" href="#sold">Sold Books</a></li>
-    <li><a data-toggle="tab" href="#bought">Bought Books</a></li>
-    <li><a data-toggle="tab" href="#wish">Wish List</a></li>
+    <li class="active"><a data-toggle="tab" href="#listings">Selling</a></li>
+    <li><a data-toggle="tab" href="#sold">Sold</a></li>
+    <li><a data-toggle="tab" href="#wish">Buying</a></li>
+    <li><a data-toggle="tab" href="#bought">Bought</a></li>
 </ul>
 <div class="tab-content">
     <div id="listings" class="tab-pane fade in active">
-        <h4>Book Listings</h4>
+        <h4 class="text-center"><b>Selling Books</b></h4>
+        <br />
         @if (Model.listings.Any())
-        {
+            {
             <div class="table-responsive">
                 <table id="book-listings" class="table table-striped">
                     <thead>
@@ -98,8 +115,8 @@
                                         {
 
                                             <a asp-controller="Transaction" asp-action="Survey" asp-route-id="@x.ID" asp-route-token="owner" class="btn btn-primary">Sold</a>
-                                            <a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a>
-                                            <a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@x.ID" class="btn btn-danger">Delete</a>
+                                                <a asp-controller="Profile" asp-action="EditListing" asp-route-id="@x.ID" class="btn btn-success">Edit</a>
+                                                <a asp-controller="Profile" asp-action="DeleteListing" asp-route-id="@x.ID" class="btn btn-danger">Delete</a>
                                         }
                                         else
                                         {
@@ -115,14 +132,15 @@
         }
         else
         {
-            <h5>No Books Listed!</h5>
+            <h5 class="text-center">No Books to Sell!</h5>
         }
     </div>
 
-
     <div id="sold" class="tab-pane fade">
+        <h4 class="text-center"><b>Books Sold</b></h4>
+        <br />
         @if (Model.soldTransactions.Any())
-        {
+            {
             <div class="table-responsive">
                 <table id="sold-books" class="table table-striped">
                     <thead>
@@ -162,56 +180,13 @@
         }
         else
         {
-            <h5>No Transaction History!</h5>
+            <h5 class="text-center">No Books Sold!</h5>
         }
     </div>
-    <div id="bought" class="tab-pane fade">
-        <h4>Books you bought:</h4>
-        @if (Model.boughtTransactions.Any())
-        {
-            <div class="table-responsive">
-                <table id="bought-books" class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Seller Name</th>
-                            <th>Seller Email</th>
-                            <th>Book</th>
-                            <th>Trans Amt</th>
-                            <th>Condition</th>
-                            <th>Rating</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (TransactionLog x in Model.boughtTransactions)
-                {
-                            <tr style="cursor:pointer" onclick="location.href = '@(Url.Action("Index", "Transaction", new { id = x.ID }))'">
-                                <td> @x.TransDate</td>
-                                <td> <a asp-controller="Profile" asp-route-UserId="@x.Seller.Id">@x.Seller.FirstName @x.Seller.LastName</a></td>
-                                <td> @x.Seller.Email</td>
-                                <td> <a asp-controller="Book" asp-action="Index" asp-route-bookId="@x.BookID">@x.Book.Title</a></td>
-                                @if (x.SoldPrice > 0)
-                                {
-                                    <td> @string.Format("{0:c}", x.SoldPrice) </td>
-                                }
-                                else
-                                {
-                                    <td>Trade</td>
-                                }
-                                <td> @x.Condition</td>
-                                <td> @x.TransRating</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        }
-        else
-        {
-            <h5>No Transaction History!</h5>
-        }
-    </div>
+
     <div id="wish" class="tab-pane fade">
+        <h4 class="text-center"><b>Buying Books</b></h4>
+        <br />
         @if (Model.wishList.Any())
             {
             <div class="table-responsive">
@@ -272,7 +247,55 @@
         }
         else
         {
-            <h5>No books in Wish List!</h5>
+            <h5 class="text-center">No Books to Buy!</h5>
+        }
+    </div>
+
+    <div id="bought" class="tab-pane fade">
+        <h4 class="text-center"><b>Books Bought</b></h4>
+        <br />
+        @if (Model.boughtTransactions.Any())
+            {
+            <div class="table-responsive">
+                <table id="bought-books" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Seller Name</th>
+                            <th>Seller Email</th>
+                            <th>Book</th>
+                            <th>Trans Amt</th>
+                            <th>Condition</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (TransactionLog x in Model.boughtTransactions)
+                {
+                            <tr style="cursor:pointer" onclick="location.href = '@(Url.Action("Index", "Transaction", new { id = x.ID }))'">
+                                <td> @x.TransDate</td>
+                                <td> <a asp-controller="Profile" asp-route-UserId="@x.Seller.Id">@x.Seller.FirstName @x.Seller.LastName</a></td>
+                                <td> @x.Seller.Email</td>
+                                <td> <a asp-controller="Book" asp-action="Index" asp-route-bookId="@x.BookID">@x.Book.Title</a></td>
+                                @if (x.SoldPrice > 0)
+                                {
+                                    <td> @string.Format("{0:c}", x.SoldPrice) </td>
+                                }
+                                else
+                                {
+                                    <td>Trade</td>
+                                }
+                                <td> @x.Condition</td>
+                                <td> @x.TransRating</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <h5 class="text-center">No Books Bought!</h5>
         }
     </div>
 </div>

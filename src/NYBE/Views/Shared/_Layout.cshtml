@@ -52,9 +52,7 @@
             }
 
         .center {
-            padding-top: 10px;
-            display: block;
-            text-align: center;
+            position: center;
         }
     </style>
 </head>
@@ -73,25 +71,27 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand nounderline">
                     <img src="~/images/NYBE.svg" />
                 </a>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-text nounderline">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-text navbar-left nounderline">
                     <h4 style="color:#4b4b4b;">NYBE</h4>
                 </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar-collapse-1" style="text-align:center;">
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     @await Html.PartialAsync("_LoginPartial")
                 </ul>
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <form asp-controller="Search" asp-action="Index">
-                        <div class="navbar-nav" role="search" style="padding-top:17px;display: inline-block;float: none;">
-                            <div class="input-group">
-                                <input name="generalSearch" type="text" class="form-control" placeholder="Search Books">
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
-                                </span>
+                        <div class="navbar-form" role="search" style="text-align:center; padding-top:15px;">
+                            <div class="container" style="display:table-cell;">
+                                <div class="input-group">
+                                    <input name="generalSearch" type="text" class="form-control" placeholder="Search Books">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </form>
