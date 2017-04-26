@@ -81,7 +81,7 @@
                         @foreach (BookListing x in Model.listings)
                 {
                             <tr>
-                                <td> @x.Book.Title </td>
+                                <td> <a asp-controller="Book" asp-action="Index" asp-route-bookId="@x.BookID">@x.Book.Title</a> </td>
                                 <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
                                 <td> @x.Condition </td>
                                 @if (x.AskingPrice > 0)
@@ -139,11 +139,11 @@
                     <tbody>
                         @foreach (TransactionLog x in Model.soldTransactions)
                 {
-                            <tr>
+                            <tr style="cursor:pointer" onclick="location.href = '@(Url.Action("Index", "Transaction", new { id = x.ID }))'">
                                 <td> @x.TransDate</td>
-                                <td> @x.Buyer.FirstName @x.Buyer.LastName</td>
+                                <td> <a asp-controller="Profile" asp-route-UserId="@x.Buyer.Id">@x.Buyer.FirstName @x.Buyer.LastName</a></td>
                                 <td> @x.Buyer.Email</td>
-                                <td> @x.Book.Title</td>
+                                <td> <a asp-controller="Book" asp-action="Index" asp-route-bookId="@x.BookID">@x.Book.Title</a></td>
                                 @if (x.SoldPrice > 0)
                                 {
                                     <td> @string.Format("{0:c}", x.SoldPrice) </td>
@@ -185,11 +185,11 @@
                     <tbody>
                         @foreach (TransactionLog x in Model.boughtTransactions)
                 {
-                            <tr>
+                            <tr style="cursor:pointer" onclick="location.href = '@(Url.Action("Index", "Transaction", new { id = x.ID }))'">
                                 <td> @x.TransDate</td>
-                                <td> @x.Seller.FirstName @x.Seller.LastName</td>
+                                <td> <a asp-controller="Profile" asp-route-UserId="@x.Seller.Id">@x.Seller.FirstName @x.Seller.LastName</a></td>
                                 <td> @x.Seller.Email</td>
-                                <td> @x.Book.Title</td>
+                                <td> <a asp-controller="Book" asp-action="Index" asp-route-bookId="@x.BookID">@x.Book.Title</a></td>
                                 @if (x.SoldPrice > 0)
                                 {
                                     <td> @string.Format("{0:c}", x.SoldPrice) </td>
@@ -230,7 +230,7 @@
                         @foreach (KeyValuePair<BookListing, bool> entry in Model.wishList)
                         {
                             <tr>
-                                <td> @entry.Key.Book.Title </td>
+                                <td> <a asp-controller="Book" asp-action="Index" asp-route-bookId="@entry.Key.Book.ID">@entry.Key.Book.Title</a> </td>
                                 <td> @entry.Key.Course.Dept @entry.Key.Course.CourseNum - @entry.Key.Course.Name </td>
                                 <td> @entry.Key.Condition </td>
                                 @if (entry.Key.AskingPrice > 0)

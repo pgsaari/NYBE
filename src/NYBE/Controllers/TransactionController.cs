@@ -32,6 +32,31 @@ namespace NYBE.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Index(int id)
+        {
+            var log = _context.TransactionLogs.Where(a => a.ID == id).FirstOrDefault();
+            var buyer = await _userManager.FindByIdAsync(log.BuyerID);
+            var seller = await _userManager.FindByIdAsync(log.SellerID);
+            if (log == null || buyer == null || seller == null) {
+                return View("Error");
+            }
+            var book = _context.Books.Where(a => a.ID == log.BookID).FirstOrDefault();
+            if (book == null) {
+                return View("Error");
+            }
+            var model = new IndexViewModel {
+                TransRating = log.TransRating,
+                SoldPrice = log.SoldPrice,
+                Condition = log.Condition,
+                Comments = log.Comments,
+                Book = book,
+                Seller = seller,
+                Buyer = buyer
+            };
+            return View(model);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Buy(int id)
         {
             var model = new BuyViewModel();
