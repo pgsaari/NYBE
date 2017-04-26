@@ -24,8 +24,8 @@
             text-decoration: none !important;
         }
 
-        body { 
-            padding-top: 70px; 
+        body {
+            padding-top: 70px;
         }
 
         .navbar-brand {
@@ -45,11 +45,11 @@
             line-height: 70px;
         }
 
-        .navbar-brand > img {
-            height: 100%;
-            padding: 15px; /* firefox bug fix */
-            width: auto;
-        }
+            .navbar-brand > img {
+                height: 100%;
+                padding: 15px; /* firefox bug fix */
+                width: auto;
+            }
 
         .center {
             padding-top: 10px;
@@ -79,18 +79,22 @@
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <div class="collapse navbar-collapse" id="navbar-collapse-1" style="text-align:center;">
                 <ul class="nav navbar-nav navbar-right">
                     @await Html.PartialAsync("_LoginPartial")
                 </ul>
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <div class="form-inline navbar-left col-sm-offset-4" role="search" style="padding-top:17px">
-                        <form asp-controller="Search" asp-action="Index">
-                            <input name="generalSearch"type="text" class="form-control" placeholder="Search Books">
-                            <button type="submit" class="btn btn-success">Go!</button>
-                        </form>
-                    </div>
+                    <form asp-controller="Search" asp-action="Index">
+                        <div class="navbar-nav" role="search" style="padding-top:17px;display: inline-block;float: none;">
+                            <div class="input-group">
+                                <input name="generalSearch" type="text" class="form-control" placeholder="Search Books">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
                 }
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
