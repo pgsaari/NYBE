@@ -13,6 +13,7 @@ namespace NYBE.Models.TransactionViewModels
         public double SoldPrice { get; set; }
         public string Condition { get; set; }
         public string Comments { get; set; }
+        public DateTime Date;
         public Book Book;
         public ApplicationUser Seller;
         public ApplicationUser Buyer;

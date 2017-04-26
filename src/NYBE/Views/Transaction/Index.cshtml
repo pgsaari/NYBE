@@ -1,8 +1,69 @@
 ﻿@model NYBE.Models.TransactionViewModels.IndexViewModel
 
 @{
-    ViewData["Title"] = "Transaction View";
+    ViewData["Title"] = Model.Seller.FirstName + " " + Model.Seller.LastName + " sold ";
 }
 
-<h2 class="text-center">@ViewData["Title"]</h2>
-<hr />
+<!-- default styles -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+<link href="~/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+<!-- important mandatory libraries -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
+<script src="~/js/star-rating.js" type="text/javascript"></script>
+
+<h2 class="text-center">@ViewData["Title"] <a asp-controller="Book" asp-action="Index" asp-route-bookId="@Model.Book.ID">@Model.Book.Title</a></h2>
+<div class="col-sm-12" style="text-align:center;">
+    <input class="rating rating-loading" value="@Model.TransRating" data-min="0" data-max="5" data-step="0.1" data-size="xs" data-readonly="true" style="text-align:center;">
+    <p />
+</div>
+<h5 class="text-center">@Model.Date</h5>
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <hr />
+        @if (Model.SoldPrice > 0)
+        {
+            <h3 class="text-center" style="color:forestgreen;">$@Model.SoldPrice</h3>
+        }
+        else
+        {
+            <h3 class="text-center" style="color:forestgreen;">Trade</h3>
+        }
+        <div class="form-group">
+            <div class="col-sm-2 col-sm-offset-1">
+                @if (Model.Book.Image != null)
+                {
+                    <img src="@Model.Book.Image" class="img-responsive" style="max-width:150px;max-height:200px;" />
+                }
+                else
+                {
+                    <i class="glyphicon glyphicon-book" style="font-size:200px;color:dimgrey;"></i>
+                }
+            </div>
+            <div class="col-sm-8 col-sm-offset-1">
+                <p><b>Author:</b> @Model.Book.AuthorFName @Model.Book.AuthorLName</p>
+                <p><b>@Model.Book.Edition Edition</b></p>
+                <p><b>ISBN:</b> @Model.Book.ISBN</p>
+                <p><b>Description:</b> @Model.Book.Description</p>
+                <p><b>Publisher:</b> @Model.Book.Publisher</p>
+                <p><b>Condition:</b> @Model.Condition</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10 col-sm-offset-1">
+                <p><b>@Model.Buyer.FirstName @Model.Buyer.LastName Notes:</b></p>
+            </div>
+            <div class="col-sm-10 col-sm-offset-1 text-center" style="border:dashed;border-width:1px;border-color:black;">
+                <p>@Model.Comments</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-10 col-sm-offset-1">
+        <hr />
+            <div class="form-group">
+                <div class="col-sm-6 col-sm-offset-5">
+                    <button id="but" value="" type="button" onclick="history.go(-1)" class="btn btn-primary">Back</button>
+                </div>
+            </div>
+    </div>
+</div>
+

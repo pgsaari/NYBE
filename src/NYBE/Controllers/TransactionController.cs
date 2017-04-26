@@ -44,11 +44,14 @@ namespace NYBE.Controllers
             if (book == null) {
                 return View("Error");
             }
+            var notes = log.Comments;
+            if (log.Comments == null || log.Comments.Length < 1) { notes = "None"; }
             var model = new IndexViewModel {
                 TransRating = log.TransRating,
                 SoldPrice = log.SoldPrice,
                 Condition = log.Condition,
-                Comments = log.Comments,
+                Comments = notes,
+                Date = log.TransDate,
                 Book = book,
                 Seller = seller,
                 Buyer = buyer
