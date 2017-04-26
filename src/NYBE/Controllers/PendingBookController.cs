@@ -71,6 +71,36 @@ namespace NYBE.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> GoogleBookSubmission(PendingBookViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await GetCurrentUserAsync();
+
+                Book pBook = new Book();
+                pBook.Title = viewModel.title;
+                pBook.AuthorFName = viewModel.authorFName;
+                pBook.AuthorLName = viewModel.authorLName;
+                pBook.ISBN = viewModel.isbn;
+                pBook.Edition = viewModel.edition;
+                pBook.Publisher = viewModel.publisher;
+                pBook.Description = viewModel.description;
+                pBook.Image = viewModel.image;
+                pBook.Status = 1;
+
+                ctx.Books.Add(pBook);
+                ctx.SaveChanges();
+
+                return View("Confirm");
+            }
+            else
+            {
+                return View(viewModel);
+            }
+        }
+
         [HttpGet]
         [Authorize(Roles ="Admin")]
         public IActionResult Manage()
