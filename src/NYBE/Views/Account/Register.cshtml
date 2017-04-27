@@ -19,9 +19,9 @@ $(document).ready(function(){
 <div class="row">
     <div class="col-sm-10 col-sm-offset-1">
         <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-4">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input asp-for="FirstName" class="form-control" placeholder="First Name" />
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
