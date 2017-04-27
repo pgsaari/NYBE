@@ -5,7 +5,10 @@
 
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css" />
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />
+
 <script>
     var jquery = jQuery.noConflict();
     jquery(document).ready(function () {
@@ -31,7 +34,8 @@
     </script>
 }
 
-<h1>Manage Schools</h1>
+<h2 class="text-center">Manage Schools</h2>
+<br />
 
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#pending">Pending Schools</a></li>
@@ -78,7 +82,7 @@
 
         else
         {
-            <h4>Currently no Pending Schools!</h4>
+            <h5 class="text-center">Currently no Pending Schools!</h5>
         }
     </div>
     <div id="all" class="tab-pane fade">

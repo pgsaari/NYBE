@@ -74,9 +74,14 @@ namespace NYBE.Controllers
                 var user = await usrCtx.FindByIdAsync(model.userId);
 
                 // remove user from old role and add to new role
-                await usrCtx.RemoveFromRoleAsync(user, model.oldRole);
-                await usrCtx.AddToRoleAsync(user, model.newRole);
-
+                if (model.oldRole != null && model.newRole != null)
+                {
+                    await usrCtx.RemoveFromRoleAsync(user, model.oldRole);
+                }
+                if (model.newRole != null)
+                {
+                    await usrCtx.AddToRoleAsync(user, model.newRole);
+                }
 
                 return RedirectToAction("Index");
             }
