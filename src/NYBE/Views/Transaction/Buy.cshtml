@@ -9,23 +9,16 @@
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
             <hr />
-            @if (Model.listing.AskingPrice > 0)
-            {
-                <h3 class="text-center" style="color:forestgreen;">$@Model.listing.AskingPrice</h3>
-            }
-            else
-            {
-                <h3 class="text-center" style="color:forestgreen;">Trade</h3>
-            }
+            <h3 class="text-center" style="color:forestgreen;">@(Model.listing.AskingPrice > 0 ? "$" + @Model.listing.AskingPrice : "Trade")</h3>
             <div class="form-group">
                 <div class="col-sm-2 col-sm-offset-1">
                     @if (Model.listing.Book.Image != null)
                     {
-                        <img src="@Model.listing.Book.Image" class="img-responsive" style="max-width:115px; max-height:175px;" />
+                        <img src="@Model.listing.Book.Image" class="img-responsive" style="max-width:150px; max-height:200px;" />
                     }
                     else
                     {
-                        <i class="glyphicon glyphicon-book" style="font-size:100px; color:dimgrey;"></i>
+                        <i class="glyphicon glyphicon-book" style="font-size:200px; color:dimgrey;"></i>
                     }
                 </div>
                 <div class="col-sm-8 col-sm-offset-1">

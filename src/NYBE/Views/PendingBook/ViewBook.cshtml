@@ -28,7 +28,27 @@
 <br />
 <form asp-controller="PendingBook" asp-action="Deny" class="text-center">
     <input asp-for="id" id="id" type="hidden" />
-    <input type="submit" value="Deny" class="btn btn-danger" />
+    <input type="button" value="Deny" class="btn btn-danger" data-toggle="modal" data-target="#denyModal" />
+    <!-- Modal -->
+    <div class="modal fade" id="denyModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header alert-danger">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Deny Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to deny this book?</p>
+                    <p>Once denied, you may make unicorns cry.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Not Sure</button>
+                    <button type="submit" class="btn btn-success">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 <hr />
 

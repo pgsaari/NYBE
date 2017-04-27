@@ -48,9 +48,9 @@
 
 <head>
     <style>
-        .inline-headers h1, .inline-headers h3 {
+        .inline-headers h1, .inline-headers h4 {
             display: inline-block;
-            vertical-align: baseline;
+            vertical-align: middle;
         }
     </style>
 </head>
@@ -59,7 +59,7 @@
     <h1>@Model.name's Profile</h1>
     @if (Model.isAdmin == true)
     {
-        <h3 style="color:red;padding-left:10px;">Admin</h3>
+        <h4><span class="label label-danger">Admin</span></h4>
     }
 </div>
 <input class="rating rating-loading" value="@Model.rating" data-min="0" data-max="5" data-step="0.1" data-size="xs" data-readonly="true">

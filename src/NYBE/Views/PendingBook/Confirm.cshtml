@@ -2,10 +2,13 @@
 @{
     ViewData["Title"] = "Book Requested";
 }
-<h2>Book Requested!</h2>
-<p>We recieved your request to add this book to our database!</p>
-<p>Our database of books is constantly growing, thank you for helping it grow!</p>
-<p>An administrator will review your submission.</p>
-<br />
-<a asp-controller="Home" asp-action="Index" class="btn btn-default">Return Home</a>
-<a asp-controller="Search" asp-action="Index" class="btn btn-default">Keep Searching</a>
+
+<div class="text-center">
+    <h2>Book Requested!</h2>
+    <p>We recieved your request to add this book to our database!</p>
+    <p>Our database of books is constantly growing, thank you for helping it grow!</p>
+    <p>An administrator will review your submission.</p>
+    <br />
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Return Home</a>
+    <a asp-controller="Search" asp-action="Index" class="btn btn-success">Keep Searching</a>
+</div>

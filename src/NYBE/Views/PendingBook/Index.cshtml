@@ -18,163 +18,155 @@
 
 </script>
 
-<h2>Request a Book</h2>
-<p>Sorry we don't have the book you're looking for. You can request to have it added here!</p>
-<br/>
+<div class="text-center">
+    <h2>Request a Book</h2>
+    <p>Sorry we don't have the book you're looking for. You can request to have it added here!</p>
+</div>
+<hr />
+<div class="row">
+    <div class="col-sm-6">
+        <h4 class="text-center">Enter Manually</h4>
+        <hr />
+        <form asp-controller="PendingBook" asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input asp-for="title" class="form-control" id="title" placeholder="Title" />
+                    <span asp-validation-for="title" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input asp-for="authorLName" class="form-control" id="authorLName" placeholder="Author Last Name" />
+                    <span asp-validation-for="authorLName" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input asp-for="authorFName" class="form-control" id="authorFName" placeholder="Author First Name" />
+                    <span asp-validation-for="authorFName" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input asp-for="isbn" class="form-control" id="isbn" placeholder="ISBN" />
+                    <span asp-validation-for="isbn" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input asp-for="edition" class="form-control" id="edition" placeholder="Edition" />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input asp-for="publisher" class="form-control" id="publisher" placeholder="Publisher" />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <textarea asp-for="description" rows="5" class="form-control" id="description" placeholder="Description"></textarea>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input asp-for="image" class="form-control" id="image" onchange="showimagepreview(this)" placeholder="Image URL" />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <img class="col-sm-6 col-sm-offset-3" id="imgDisplayarea" />
+            </div>
+            <br />
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Cancel</a>
+            <button type="submit" class="btn btn-success">Request</button>
+        </form>
+    </div>
 
-<form asp-controller="PendingBook" asp-action="Index" class="col-md-6">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group row">
-        <label class="col-md-4" for="title">Title</label>
-        <div class="col-md-5">
-            <input asp-for="title" class="form-control" id="title" data-val-required="Title is required."/>   
-        </div>
-        <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="title"></span>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-4" for="authorFName">Author Last Name</label>
-        <div class="col-md-5">
-            <input asp-for="authorLName" class="form-control" id="authorLName" data-val-required="Author's last name is required."/>
-            <span class="text-danger field-validation-valid" data-valmsg-for="authorLName" data-valmsg-replace="true"></span>
-        </div>
-        <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="authorLName"></span>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-4" for="authorFName">Author First Name</label>
-        <div class="col-md-5">
-            <input asp-for="authorFName" class="form-control" id="authorFName" data-val-required="Author's first name is required."/>
-            <span class="text-danger field-validation-valid" data-valmsg-for="authorFName" data-valmsg-replace="true"></span>
-        </div>
-        <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="authorFName"></span>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-4" for="isbn">ISBN</label>
-        <div class="col-md-5">
-            <input asp-for="isbn" class="form-control" id="isbn" data-val-required="ISBN is required."/>
-            <span class="text-danger field-validation-valid" data-valmsg-for="isbn" data-valmsg-replace="true"></span>
-        </div>
-        <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="isbn"></span>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-4" for="edition">Edition</label>
-        <div class="col-md-5">
-            <input asp-for="edition" class="form-control" id="edition" />
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-4" for="publisher">Publisher</label>
-        <div class="col-md-5">
-            <input asp-for="publisher" class="form-control" id="publisher" />
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-4" for="description">Description</label>
-        <div class="col-md-5">
-            <textarea asp-for="description" rows="5" class="form-control" id="description" ></textarea>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-4" for="image">Image URL</label>
-        <div class="col-md-5">
-            <input asp-for="image" class="form-control" id="image" onchange="showimagepreview(this)"/>
-        </div>
-    </div>
-    <div class="row">
-        <label class="col-md-4" for="price">Cover</label>
-        <img class="col-md-5" id="imgDisplayarea" />
-    </div>
-    <br/>
-    <a asp-controller="Home" asp-action="Index" class="btn btn-default">Cancel</a>
-    <button type="submit" class="btn btn-success">Request</button>
+    <div class="col-sm-6">
+        <h4 class="text-center">Search Google Books</h4>
+        <hr />
+        <div class="form-inline text-center">
+                    <div class="input-group">
+                        <input type="text" id="gb_search_isbn" class="form-control" placeholder="ISBN" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-success" id="googleBooksSearch"><i class="glyphicon glyphicon-search"></i></button>
+                        </span>
+                    </div>
+                </div>
 
-</form>
-
-<br/>
-
-<div class="col-md-6">
-    <form>
-        <div class="form-group row">
-            <label class="col-md-4" for="gb_search_isbn">ISBN:</label>
-            <div class="col-md-5">
-                <input type="text" id="gb_search_isbn" class="form-control" />
-            </div>
-        </div>
-        <button type="button" class="btn btn-success" id="googleBooksSearch">Search Google Books</button>
-    </form>
-
-    <br />
-
-    <form id="gb_form" hidden asp-controller="PendingBook" asp-action="GoogleBookSubmission">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group row">
-            <label class="col-md-4" for="gb_title">Title</label>
-            <div class="col-md-5">
-                <p id="gb_label_title"></p>
-                <input type="hidden" asp-for="title" class="form-control" id="gb_title" data-val-required="Title is required." />
-            </div>
-            <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="title"></span>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-4" for="gb_authorLName">Name Last Name</label>
-            <div class="col-md-5">
-                <p id="gb_label_authorLName"></p>
-                <input type="hidden" asp-for="authorLName" class="form-control" id="gb_authorLName" data-val-required="Author's last name is required." />
-                <span class="text-danger field-validation-valid" data-valmsg-for="authorLName" data-valmsg-replace="true"></span>
-            </div>
-            <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="authorLName"></span>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-4" for="gb_authorFName">Author First Name</label>
-            <div class="col-md-5">
-                <p id="gb_label_authorFName"></p>
-                <input type="hidden" asp-for="authorFName" class="form-control" id="gb_authorFName" data-val-required="Author's first name is required." />
-                <span class="text-danger field-validation-valid" data-valmsg-for="authorFName" data-valmsg-replace="true"></span>
-            </div>
-            <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="authorFName"></span>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-4" for="gb_isbn">ISBN</label>
-            <div class="col-md-5">
-                <p id="gb_label_isbn"></p>
-                <input type="hidden" asp-for="isbn" class="form-control" id="gb_isbn" data-val-required="ISBN is required." />
-                <span class="text-danger field-validation-valid" data-valmsg-for="isbn" data-valmsg-replace="true"></span>
-            </div>
-            <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="isbn"></span>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-4" for="edition">Edition</label>
-            <div class="col-md-5">
-                <input asp-for="edition" class="form-control" id="gb_edition" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-4" for="publisher">Publisher</label>
-            <div class="col-md-5">
-                <p id="gb_label_publisher"></p>
-                <input type="hidden" asp-for="publisher" class="form-control" id="gb_publisher" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-4" for="gb_description">Description</label>
-            <div class="col-md-5">
-                <p id="gb_label_description"></p>
-                <input type="hidden" asp-for="description" rows="5" class="form-control" id="gb_description" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-4" for="gb_image">Image URL</label>
-            <div class="col-md-5">
-                <p id="gb_label_image"></p>
-                <input type="hidden" asp-for="image" class="form-control" id="gb_image" onchange="showimagepreview(this)" />
-            </div>
-        </div>
-        <div class="row">
-            <label class="col-md-4" for="price">Cover</label>
-            <img class="col-md-5" id="gb_imgDisplayarea" />
-        </div>
         <br />
-        <a asp-controller="Home" asp-action="Index" class="btn btn-default">Cancel</a>
-        <button type="submit" class="btn btn-success">Request</button>
 
-    </form>
+        <form asp-controller="PendingBook" asp-action="GoogleBookSubmission" id="gb_form" hidden>
+            <div class="form-group row">
+                <label class="col-sm-4" for="gb_title">Title:</label>
+                <div class="col-sm-5">
+                    <p id="gb_label_title"></p>
+                    <input type="hidden" asp-for="title" id="gb_title" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4" for="gb_authorLName">Author Last Name:</label>
+                <div class="col-sm-5">
+                    <p id="gb_label_authorLName"></p>
+                    <input type="hidden" asp-for="authorLName" id="gb_authorLName" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4" for="gb_authorFName">Author First Name:</label>
+                <div class="col-sm-5">
+                    <p id="gb_label_authorFName"></p>
+                    <input type="hidden" asp-for="authorFName" id="gb_authorFName" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4" for="gb_isbn">ISBN:</label>
+                <div class="col-sm-5">
+                    <p id="gb_label_isbn"></p>
+                    <input type="hidden" asp-for="isbn" id="gb_isbn" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4" for="edition">Edition:</label>
+                <div class="col-sm-5">
+                    <input asp-for="edition" class="form-control" id="gb_edition" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4" for="publisher">Publisher</label>
+                <div class="col-sm-5">
+                    <p id="gb_label_publisher"></p>
+                    <input type="hidden" asp-for="publisher" id="gb_publisher" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4" for="gb_description">Description:</label>
+                <div class="col-sm-5">
+                    <p id="gb_label_description"></p>
+                    <input type="hidden" asp-for="description" id="gb_description" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4" for="gb_image">Image URL:</label>
+                <div class="col-sm-5">
+                    <p id="gb_label_image"></p>
+                    <input type="hidden" asp-for="image" id="gb_image" onchange="showimagepreview(this)" />
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-sm-4" for="price">Cover:</label>
+                <img class="col-sm-5" id="gb_imgDisplayarea" />
+            </div>
+            <br />
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Cancel</a>
+            <button type="submit" class="btn btn-success">Request</button>
+        </form>
+    </div>
 </div>

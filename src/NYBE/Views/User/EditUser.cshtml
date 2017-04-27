@@ -2,28 +2,35 @@
 @{
     ViewData["Title"] = "Edit User";
 }
-<h2>Edit User</h2>
+
+<!-- default styles -->
+<link href="~/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+<!-- important mandatory libraries -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
+<script src="~/js/star-rating.js" type="text/javascript"></script>
+
+<h2 class="text-center">Edit User</h2>
+<hr />
 <form asp-controller="User" asp-action="EditUser">
-    <div >
-        <h4>@Model.name</h4>
-        <p><b>Email: </b>@Model.email</p>
-        <p><b>Phone: </b>@Model.phone</p>
-        <p><b>School: </b>@Model.school</p>
-        <p><b>Rating: </b>@Model.rating</p>
-        <!--Weird, but you have to use Html.HiddenFor to get these fields in the post method-->
-        @Html.HiddenFor(Model => Model.userId)
-        @Html.HiddenFor(model => Model.oldRole)
-    </div>
-    <div class="form-group">
+    <h2>@Model.name</h2>
+    <input class="rating rating-loading" value="@Model.rating" data-min="0" data-max="5" data-step="0.1" data-size="xs" data-readonly="true">
+    <p><b>Phone Number: </b> <a href="tel:+@Model.phone">@Model.phone</a></p>
+    <p><b>Email: </b> <a href="mailto:@Model.email">@Model.email</a></p>
+    <p><b>School: </b> @Model.school</p>
+    <!--Weird, but you have to use Html.HiddenFor to get these fields in the post method-->
+    @Html.HiddenFor(Model => Model.userId)
+    @Html.HiddenFor(model => Model.oldRole)
+    <div class="form-inline">
         <label for="newRole"><b>Role: </b></label>
-        <div>
             <select asp-for="newRole" class="form-control" name="newRole">
                 <option selected disabled hidden>@Model.oldRole</option> <!--Show the previous role-->
                 <option value="User">User</option>
                 <option value="Admin">Admin</option>
             </select>
-        </div>
     </div>
-    <a asp-controller="User" asp-action="Index" class="btn btn-default">Cancel</a>
-    <button type="submit" class="btn btn-success">Save</button>
+    <hr />
+    <div class="text-center">
+        <a asp-controller="User" asp-action="Index" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn btn-success">Save</button>
+    </div>
 </form>

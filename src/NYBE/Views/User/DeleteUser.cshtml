@@ -4,24 +4,69 @@
     ViewData["Title"] = "Disable User";
 }
 
-<h1>Disable User?</h1>
+<!-- default styles -->
+<link href="~/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+<!-- important mandatory libraries -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
+<script src="~/js/star-rating.js" type="text/javascript"></script>
 
-<h4>Disabling a User will deactivate their account.</h4>
-<h5>Is this what you want to do?</h5>
-<br />
+<head>
+    <style>
+        .inline-headers h2, .inline-headers h4 {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<div class="text-center">
+    <h2>Disable User</h2>
+    <h4>Disabling a User will deactivate their account.</h4>
+</div>
+<hr />
 
 <form asp-controller="User" asp-action="DeleteUser">
-
-    <h4>@Model.name</h4>
-    <p><b>Role: </b>@Model.oldRole</p>
-    <p><b>Email: </b>@Model.email</p>
-    <p><b>Phone: </b>@Model.phone</p>
-    <p><b>School: </b>@Model.school</p>
-    <p><b>Rating: </b>@Model.rating</p>
+    <div class="inline-headers">
+        <h2>@Model.name</h2>
+        @if (Model.oldRole == "Admin")
+        {
+            <h4><span class="label label-danger">@Model.oldRole</span></h4>
+        }
+        else
+        {
+            <h4><span class="label label-success">@Model.oldRole</span></h4>
+        }
+    </div>
+    <input class="rating rating-loading" value="@Model.rating" data-min="0" data-max="5" data-step="0.1" data-size="xs" data-readonly="true">
+    <p><b>Phone Number: </b> <a href="tel:+@Model.phone">@Model.phone</a></p>
+    <p><b>Email: </b> <a href="mailto:@Model.email">@Model.email</a></p>
+    <p><b>School: </b> @Model.school</p>
     <!--Weird, but you have to use Html.HiddenFor to get these fields in the post method-->
     @Html.HiddenFor(Model => Model.userId)
     @Html.HiddenFor(model => Model.oldRole)
-
-    <a asp-controller="User" asp-action="Index" class="btn btn-default">Cancel</a>
-    <button type="submit" class="btn btn-danger">Disable</button>
+    <hr />
+    <div class="text-center">
+        <a asp-controller="User" asp-action="Index" class="btn btn-primary">Nahhh</a>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#disableModal">Disable</button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="disableModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header alert-danger">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Disable Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to disable <b>@Model.name</b>?</p>
+                    <p>Once disabled, you can re-activate if you wish.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Not Sure</button>
+                    <button type="submit" class="btn btn-success">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>

@@ -4,20 +4,42 @@
     ViewData["Title"] = "Enable Book";
 }
 
-<h2>Enable Book</h2>
-
-<h3>Are you sure you want to enable this book?</h3>
-<br/>
-<div>
-    <h4><b>Title:</b> @Model.title @Model.edition Edition</h4>
-    <p><b>Author:</b> @Model.authorFName @Model.authorLName</p>
-    <p><b>ISBN:</b> @Model.isbn</p>
-    <p><b>Publisher:</b> @Model.publisher</p>
-    <p><b>Description:</b> @Model.description</p>
-    <form asp-controller="PendingBook" asp-action="Enable">
-        <div class="form-actions no-color">
-            <a asp-action="Manage" class="btn btn-default">Cancel</a>
-            <input type="submit" value="Enable" class="btn btn-success" />
-        </div>
-    </form>
+<div class="text-center">
+    <h2>Enable Book</h2>
+    <h4>Are you sure you want to enable this book?</h4>
 </div>
+<hr />
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="form-group">
+            <div class="col-sm-2 col-sm-offset-1">
+                @if (Model.image != null)
+                {
+                    <img src="@Model.image" class="img-responsive" style="max-width:150px; max-height:200px;" />
+                }
+                else
+                {
+                    <i class="glyphicon glyphicon-book" style="font-size:200px; color:dimgrey;"></i>
+                }
+            </div>
+            <div class="col-sm-8 col-sm-offset-1">
+                <p><b>Author:</b> @Model.authorFName @Model.authorLName</p>
+                <p><b>@Model.edition Edition</b></p>
+                <p><b>ISBN:</b> @Model.isbn</p>
+                <p><b>Description:</b> @Model.description</p>
+                <p><b>Publisher:</b> @Model.publisher</p>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1 text-center">
+        <form asp-controller="PendingBook" asp-action="Enable">
+            <div class="form-actions no-color">
+                <a asp-action="Manage" class="btn btn-primary">Nahhh</a>
+                <input type="submit" value="Enable" class="btn btn-success" />
+            </div>
+        </form>
+        </div>
+    </div>

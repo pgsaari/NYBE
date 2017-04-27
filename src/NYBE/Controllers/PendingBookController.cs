@@ -264,6 +264,7 @@ namespace NYBE.Controllers
                 viewModel.edition = book.Edition;
                 viewModel.publisher = book.Publisher;
                 viewModel.description = book.Description;
+                viewModel.image = book.Image;
             }
 
             return View(viewModel);
@@ -298,6 +299,7 @@ namespace NYBE.Controllers
                 viewModel.edition = book.Edition;
                 viewModel.publisher = book.Publisher;
                 viewModel.description = book.Description;
+                viewModel.image = book.Image;
             }
 
             return View(viewModel);

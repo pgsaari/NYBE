@@ -12,15 +12,19 @@ namespace NYBE.Models.BookViewModels
         public int id { get; set; }
 
         [Required]
+        [Display(Name = "ISBN")]
         public string isbn { get; set; }
 
         [Required]
+        [Display(Name = "title")]
         public string title { get; set; }
 
         [Required]
+        [Display(Name = "author last name")]
         public string authorLName { get; set; }
 
         [Required]
+        [Display(Name = "author first name")]
         public string authorFName { get; set; }
 
         public string description { get; set; }
