@@ -134,8 +134,9 @@ namespace NYBE.Controllers
             var user = await GetCurrentUserAsync();
             if (user != null)
             {
-                var result = await _userManager.SetEmailAsync(user, model.NewEmail);
-                if (result.Succeeded)
+                var resultUN = await _userManager.SetUserNameAsync(user, model.NewEmail);
+                var resultEM = await _userManager.SetEmailAsync(user, model.NewEmail);
+                if (resultUN.Succeeded && resultEM.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangeEmailSuccess });

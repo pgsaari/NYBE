@@ -32,7 +32,8 @@
 }
 
 
-<h1>Manage Books</h1>
+<h2 class="text-center">Manage Books</h2>
+<br />
 
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#pending">Pending Books</a></li>
@@ -84,7 +85,7 @@
 
         else
         {
-            <h4>Currently no Pending Books!</h4>
+            <h5 class="text-center">Currently no Pending Books!</h5>
         }
     </div>
     <div id="all" class="tab-pane fade">
@@ -106,7 +107,7 @@
                         @foreach (Book book in Model.allBooks)
                         {
                             <tr>
-                                <td>@book.Title</td>
+                                <td><a asp-controller="Book" asp-action="Index" asp-route-bookId="@book.ID">@book.Title</a></td>
                                 <td>@book.AuthorFName @book.AuthorLName</td> <!--Assume users only have one role-->
                                 <td>@book.ISBN</td>
                                 <td>@book.Edition</td>
