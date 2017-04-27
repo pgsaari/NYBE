@@ -2,30 +2,32 @@
 @{
     ViewData["Title"] = "Approve School";
 }
-<h2>Approve School</h2>
-<p>This will remove this school as "Pending."</p>
-<p>Are you sure this is what you want to do?</p>
-<br />
+
+<div class="text-center">
+    <h2>Approve School</h2>
+    <h4>This will remove this school as "Pending."</h4>
+</div>
+<hr />
 
 <form asp-controller="PendingSchool" asp-action="Approve">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group row">
-        <label class="col-md-2" for="price">Name</label>
-        <div class="col-md-3">
-            <input asp-for="name" class="form-control" id="title" data-val-required="Name is required." />
+        <label class="col-sm-1 col-sm-offset-4" for="price">Name:</label>
+        <div class="col-sm-3">
+            <input asp-for="name" class="form-control" id="title" />
+            <span asp-validation-for="name" class="text-danger"></span>
         </div>
-        <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="name"></span>
     </div>
     <div class="form-group row">
-        <label class="col-md-2" for="price">City</label>
-        <div class="col-md-3">
-            <input asp-for="city" class="form-control" id="authorLName" data-val-required="City is required." />
+        <label class="col-sm-1 col-sm-offset-4" for="price">City:</label>
+        <div class="col-sm-3">
+            <input asp-for="city" class="form-control" id="authorLName" />
+            <span asp-validation-for="city" class="text-danger" ></span>
         </div>
-        <span class="text-danger field-validation-valid col-md-4 text-left" asp-validation-for="city"></span>
     </div>
     <div class="form-group row">
-        <label class="col-lg-2" for="state">State</label>
-        <div class="col-lg-3">
+        <label class="col-sm-1 col-sm-offset-4" for="state">State:</label>
+        <div class="col-sm-3">
             <select asp-for="state" class="form-control" name="state">
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -81,6 +83,9 @@
             </select>
         </div>
     </div>
-    <a asp-controller="PendingSchool" asp-action="Manage" class="btn btn-default">Cancel</a>
-    <button type="submit" class="btn btn-success">Approve</button>
+    <hr />
+    <div class="text-center">
+        <a asp-controller="PendingSchool" asp-action="Manage" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn btn-success">Approve</button>
+    </div>
 </form>

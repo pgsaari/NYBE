@@ -111,28 +111,34 @@ namespace NYBE.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Approve(PendingSchoolViewModel viewModel)
         {
-            // remove the pending book from that table
-            var removeSchool = ctx.PendingSchools.Where(a => a.ID == viewModel.id).FirstOrDefault();
-            ctx.PendingSchools.Remove(removeSchool);
+            if (ModelState.IsValid)
+            {
+                // remove the pending book from that table
+                var removeSchool = ctx.PendingSchools.Where(a => a.ID == viewModel.id).FirstOrDefault();
+                ctx.PendingSchools.Remove(removeSchool);
 
-            // add to the actual book table
-            School newSchool = new School();
-            newSchool.Name = viewModel.name;
-            newSchool.City = viewModel.city;
-            newSchool.State = viewModel.state;
-            newSchool.Status = 1;
-            ctx.Schools.Add(newSchool);
+                // add to the actual book table
+                School newSchool = new School();
+                newSchool.Name = viewModel.name;
+                newSchool.City = viewModel.city;
+                newSchool.State = viewModel.state;
+                newSchool.Status = 1;
+                ctx.Schools.Add(newSchool);
 
-            ctx.SaveChanges();
+                ctx.SaveChanges();
 
-            // Send email notification to User that submitted the school.
-            var user = await usrCtx.FindByIdAsync(removeSchool.UserID);
+                // Send email notification to User that submitted the school.
+                var user = await usrCtx.FindByIdAsync(removeSchool.UserID);
 
-            var callbackUrl = Url.Action("Login", "Account", null, protocol: HttpContext.Request.Scheme);
-            await _emailSender.SendEmailAsync(user.Email, "NYBE School Approval",
-               $"Your recent school request for \"{removeSchool.Name}\" has been approved!  <a href='{callbackUrl}'>Sign in</a> and check it out!");
+                var callbackUrl = Url.Action("Login", "Account", null, protocol: HttpContext.Request.Scheme);
+                await _emailSender.SendEmailAsync(user.Email, "NYBE School Approval",
+                   $"Your recent school request for \"{removeSchool.Name}\" has been approved!  <a href='{callbackUrl}'>Sign in</a> and check it out!");
 
-            return RedirectToAction("Manage");
+                return RedirectToAction("Manage");
+            } else
+            {
+                return View(viewModel);
+            }
         }
 
         [HttpGet]

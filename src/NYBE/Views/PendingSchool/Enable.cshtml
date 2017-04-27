@@ -4,17 +4,24 @@
     ViewData["Title"] = "Enable School";
 }
 
-<h2>Enable School</h2>
+<h2 class="text-center">Enable School</h2>
+<hr />
 
-<h3>Are you sure you want to re-enable this school?</h3>
-<div>
-    <h4><b>Name:</b> @Model.name</h4>
-    <p><b>City:</b> @Model.city</p>
-    <p><b>State:</b> @Model.state</p>
-    <form asp-controller="PendingSchool" asp-action="Enable">
-        <div class="form-actions no-color">
-            <a asp-action="Manage" class="btn btn-default">Cancel</a>
-            <input type="submit" value="Enable" class="btn btn-success" />
-        </div>
-    </form>
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <h4><b>Name:</b> @Model.name</h4>
+        <p><b>City:</b> @Model.city</p>
+        <p><b>State:</b> @Model.state</p>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1 text-center">
+        <form asp-controller="PendingSchool" asp-action="Enable">
+            <div class="form-actions no-color">
+                <a asp-action="Manage" class="btn btn-primary">Cancel</a>
+                <input type="submit" value="Enable" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
 </div>
