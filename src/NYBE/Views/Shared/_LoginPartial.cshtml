@@ -52,7 +52,7 @@
 else
 {
     <li class="btn-toolbar center" role="button" style="padding-right:20px;">
-        <button onclick="location.href = '/Account/Register'" class="btn btn-primary navbar-btn">Register</button>
-        <button onclick="location.href = '/Account/Login'" class="btn btn-success navbar-btn">Log in</button>
+        <button asp-controller="Account" asp-action="Register" class="btn btn-primary navbar-btn">Register</button>
+        <button asp-controller="Account" asp-action="Login" class="btn btn-success navbar-btn">Log in</button>
     </li>
 }

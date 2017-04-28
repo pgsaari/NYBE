@@ -19,6 +19,39 @@ namespace NYBE.Controllers
             _context = context;
         }
 
+        // GET: /search/
+        public IActionResult Lists()
+        {
+            var view = new BookSearchViewModel();
+            view.schools = _context.Schools.Where(a => a.Status == 1).ToList();
+            view.courses = _context.Courses.ToList();
+
+            return View("_Layout", view);
+        }
+
+        public string[] getSchools()
+        {
+            var schools = _context.Schools.Where(a => a.Status == 1).ToList();
+            string[] list = new string[schools.Count];
+            for (int i = 0; i < schools.Count; i++)
+            {
+                var s = schools.ElementAt(i);
+                list[i] = s.ID + ":" + s.Name;
+            }
+            return list;
+        }
+
+        public string[] getCourses()
+        {
+            var courses = _context.Courses.ToList();
+            string[] list = new string[courses.Count];
+            for (int i = 0; i < courses.Count; i++)
+            {
+                var c = courses.ElementAt(i);
+                list[i] = c.SchoolID + ":" + c.Name;
+            }
+            return list;
+        }
 
         //
         // GET: /search/
@@ -29,7 +62,9 @@ namespace NYBE.Controllers
             //chars to split by
             char[] delimiterChars = { ' ', ',', '.', ':' };
 
-            if(!String.IsNullOrEmpty(generalSearch))
+            System.Diagnostics.Debug.WriteLine("Search: " + generalSearch + " Title: " + title + " Author: " + author + " ISBN: " + isbn + " Course:" + courseName);
+
+            if (!String.IsNullOrEmpty(generalSearch))
             {
                 string[] words = generalSearch.Split(delimiterChars);
                 foreach (string str in words)

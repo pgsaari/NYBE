@@ -1,5 +1,9 @@
 ﻿@inject SignInManager<ApplicationUser> SignInManager
 
+@{
+    List<Course> Courses = new List<Course> { };
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +22,9 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+
+    <!-- search bar -->
+    <link href="~/css/search.css" media="all" rel="stylesheet" type="text/css" />
 
     <style>
         .nounderline {
@@ -81,20 +88,59 @@
                 <ul class="nav navbar-nav navbar-right">
                     @await Html.PartialAsync("_LoginPartial")
                 </ul>
+
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <form asp-controller="Search" asp-action="Index">
-                        <div class="navbar-form" role="search" style="text-align:center; padding-top:15px;">
-                            <div class="container" style="display:table-cell;">
-                                <div class="input-group">
-                                    <input name="generalSearch" type="text" class="form-control" placeholder="Search Books">
-                                    <span class="input-group-btn">
-                                        <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
-                                    </span>
+                    <div class="container text-center" id="searchContainer">
+                        <div class="input-group" id="adv-search" style="margin-top:17px;">
+                            <input class="form-control" id="generalSearch" type="text" form="searchForm" placeholder="Search Books" />
+                            <div class="input-group-btn">
+                                <div class="btn-group" role="group">
+                                    <div class="dropdown dropdown-lg">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="glyphicon glyphicon-chevron-down"></span></button>
+                                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <form asp-controller="Search" asp-action="Index" class="form-horizontal" role="form" id="searchForm">
+                                                <input name="generalSearch" id="generalSearchSubmit" hidden />
+                                                <div class="form-group">
+                                                    <input class="form-control" name="title" type="text" placeholder="Title" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <input class="form-control" name="author" type="text" placeholder="Author" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <input class="form-control" name="isbn" type="text" placeholder="ISBN" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="filter">Filter by School</label>
+                                                    <select class="form-control" name="schoolName" id="schoolSelectBox"></select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="filter">Filter by Course</label>
+                                                    <select class="form-control" name="courseName" id="courseSelectBox"></select>
+                                                </div>
+                                                <div>
+                                                    <button type="submit" class="btn btn-success" onclick="$('#generalSearchSubmit').val($('#generalSearch').val());" id="searchButton"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-success" onclick="$('#searchButton').click();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                    @*<form asp-controller="Search" asp-action="Index">
+                            <div class="navbar-form" role="search" style="text-align:center; padding-top:15px;">
+                                <div class="container" style="display:table-cell;">
+                                    <div class="input-group">
+                                        <input name="generalSearch" type="text" class="form-control" placeholder="Search Books">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>*@
                 }
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

@@ -1,16 +1,4 @@
 ﻿// Write your Javascript code.
-$("#toggleAdvancedSearch").click(function () {
-    if (document.getElementById("toggleAdvancedSearch").innerHTML === "Hide Advanced Search") {
-        $("#advancedSearchFields").hide();
-        $("#generalSearch").show()
-        document.getElementById("toggleAdvancedSearch").innerHTML = "Show Advanced Search";
-    } else {
-        $("#advancedSearchFields").show();
-        $("#generalSearch").hide();
-        document.getElementById("toggleAdvancedSearch").innerHTML = "Hide Advanced Search";
-    }
-});
-
 $("#schoolSelectBox").change(function() {
     var schoolSelected = $("#schoolSelectBox").find(":selected").val();
     
@@ -72,6 +60,26 @@ $("#surveyTradeCheckBox").click(function () {
         $("#surveyPriceDiv").show();
     }
 });
+
+window.onload = function () {
+    getList('getSchools', '#schoolSelectBox');
+    getList('getCourses', '#courseSelectBox');
+};
+
+getList = function (list, select) {
+    $.getJSON('Search/' + list, function (data) {
+        var options = (select == '#courseSelectBox' ? '<option class="-1" value="">All</option>' : '<option value="-1">All</option>');
+        for (var x = 0; x < data.length; x++) {
+            var s = data[x].toString().split(":");
+            if (select == '#courseSelectBox') {
+                options += '<option class="' + s[0] + '" value="' + s[1] + '">' + s[1] + '</option>';
+            } else {
+                options += '<option value="' + s[0] + '">' + s[1] + '</option>';
+            }
+        }
+        $(select).html(options);
+    });
+}
 
 $("#googleBooksSearch").click(function () {
     var isbn = $("#gb_search_isbn").val();

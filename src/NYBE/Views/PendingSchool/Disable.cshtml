@@ -16,31 +16,31 @@
 </div>
 <hr />
 
-    <div class="text-center">
-        <form asp-controller="PendingSchool" asp-action="Disable">
-            <div class="form-actions no-color">
-                <a asp-action="Manage" class="btn btn-primary">Cancel</a>
-                <input type="button" value="Disable" class="btn btn-danger" data-toggle="modal" data-target="#disableModal" />
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="disableModal" role="dialog">
-                <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header alert-danger">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Disable Confirmation</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure you want to disable <b>@Model.name</b>?</p>
-                            <p>User's will not be able to select this as their school.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Not Sure</button>
-                            <button type="submit" class="btn btn-success">Yes</button>
-                        </div>
+<div class="text-center">
+    <form asp-controller="PendingSchool" asp-action="Disable">
+        <div class="form-actions no-color">
+            <a asp-action="Manage" class="btn btn-primary">Cancel</a>
+            <input type="button" value="Disable" class="btn btn-danger" data-toggle="modal" data-target="#disableModal" />
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="disableModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header alert-danger">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Disable Confirmation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to disable <b>@Model.name</b>?</p>
+                        <p>User's will not be able to select this as their school.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Not Sure</button>
+                        <button type="submit" class="btn btn-success">Yes</button>
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>

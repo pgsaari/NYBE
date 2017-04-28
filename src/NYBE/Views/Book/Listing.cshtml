@@ -84,7 +84,6 @@
     @Html.HiddenFor(Model => Model.book.ID)
     <a onclick="location.href = '@(Url.Action("Index", "Book", new { bookId = Model.book.ID }))'" class="btn btn-default">Cancel</a>
     <button type="submit" class="btn btn-success">Save</button>
-
 </form>
 
 
