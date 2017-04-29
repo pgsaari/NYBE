@@ -1,17 +1,22 @@
 ﻿@model  NYBE.Models.DataModels.EditListingViewModel
+
 @{
-    ViewData["Title"] = "Sell";
+    ViewData["Title"] = "Sell Book";
 }
+
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#newCourseChbx').change(function () {
-            $('#courseForm').toggleClass('hidden');
-            $('#courseDept').toggleClass('required');
-        });
+        if (document.getElementById('newCourseCheckBox').checked) {
+            $('#courseForm').show();
+            $('#courseIDContainer').hide();
+        } else {
+            $('#courseForm').hide();
+            $('#courseDept').val('null');
+            $('#courseName').val('null');
+        }
     });
 </script>
-
 
 <h2 class="text-center">Sell Book</h2>
 
@@ -53,35 +58,43 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" name="courseIDContainer" id="courseIDContainer">
                 <div class="form-group">
                     <div class="col-sm-2 col-sm-offset-1">
-                        <h4>Course:</h4>
+                        <h4 name="courseIDLabel" id="courseIDLabel">Course:</h4>
                     </div>
                     <div class="col-sm-8 col-sm-offset-1">
-                        <select asp-for="courseID" id="courseID" class="form-control" name="courseID">
+                        <select asp-for="courseID" id="courseID" class="form-control" name="courseID" re>
                             <option selected disabled hidden>Select Course</option>
                             @foreach (Course course in Model.courses)
                             {
                                 <option value="@course.ID">@course.Dept - @course.CourseNum @course.Name</option>
                             }
                         </select>
-                        <br />
-                        <input type="checkbox" asp-for="newCourse" id="newCourseChbx" />
-                        <label for="newCourse">Add new Course</label>
                         <span class="text-danger field-validation-valid" asp-validation-for="courseID"></span>
+                        <br />
+                        <label name="courseIDHtml" id="courseIDHtml" hidden></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-4">
+                        <br />
+                        <input type="checkbox" asp-for="newCourse" name="newCourseCheckBox" id="newCourseCheckBox" />
+                        <label for="newCourse">Add new Course</label>
                     </div>
                 </div>
             </div>
             <br />
-            <div id="courseForm" class="hidden">
+            <div id="courseForm">
                 <div class="row">
                     <div class="form-group">
                         <div class="col-sm-2 col-sm-offset-1">
                             <h4>Department:</h4>
                         </div>
                         <div class="col-sm-8 col-sm-offset-1">
-                            <input asp-for="courseDept" class="form-control" id="courseDept" />
+                            <input asp-for="courseDept" class="form-control" name="courseDept" id="courseDept" />
                             <span class="text-danger field-validation-valid" asp-validation-for="courseDept"></span>
                         </div>
                     </div>
@@ -93,7 +106,8 @@
                             <h4>Course Number:</h4>
                         </div>
                         <div class="col-sm-8 col-sm-offset-1">
-                            <input asp-for="courseNum" class="form-control" type="number" id="courseNum" step="1" />
+                            <input asp-for="courseID" class="form-control" type="number" value="" min="1" name="courseNum" id="courseNum" step="1" />
+                            <span class="text-danger field-validation-valid" asp-validation-for="courseID"></span>
                         </div>
                     </div>
                 </div>
@@ -104,7 +118,7 @@
                             <h4>Course Name:</h4>
                         </div>
                         <div class="col-sm-8 col-sm-offset-1">
-                            <input asp-for="courseName" class="form-control" id="courseName" />
+                            <input asp-for="courseName" class="form-control" name="courseName" id="courseName" />
                             <span class="text-danger field-validation-valid" asp-validation-for="courseName"></span>
                         </div>
                     </div>
@@ -156,7 +170,7 @@
             <div class="row">
                 <div class="text-center">
                     <a onclick="location.href = '@(Url.Action("Index", "Book", new { bookId = Model.book.ID }))'" class="btn btn-primary">Cancel</a>
-                    <button type="submit" class="btn btn-success">Sell</button>
+                    <button type="submit" class="btn btn-success">Sell Book</button>
                 </div>
             </div>
             @Html.HiddenFor(Model => Model.book.ID)

@@ -81,38 +81,51 @@ namespace NYBE.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser user = await usrCtx.GetUserAsync(HttpContext.User);
-
+                Course newCourse = new Course();
                 BookListing newListing = new BookListing();
                 newListing.ApplicationUserID = user.Id;
-                if (Request.Form["listingTradeCheckBox"] == "on")
-                {
-                    newListing.AskingPrice = -1;
-                } else
-                {
-                    newListing.AskingPrice = viewModel.price;
-                }
-                
                 newListing.Condition = viewModel.condition;
                 newListing.BookID = viewModel.book.ID;
+                newListing.CourseID = viewModel.courseID;
+                newListing.AskingPrice = viewModel.price;
                 newListing.Type = SELL;
-                if (!viewModel.newCourse)// if they picked a course from the dropdown
+                // If they created a new course, add the course to the database.
+                if (viewModel.newCourse)
                 {
-                    newListing.CourseID = viewModel.courseID;
-                }
-                else // if they created a new course
-                {
-                    Course newCourse = new Course();
                     newCourse.Dept = viewModel.courseDept;
-                    newCourse.CourseNum = Int16.Parse(viewModel.courseNum);
+                    newCourse.CourseNum = viewModel.courseID;
                     newCourse.Name = viewModel.courseName;
                     newCourse.SchoolID = user.SchoolID;
-                    //newCourse.BookToCourses.Add();
                     ctx.Courses.Add(newCourse);
                     newListing.Course = newCourse;
+                    
+                } else {
+                    // Connect the book and the  pre-existing course if it doesn't already exist.
+                    if (!ctx.BookToCourses.Where(a => a.BookID == viewModel.book.ID && a.CourseID == viewModel.courseID).Any())
+                    {
+                        BookToCourse bookToCourse = new BookToCourse();
+                        bookToCourse.BookID = viewModel.book.ID;
+                        bookToCourse.CourseID = viewModel.courseID;
+                        ctx.BookToCourses.Add(bookToCourse);
+                    }
                 }
                 
                 ctx.BookListings.Add(newListing);
                 ctx.SaveChanges();
+
+                // Put it after the new course is added and saved into the database so it receives an ID.
+                if (viewModel.newCourse)
+                {
+                    // Connect the book and the new course if it doesn't already exist.
+                    if (!ctx.BookToCourses.Where(a => a.BookID == viewModel.book.ID && a.CourseID == newCourse.ID).Any())
+                    {
+                        BookToCourse bookToCourse = new BookToCourse();
+                        bookToCourse.BookID = viewModel.book.ID;
+                        bookToCourse.CourseID = newCourse.ID;
+                        ctx.BookToCourses.Add(bookToCourse);
+                        ctx.SaveChanges();
+                    }
+                }
 
                 return RedirectToAction("Index", "Profile");
             }
@@ -139,37 +152,53 @@ namespace NYBE.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser user = await usrCtx.GetUserAsync(HttpContext.User);
-
+                Course newCourse = new Course();
                 BookListing newListing = new BookListing();
                 newListing.ApplicationUserID = user.Id;
-                if (Request.Form["wishTradeCheckBox"] == "on")
-                {
-                    newListing.AskingPrice = -1;
-                }
-                else
-                {
-                    newListing.AskingPrice = viewModel.price;
-                }
                 newListing.Condition = viewModel.condition;
                 newListing.BookID = viewModel.book.ID;
+                newListing.CourseID = viewModel.courseID;
+                newListing.AskingPrice = viewModel.price;
                 newListing.Type = WISHLIST;
-                if (!viewModel.newCourse)
+                // If they created a new course, add the course to the database.
+                if (viewModel.newCourse)
                 {
-                    newListing.CourseID = viewModel.courseID;
+                    newCourse.Dept = viewModel.courseDept;
+                    newCourse.CourseNum = viewModel.courseID;
+                    newCourse.Name = viewModel.courseName;
+                    newCourse.SchoolID = user.SchoolID;
+                    ctx.Courses.Add(newCourse);
+                    newListing.Course = newCourse;
+
                 }
                 else
                 {
-                    Course newCourse = new Course();
-                    newCourse.Dept = viewModel.courseDept;
-                    newCourse.CourseNum = Int16.Parse(viewModel.courseNum);
-                    newCourse.Name = viewModel.courseName;
-                    newCourse.SchoolID = user.SchoolID;
-                    //newCourse.BookToCourses.Add();
-                    ctx.Courses.Add(newCourse);
-                    newListing.Course = newCourse;
+                    // Connect the book and the  pre-existing course if it doesn't already exist.
+                    if (!ctx.BookToCourses.Where(a => a.BookID == viewModel.book.ID && a.CourseID == viewModel.courseID).Any())
+                    {
+                        BookToCourse bookToCourse = new BookToCourse();
+                        bookToCourse.BookID = viewModel.book.ID;
+                        bookToCourse.CourseID = viewModel.courseID;
+                        ctx.BookToCourses.Add(bookToCourse);
+                    }
                 }
+
                 ctx.BookListings.Add(newListing);
                 ctx.SaveChanges();
+
+                // Put it after the new course is added and saved into the database so it receives an ID.
+                if (viewModel.newCourse)
+                {
+                    // Connect the book and the new course if it doesn't already exist.
+                    if (!ctx.BookToCourses.Where(a => a.BookID == viewModel.book.ID && a.CourseID == newCourse.ID).Any())
+                    {
+                        BookToCourse bookToCourse = new BookToCourse();
+                        bookToCourse.BookID = viewModel.book.ID;
+                        bookToCourse.CourseID = newCourse.ID;
+                        ctx.BookToCourses.Add(bookToCourse);
+                        ctx.SaveChanges();
+                    }
+                }
 
                 return RedirectToAction("Index", "Profile");
             }

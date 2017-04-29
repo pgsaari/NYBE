@@ -21,12 +21,31 @@ $("#schoolSelectBox").change(function() {
     });
 });
 
-$("#editTradeCheckBox").click(function () {
-    if (document.getElementById('editTradeCheckBox').checked) {
-        $("#editPriceContainer").hide();
-        $("#editPrice").val(0);
+$('#courseID').change(function () {
+    $('#courseNum').val(this.value);
+});
+
+$('#courseNum').change(function () {
+    $('#courseID').html('<option value="' + this.value + '">' + this.value + '</option>');
+    $('#courseID').val(this.value);
+});
+
+$('#newCourseCheckBox').click(function () {
+    if (document.getElementById('newCourseCheckBox').checked) {
+        $('#courseForm').show();
+        $('#courseIDContainer').hide();
+        $('#courseIDHtml').html(document.getElementById('courseID').innerHTML);
+        $('#courseDept').val("");
+        $('#courseNum').val("");
+        $('#courseName').val("");
     } else {
-        $("#editPriceContainer").show();
+        $('#courseForm').hide();
+        $('#courseID').html(document.getElementById('courseIDHtml').innerHTML);
+        $('#courseID').each(function () { this.selectedIndex = 0 });
+        $('#courseIDContainer').show();
+        $('#courseDept').val("null");
+        $('#courseNum').val(-1);
+        $('#courseName').val("null");
     }
 });
 

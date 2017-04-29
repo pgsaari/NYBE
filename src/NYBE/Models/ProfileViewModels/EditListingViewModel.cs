@@ -16,12 +16,19 @@ namespace NYBE.Models.DataModels
         public Book book { get; set; }
         
         public Course course { get; set; }
-        //[Range(1,int.MaxValue, ErrorMessage = "Error in choosing Course")]
+        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "The course field is required.")]
         public int courseID { get; set; }
         public List<Course> courses {get; set;}
 
+        [Required]
+        [Display(Name = "department")]
         public string courseDept { get; set; }
-        public string courseNum { get; set; }
+        //[Required]
+        //[Display(Name = "course number")]
+        //public string courseNum { get; set; }
+        [Required]
+        [Display(Name = "course name")]
         public string courseName { get; set; }
         public bool newCourse { get; set; }
     }

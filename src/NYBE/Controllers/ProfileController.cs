@@ -89,6 +89,7 @@ namespace NYBE.Controllers
             var viewModel = new EditListingViewModel();
             var temp = ctx.BookListings.Include("Book").Include("Course").Where(a => a.ID == id && a.Status == 0).FirstOrDefault();
             viewModel.courses = ctx.Courses.ToList();
+            viewModel.courseID = temp.CourseID;
             viewModel.ID = id;
             viewModel.book = temp.Book;
             viewModel.course = temp.Course;
@@ -98,15 +99,39 @@ namespace NYBE.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditListing(EditListingViewModel viewModel)
+        public async Task<ActionResult> EditListing(EditListingViewModel viewModel)
         {
             var temp = ctx.BookListings.Where(a => a.ID == viewModel.ID && a.Status == 0).FirstOrDefault();
+            Course newCourse = new Course();
+
             temp.Condition = viewModel.condition;
             temp.CourseID = viewModel.courseID;
             temp.AskingPrice = viewModel.price;
-            
+            // If they created a new course, add the course to the database.
+            if (viewModel.newCourse) {
+                newCourse.Dept = viewModel.courseDept;
+                newCourse.CourseNum = viewModel.courseID;
+                newCourse.Name = viewModel.courseName;
+                ApplicationUser user = await usrCtx.GetUserAsync(HttpContext.User);
+                newCourse.SchoolID = user.SchoolID;
+                ctx.Courses.Add(newCourse);
+                temp.Course = newCourse;
+            }
+
             ctx.Update(temp);
-            var success = ctx.SaveChanges();
+            ctx.SaveChanges();
+
+            // Put it after the new course is added and saved into the database so it receives an ID.
+            if (viewModel.newCourse) {
+                // Connect the book and the new course if it doesn't already exist.
+                if (!ctx.BookToCourses.Where(a => a.BookID == viewModel.book.ID && a.CourseID == newCourse.ID).Any()) {
+                    BookToCourse bookToCourse = new BookToCourse();
+                    bookToCourse.BookID = viewModel.book.ID;
+                    bookToCourse.CourseID = newCourse.ID;
+                    ctx.BookToCourses.Add(bookToCourse);
+                    ctx.SaveChanges();
+                }
+            }
 
             return RedirectToAction("Index");
         }
