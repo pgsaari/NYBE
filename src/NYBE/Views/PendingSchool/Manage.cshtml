@@ -46,8 +46,8 @@
 </ul>
 
 <div class="tab-content">
+    <br />
     <div id="pending" class="tab-pane fade in active">
-        <br/>
         @if (Model.pendingSchools.Any())
         {
             <div class="container">
@@ -85,7 +85,6 @@
         }
     </div>
     <div id="all" class="tab-pane fade">
-        <br/>
         @if (Model.allSchools.Any())
         {
             <div class="container">
@@ -121,7 +120,6 @@
         }
     </div>
     <div id="disabled" class="tab-pane fade">
-        <br/>
         <div class="container">
             <div class="table-responsive">
                 <table id="disabled-schools" class="table table-striped">

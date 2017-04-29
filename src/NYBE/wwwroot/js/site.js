@@ -22,32 +22,11 @@ $("#schoolSelectBox").change(function() {
 });
 
 $("#editTradeCheckBox").click(function () {
-    console.log("Clicked!");
     if (document.getElementById('editTradeCheckBox').checked) {
-        $("#editListingPrice").hide();
-
+        $("#editPriceContainer").hide();
+        $("#editPrice").val(0);
     } else {
-        $("#editListingPrice").show();
-    }
-});
-
-$("#listingTradeCheckBox").click(function () {
-    console.log("Clicked!");
-    if (document.getElementById('listingTradeCheckBox').checked) {
-        $("#listingPrice").hide();
-
-    } else {
-        $("#listingPrice").show();
-    }
-});
-
-$("#wishTradeCheckBox").click(function () {
-    console.log("Clicked!");
-    if (document.getElementById('wishTradeCheckBox').checked) {
-        $("#idealPrice").hide();
-
-    } else {
-        $("#idealPrice").show();
+        $("#editPriceContainer").show();
     }
 });
 

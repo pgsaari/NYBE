@@ -9,143 +9,201 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />
 
 <script>
-        var jquery = jQuery.noConflict();
-        jquery(document).ready(function () {
-            jquery('#bookListingTable').DataTable();
-        });
+    var jquery = jQuery.noConflict();
+    jquery(document).ready(function () {
+        jquery('#selling-table').DataTable();
+    });
+</script>
+<script>
+    var jquery = jQuery.noConflict();
+    jquery(document).ready(function () {
+        jquery('#buying-table').DataTable();
+    });
 </script>
 
-<h1>@Model.book.Title</h1>
-
-<br />
-
-<div class="container col-md-12">
-    <div class="col-md-3">
-        @if (Model.book.Image != null)
-        {
-        <img src="@Model.book.Image" class="img-responsive" />
+<head>
+    <style>
+        .btn-group > .btn:first-of-type {
+            margin-left: 0;
+            -webkit-border-top-left-radius: 4px;
+            -moz-border-radius-topleft: 4px;
+            border-top-left-radius: 4px;
+            -webkit-border-bottom-left-radius: 4px;
+            -moz-border-radius-bottomleft: 4px;
+            border-bottom-left-radius: 4px;
         }
-        else
-        {
-        <i class="glyphicon glyphicon-book" style="font-size:200px; color:dimgrey;"></i>
-        }
-    </div>
-    <div class="col-md-8">
-        <p>Author: @Model.book.AuthorFName @Model.book.AuthorLName</p>
-        <p>@Model.book.Edition Edition</p>
-        <p>ISBN: @Model.book.ISBN</p>
-        <p>Description: @Model.book.Description</p>
-        <p>Publisher: @Model.book.Publisher</p>
+    </style>
+</head>
+
+<div class="row">
+    <div class="text-center">
+        <h2 class="text-center">@Model.book.Title</h2>
+        <br />
+        <div class="btn-group">
+            <a asp-action="WishList" asp-route-bookId="@Model.book.ID" class="btn btn-primary">Add to Wish List</a>
+            <a asp-action="Listing" asp-route-bookId="@Model.book.ID" class="btn btn-success">Sell Book</a>
+        </div>
     </div>
 </div>
 
-<div class="row col-md-12">
-    <br />
-    <a asp-action="Listing" asp-route-bookId="@Model.book.ID" class="btn btn-default">Sell Book</a>
-    <a asp-action="WishList" asp-route-bookId="@Model.book.ID" class="btn btn-default">Add to Wish List</a>
-</div>
-
-
-<div class="container col-md-12">
+<div class="row">
     <br />
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#selling">Selling</a></li>
-        <li><a data-toggle="tab" href="#buying">Buying</a></li>
+        <li class="active"><a data-toggle="tab" href="#details">Book Details</a></li>
+        <li><a data-toggle="tab" href="#stats">Statistics</a></li>
     </ul>
     <div class="tab-content">
-        <div id="selling" class="tab-pane fade in active">
-            <br/>
-            @if (Model.forSaleListings.Any())
-            {
-                <div class="table-responsive">
-                    <table class="table table-striped" id="bookListingTable">
-                        <thead>
-                            <tr>
-                                <th>Seller</th>
-                                <th>School</th>
-                                <th>Course</th>
-                                <th>Condition</th>
-                                <th>Price</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (BookListing x in Model.forSaleListings)
+        <br />
+        <div id="details" class="tab-pane fade in active">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="form-group">
+                        <div class="col-sm-2 col-sm-offset-1">
+                            @if (Model.book.Image != null)
                             {
-                                <tr>
-                                    <td> @x.User.FirstName @x.User.LastName </td>
-                                    <td> @x.User.School.Name</td>
-                                    <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
-                                    <td> @x.Condition </td>
-                                    @if (x.AskingPrice > 0)
-                                    {
-                                        <td> @string.Format("{0:c}", x.AskingPrice) </td>
-                                    }
-                                    else
-                                    {
-                                        <td>Trade</td>
-                                    }
-                                    <td><a class="btn btn-default" asp-controller="Profile" asp-route-UserId="@x.User.Id" name="UserId" id="UserId">View Profile</a></td>
-                                </tr>
+                                <img src="@Model.book.Image" class="img-responsive" style="max-width:150px; max-height:200px;" />
                             }
-                        </tbody>
-                    </table>
+                            else
+                            {
+                                <i class="glyphicon glyphicon-book" style="font-size:200px; color:dimgrey;"></i>
+                            }
+                        </div>
+                        <div class="col-sm-8 col-sm-offset-1">
+                            <p><b>Author:</b> @Model.book.AuthorFName @Model.book.AuthorLName</p>
+                            @if (!String.IsNullOrEmpty(Model.book.Edition))
+                            {
+                                <p><b>@Model.book.Edition Edition</b></p>
+                            }
+                            <p><b>ISBN:</b> @Model.book.ISBN</p>
+                            <p><b>Description:</b> @Model.book.Description</p>
+                            <p><b>Publisher:</b> @Model.book.Publisher</p>
+                        </div>
+                    </div>
                 </div>
-            }
-            else
+            </div>
+            <br />
+            <hr />
+            <div class="row">
+                <div class="container col-sm-12">
+                    <br />
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#selling">Selling</a></li>
+                        <li><a data-toggle="tab" href="#buying">Buying</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <br />
+                        <div id="selling" class="tab-pane fade in active">
+                            @if (Model.forSaleListings.Any())
             {
-                <p>Book not listed on the market!</p>
+                                <div class="container">
+                                    <div class="table-responsive">
+                                        <table id="selling-table" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Seller</th>
+                                                    <th>School</th>
+                                                    <th>Course</th>
+                                                    <th>Condition</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (BookListing x in Model.forSaleListings)
+                                                {
+                                                    <tr>
+                                                        <td> @x.User.FirstName @x.User.LastName </td>
+                                                        <td> @x.User.School.Name</td>
+                                                        <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
+                                                        <td> @x.Condition </td>
+                                                        @if (x.AskingPrice > 0)
+                                                        {
+                                                            <td> @string.Format("{0:c}", x.AskingPrice) </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>Trade</td>
+                                                        }
+                                                        <td><a class="btn btn-default" asp-controller="Profile" asp-route-UserId="@x.User.Id" name="UserId" id="UserId">View Profile</a></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <h5 class="text-center">No one is selling!</h5>
+                            }
+                        </div>
 
-            }
+                        <div id="buying" class="tab-pane fade">
+                            @if (Model.toBuyListings.Any())
+                            {
+                                <div class="container">
+                                    <div class="table-responsive">
+                                        <table id="buying-table" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Buyer</th>
+                                                    <th>School</th>
+                                                    <th>Course</th>
+                                                    <th>Condition</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (BookListing x in Model.toBuyListings)
+                                                {
+                                                    <tr>
+                                                        <td> @x.User.FirstName @x.User.LastName </td>
+                                                        <td> @x.User.School.Name</td>
+                                                        <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
+                                                        <td> @x.Condition </td>
+                                                        @if (x.AskingPrice > 0)
+                                                        {
+                                                            <td> @string.Format("{0:c}", x.AskingPrice) </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>Trade</td>
+                                                        }
+                                                        <td><a class="btn btn-default" asp-controller="Profile" asp-route-UserId="@x.User.Id" name="UserId" id="UserId">View Profile</a></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <h5 class="text-center">No one is buying!</h5>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div id="buying" class="tab-pane fade">
-            <br />
-            @if (Model.toBuyListings.Any())
-            {
-                <div class="table-responsive">
-                    <table class="table table-striped" id="bookListingTable">
-                        <thead>
-                            <tr>
-                                <th>Buyer</th>
-                                <th>School</th>
-                                <th>Course</th>
-                                <th>
-                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ConditionSortParm"]" asp-route-bookId="@Model.book.ID">Condition</a>
-                                </th>
-                                <th>
-                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-bookId="@Model.book.ID">Price</a>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (BookListing x in Model.toBuyListings)
-                            {
-                                <tr>
-                                    <td> @x.User.FirstName @x.User.LastName </td>
-                                    <td> @x.User.School.Name</td>
-                                    <td> @x.Course.Dept @x.Course.CourseNum - @x.Course.Name </td>
-                                    <td> @x.Condition </td>
-                                    @if (x.AskingPrice > 0)
-                                    {
-                                        <td> @string.Format("{0:c}", x.AskingPrice) </td>
-                                    }
-                                    else
-                                    {
-                                        <td>Trade</td>
-                                    }
-                                    <td><a class="btn btn-default" asp-controller="Profile" asp-route-UserId="@x.User.Id" name="UserId" id="UserId">View Profile</a></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            }
-            else
-            {
-                <h5>Book not listed on the market!</h5>
-
-            }
+        <div id="stats" class="tab-pane fade">
+            <h4 class="text-center">Coming soon!</h4>
         </div>
     </div>
 </div>
+
+@*<div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <hr />
+        <div class="form-group">
+            <div class="col-sm-6 col-sm-offset-5">
+                <a asp-action="WishList" asp-route-bookId="@Model.book.ID" class="btn btn-primary">Add to Wish List</a>
+                <a asp-action="Listing" asp-route-bookId="@Model.book.ID" class="btn btn-success">Sell Book</a>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+

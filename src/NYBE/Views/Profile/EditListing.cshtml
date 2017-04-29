@@ -53,6 +53,7 @@
                     </div>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="form-group">
                     <div class="col-sm-2 col-sm-offset-1">
@@ -70,6 +71,7 @@
                     </div>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="form-group">
                     <div class="col-sm-2 col-sm-offset-1">
@@ -80,13 +82,14 @@
                     </div>
                 </div>
             </div>
+            <br />
             <div class="row">
-                <div class="form-group" id="editListingPrice" @(Model.price < 0 ? "hidden" : "")>
+                <div class="form-group" id="editPriceContainer" @(Model.price < 0 ? "hidden" : "")>
                     <div class="col-sm-2 col-sm-offset-1">
                         <h4>Price:</h4>
                     </div>
                     <div class="col-sm-8 col-sm-offset-1">
-                        <input asp-for="price" class="form-control" type="number" min="0" value="@Model.price" id="price" step="0.01" />
+                        <input asp-for="price" class="form-control" type="number" min="0" value="@Model.price" id="editPrice" step="0.01" />
                     </div>
                 </div>
             </div>
