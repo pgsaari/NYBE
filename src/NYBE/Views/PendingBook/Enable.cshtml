@@ -23,8 +23,12 @@
                 }
             </div>
             <div class="col-sm-8 col-sm-offset-1">
+                <p><b>Title:</b> @Model.title</p>
                 <p><b>Author:</b> @Model.authorFName @Model.authorLName</p>
-                <p><b>@Model.edition Edition</b></p>
+                @if (!String.IsNullOrEmpty(Model.edition))
+                {
+                    <p><b>@Model.edition Edition</b></p>
+                }
                 <p><b>ISBN:</b> @Model.isbn</p>
                 <p><b>Description:</b> @Model.description</p>
                 <p><b>Publisher:</b> @Model.publisher</p>

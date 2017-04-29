@@ -23,6 +23,7 @@
                 }
             </div>
             <div class="col-sm-8 col-sm-offset-1">
+                <p><b>Title:</b> @Model.title</p>
                 <p><b>Author:</b> @Model.authorFName @Model.authorLName</p>
                 <p><b>@Model.edition Edition</b></p>
                 <p><b>ISBN:</b> @Model.isbn</p>
@@ -51,7 +52,7 @@
                         </div>
                         <div class="modal-body">
                             <p>Are you sure you want to disable <b>@Model.title</b>?</p>
-                            <p>User's will not be able to find this book in search results.</p>
+                            <p>Users will not be able to find this book in search results.</p>
                             <p>It will however, remain in users' transaction history.</p>
                         </div>
                         <div class="modal-footer">

@@ -2,45 +2,101 @@
 @{
     ViewData["Title"] = "Edit Listing";
 }
-<h2>Edit Listing</h2>
-<form asp-controller="Profile" asp-action="EditListing">
-  
+<h2 class="text-center">Edit Listing</h2>
+<hr />
 
-        <h4><b>Title:</b> @Model.book.Title @Model.book.Edition Edition</h4>
-        <p><b>Author:</b> @Model.book.AuthorFName  @Model.book.AuthorLName</p>
-        <p><b>Description:</b> @Model.book.Description</p>
-        <!--TODO: Should we let them edit the course for the book?-->
-        <p><b>Course:</b> @Model.course.Dept @Model.course.CourseNum - @Model.course.Name</p>
-
-        <div class="form-group row">
-            <label class="col-lg-2" for="condition">Condition</label>
-            <div class="col-lg-10">
-                <select asp-for="condition" class="form-control" name="condition">
-                    <option selected disabled hidden>@Model.condition</option> <!--Show the previous condition-->
-                    <option value="New">New</option>
-                    <option value="Excellent">Excellent</option>
-                    <option value="Good">Good</option>
-                    <option value="Fair">Fair</option>
-                    <option value="Bad">Bad</option>
-                </select>
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <form asp-controller="Profile" asp-action="EditListing">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        @if (Model.book.Image != null)
+                        {
+                            <img src="@Model.book.Image" class="img-responsive" style="max-width:150px; max-height:200px;" />
+                        }
+                        else
+                        {
+                            <i class="glyphicon glyphicon-book" style="font-size:200px; color:dimgrey;"></i>
+                        }
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-1">
+                        <p><b>Title:</b> @Model.book.Title</p>
+                        <p><b>Author:</b> @Model.book.AuthorFName @Model.book.AuthorLName</p>
+                        <p><b>@Model.book.Edition Edition</b></p>
+                        <p><b>ISBN:</b> @Model.book.ISBN</p>
+                        <p><b>Description:</b> @Model.book.Description</p>
+                        <p><b>Publisher:</b> @Model.book.Publisher</p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-lg-2" for="price">Trade</label>
-            <div class="col-lg-10">
-                <input name="editTradeCheckBox" id ="editTradeCheckBox" type="checkbox" data-toggle="toggle" @(Model.price<0 ? "checked": "")>   
+            <br />
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <h4>Course:</h4>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-1">
+                        <select asp-for="courseID" class="form-control" name="courseID">
+                            @foreach (Course course in Model.courses)
+                            {
+                                if (course.ID == Model.courseID)
+                                {
+                                    <option value="@course.ID" selected>@course.Dept - @course.CourseNum @course.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@course.ID">@course.Dept - @course.CourseNum @course.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div id="editListingPrice" class="form-group row" @(Model.price<0 ? "hidden":"")>
-            <label class="col-lg-2" for="price">Price</label>
-            <div class="col-lg-10">
-                <input asp-for="price" class="form-control" type="number" min="0" value="@Model.price" id="price" step="0.01" />
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <h4>Condition:</h4>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-1">
+                        <select asp-for="condition" class="form-control" name="condition">
+                            <option selected disabled hidden>@Model.condition</option> <!--Show the previous condition-->
+                            <option value="New">New</option>
+                            <option value="Excellent">Excellent</option>
+                            <option value="Good">Good</option>
+                            <option value="Fair">Fair</option>
+                            <option value="Bad">Bad</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-        </div>
-  
-    <a asp-controller="Profile" asp-action="Index" class="btn btn-default">Cancel</a>
-    <button type="submit" class="btn btn-success">Save</button>
-
-</form>
-
-
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <h4>Trade:</h4>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-1">
+                        <input name="editTradeCheckBox" id="editTradeCheckBox" type="checkbox" data-toggle="toggle" @(Model.price < 0 ? "checked" : "")>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group" id="editListingPrice" @(Model.price < 0 ? "hidden" : "")>
+                    <div class="col-sm-2 col-sm-offset-1">
+                        <h4>Price:</h4>
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-1">
+                        <input asp-for="price" class="form-control" type="number" min="0" value="@Model.price" id="price" step="0.01" />
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="text-center">
+                    <a asp-controller="Profile" asp-action="Index" class="btn btn-primary">Cancel</a>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

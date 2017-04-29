@@ -88,6 +88,7 @@ namespace NYBE.Controllers
         {
             var viewModel = new EditListingViewModel();
             var temp = ctx.BookListings.Include("Book").Include("Course").Where(a => a.ID == id && a.Status == 0).FirstOrDefault();
+            viewModel.courses = ctx.Courses.ToList();
             viewModel.ID = id;
             viewModel.book = temp.Book;
             viewModel.course = temp.Course;
@@ -101,6 +102,7 @@ namespace NYBE.Controllers
         {
             var temp = ctx.BookListings.Where(a => a.ID == viewModel.ID && a.Status == 0).FirstOrDefault();
             temp.Condition = viewModel.condition;
+            temp.CourseID = viewModel.courseID;
             if(Request.Form["editTradeCheckBox"] == "on")
             {
                 temp.AskingPrice = -1;

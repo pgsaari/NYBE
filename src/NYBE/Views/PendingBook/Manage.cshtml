@@ -73,9 +73,7 @@
                                     <td>@book.Edition</td>
                                     <td>@book.Publisher</td>
                                     <td>
-                                        <div class="btn-group">
-                                            <a asp-controller="PendingBook" asp-action="ViewBook" asp-route-id="@book.ID" class="btn btn-primary">View Book</a>
-                                        </div>
+                                        <a asp-controller="PendingBook" asp-action="ViewBook" asp-route-id="@book.ID" class="btn btn-primary">View Book</a>
                                     </td>
                                 </tr>
                             }

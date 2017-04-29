@@ -23,8 +23,8 @@
 
 
 
-<h2 class="text-center">Pending Book - @Model.title</h2>
-<h5 class="text-center">Approve this book with either the Manually entered data or the Google Books data</h5>
+<h2 class="text-center">Pending Book</h2>
+<h5 class="text-center">Approve this book with the Manually entered data@(@gb != null ? " or the Google Books data." : ".")</h5>
 <br />
 <form asp-controller="PendingBook" asp-action="Deny" class="text-center">
     <input asp-for="id" id="id" type="hidden" />
