@@ -19,12 +19,13 @@ namespace NYBE.Services
         public Task SendEmailAsync(string email, string subject, string message)
         {
             // Plug in your email service here to send an email.
-            Execute(Options.SendGridKey, subject, message, email).Wait();
+            Execute(subject, message, email).Wait();
             return Task.FromResult(0);
         }
 
-        public async Task Execute(string apiKey, string subject, string message, string email)
+        public async Task Execute(string subject, string message, string email)
         {
+            var apiKey = System.Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
