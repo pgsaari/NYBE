@@ -59,6 +59,16 @@ $("#surveyTradeCheckBox").click(function () {
     }
 });
 
+$("#editTradeCheckBox").click(function () {
+    console.log("Clicked!");
+    if (document.getElementById('editTradeCheckBox').checked) {
+        $("#editPriceContainer").hide();
+        $("#editPrice").val(-1);
+    } else {
+        $("#editPriceContainer").show();
+    }
+});
+
 window.onload = function () {
     getList('getSchools', '#schoolSelectBox');
     getList('getCourses', '#courseSelectBox');
