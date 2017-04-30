@@ -203,7 +203,7 @@
         <div id="stats" class="tab-pane fade">
             <div class="row">
                 <div class="col-sm-10 col-sm-offset-1">
-                    @if (@Html.Raw(ViewBag.VolumeDataPoints).ToString().Replace("\"", "") != "[]")
+                    @if (ViewBag.VolumeDataPoints.Length != 0)
                     {
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3" style="padding:0px;">

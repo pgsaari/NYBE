@@ -99,7 +99,22 @@ namespace NYBE.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Survey(int id, string token = null, string buyerId = null)
+        public async Task<IActionResult> Cancel(int id)
+        {
+            var openLog = _context.TransactionLogs.Where(a => a.ID == id).FirstOrDefault();
+            if (openLog != null)
+            {
+                var listing = _context.BookListings.Where(a => a.ApplicationUserID == openLog.SellerID && a.BookID == openLog.BookID && a.AskingPrice == openLog.SoldPrice && a.Condition == openLog.Condition).FirstOrDefault();
+                // Restore old listing and remove pending transaction
+                listing.Status = 0;
+                _context.TransactionLogs.Remove(openLog);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(ProfileController.Index), "Profile");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Survey(int id = -1, string token = null, string buyerId = null)
         {
             System.Diagnostics.Debug.WriteLine("ID: " + id);
             System.Diagnostics.Debug.WriteLine("Token: " + token);
@@ -129,11 +144,11 @@ namespace NYBE.Controllers
             {
                 byte[] data = Convert.FromBase64String(model.token);
                 DateTime when = DateTime.FromBinary(BitConverter.ToInt64(data, 0));
-                if (when < DateTime.UtcNow.AddHours(-48))
-                {
-                    // TODO: Restore old listing and remove pending transaction
-                    return View("Expired");
-                }
+                //if (when < DateTime.UtcNow.AddHours(-48))
+                //{
+                //    // TODO: Restore old listing and remove pending transaction
+                //    return View("Expired");
+                //}
                 var buyer = await _userManager.FindByIdAsync(buyerId);
                 model.buyers.Add(buyer);
                 model.buyerId = buyerId;

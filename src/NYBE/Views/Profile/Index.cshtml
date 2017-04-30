@@ -47,6 +47,15 @@
         });
     </script>
 }
+@if (Model.ownProfile && Model.pendingTransactions.Any())
+{
+    <script>
+        var jquery = jQuery.noConflict();
+        jquery(document).ready(function () {
+            jquery('#pending-list').DataTable();
+        });
+    </script>
+}
 
 <head>
     <style>
@@ -86,6 +95,10 @@
     <li><a data-toggle="tab" href="#sold">Sold</a></li>
     <li><a data-toggle="tab" href="#wish">Buying</a></li>
     <li><a data-toggle="tab" href="#bought">Bought</a></li>
+    @if (Model.ownProfile)
+    {
+        <li><a data-toggle="tab" href="#pending">Pending</a></li>
+    }
 </ul>
 <div class="tab-content">
     <div id="listings" class="tab-pane fade in active">
@@ -308,4 +321,69 @@
             <h5 class="text-center">No Books Bought!</h5>
         }
     </div>
+
+    @if (Model.ownProfile)
+    {
+        <div id="pending" class="tab-pane fade">
+            <h4 class="text-center"><b>Pending Transactions</b></h4>
+            <br />
+            @if (Model.pendingTransactions.Any())
+            {
+                <div class="table-responsive">
+                    <table id="pending-books" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Seller Name</th>
+                                <th>Seller Email</th>
+                                <th>Book</th>
+                                <th>Asking Price</th>
+                                <th>Condition</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.pendingTransactions.Count; i++)
+                            {
+                                var x = Model.pendingTransactions.ElementAt(i);
+                                var listing = Model.pendingBookListings.ElementAt(i);
+                                <tr>
+                                    <td> @x.TransDate</td>
+                                    <td> <a asp-controller="Profile" asp-route-UserId="@x.Seller.Id">@x.Seller.FirstName @x.Seller.LastName</a></td>
+                                    <td> @x.Seller.Email</td>
+                                    <td> <a asp-controller="Book" asp-action="Index" asp-route-bookId="@x.BookID">@x.Book.Title</a></td>
+                                    @if (x.SoldPrice > 0)
+                                    {
+                                        <td> @string.Format("{0:c}", x.SoldPrice) </td>
+                                    }
+                                    else
+                                    {
+                                        <td>Trade</td>
+                                    }
+                                    <td> @x.Condition</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            @if (listing.Status == 1)
+                                            {
+                                                byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
+                                                byte[] logid = BitConverter.GetBytes(x.ID);
+                                                byte[] key = Guid.NewGuid().ToByteArray();
+                                                string token = Convert.ToBase64String(time.Concat(logid).Concat(key).ToArray());
+                                                <a asp-controller="Transaction" asp-action="Survey" asp-route-id="@listing.ID" asp-route-token="@token" asp-route-buyerId="@x.BuyerID" class="btn btn-success">Complete</a>
+                                            }
+                                            <a asp-controller="Transaction" asp-action="Cancel" asp-route-id="@x.ID" class="btn btn-danger">Cancel</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <h5 class="text-center">There are no Pending Transactions!</h5>
+            }
+        </div>
+    }
 </div>

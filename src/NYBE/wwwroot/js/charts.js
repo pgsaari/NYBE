@@ -17,7 +17,7 @@ $(document).ready(function () {
             valueFormatString: "MMM",
         },
         toolTip: {
-            content: "<b>Date</b> <span style='\"'color: dimgrey;'\"'>{x}</span> <br/> <span style='\"'color: {color};'\"'><strong>Avg</strong></span> <span style='\"'color: dimgrey;'\"'>${y[2]}</span> <br/> <span style='\"'color: {color};'\"'><strong>Range</strong></span> <span style='\"'color: dimgrey;'\"'>${y[1]} - ${y[0]}</span>",
+            content: "<b>Date</b> <span style='\"'color: dimgrey;'\"'>{x}</span> <br/> <span style='\"'color: {color};'\"'><strong>Avg</strong></span> <span style='\"'color: dimgrey;'\"'>${y[2]}</span> <br/> <span style='\"'color: {color};'\"'><strong>Range</strong></span> <span style='\"'color: dimgrey;'\"'>${y[0]} - ${y[1]}</span>",
         },
         data: [{
             type: "rangeSplineArea",

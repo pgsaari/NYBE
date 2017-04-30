@@ -80,6 +80,15 @@ namespace NYBE.Controllers
                 }
             }
 
+            // Get the pending transactions for this user.
+            view.pendingTransactions = ctx.TransactionLogs.Include("Seller").Include("Book").Where(a => a.Status == 1 && a.BuyerID == user.Id).OrderByDescending(a => a.TransDate).ToList();
+            // Populate list with corresponding book listings. (gross)
+            view.pendingBookListings = new List<BookListing>();
+            foreach (TransactionLog log in view.pendingTransactions)
+            {
+                view.pendingBookListings.Add(ctx.BookListings.Where(a => a.ApplicationUserID == log.SellerID && a.BookID == log.BookID && a.Condition == log.Condition && a.AskingPrice == log.SoldPrice).FirstOrDefault());
+            }
+
             return View(view);
         }
 
@@ -102,6 +111,13 @@ namespace NYBE.Controllers
         public async Task<ActionResult> EditListing(EditListingViewModel viewModel)
         {
             var temp = ctx.BookListings.Where(a => a.ID == viewModel.ID && a.Status == 0).FirstOrDefault();
+            // Find all open transactions and remove them
+            var openLogs = ctx.TransactionLogs.Where(a => a.SellerID == temp.ApplicationUserID && a.BookID == temp.BookID && a.Condition == temp.Condition && a.SoldPrice == temp.AskingPrice);
+            foreach (TransactionLog log in openLogs)
+            {
+                ctx.TransactionLogs.Remove(log);
+            }
+
             Course newCourse = new Course();
 
             temp.Condition = viewModel.condition;
