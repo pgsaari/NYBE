@@ -1,4 +1,5 @@
 ﻿/// <autosync enabled="true" />
+/// <reference path="js/charts.min.js" />
 /// <reference path="js/locales/ar.js" />
 /// <reference path="js/locales/de.js" />
 /// <reference path="js/locales/es.js" />

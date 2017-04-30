@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using NYBE.Models.BookViewModel;
 using Microsoft.EntityFrameworkCore;
 using NYBE.Models.DataModels;
+using static NYBE.Models.BookViewModel.BookViewModel;
+using Newtonsoft.Json;
 
 namespace NYBE.Controllers
 {
@@ -41,7 +43,6 @@ namespace NYBE.Controllers
             //type == 0(selling) && status == 0(open)
             var forSaleListings = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => a.BookID == bookId && a.Type == 0 && a.Status == 0);
             
-
             switch(sortOrder)
             {
                 case "cond_desc":
@@ -61,6 +62,36 @@ namespace NYBE.Controllers
             //type == 1(buying) && status == 0(open)
             var toBuyListings = ctx.BookListings.Include("User").Include("User.School").Include("Book").Include("Course").Where(a => a.BookID == bookId && a.Type == 1 && a.Status == 0);
             viewModel.toBuyListings = toBuyListings.ToList();
+
+            // Group transactions by date and seperate data by conditions.
+            var group = ctx.TransactionLogs.Where(a => a.BookID == bookId && a.SoldPrice > 0 && a.Status == 0).GroupBy(a => a.TransDate).ToList();
+            var conditions = new string[] { "New", "Excellent", "Good", "Fair", "Bad" };
+            List<List<VolumeDataPoint>> volumeDataPoints = new List<List<VolumeDataPoint>>();
+            List<List<RangeDataPoint>> rangeDataPoints = new List<List<RangeDataPoint>>();
+
+            foreach (IGrouping<DateTime, TransactionLog> log in group)
+            {
+                var date = "new Date(" + log.Key.Year + "," + log.Key.Month + "," + log.Key.Day + ")";
+                for (int i = 0; i < conditions.Length; i++)
+                {
+                    var condition = log.Where(a => a.Condition == conditions[i]);
+                    volumeDataPoints.Add(new List<VolumeDataPoint>());
+                    rangeDataPoints.Add(new List<RangeDataPoint>());
+                    if (condition.Any())
+                    {
+                        var count = condition.Count();
+                        volumeDataPoints[i].Add(new VolumeDataPoint(date, count));
+
+                        var min = condition.Min(a => a.SoldPrice);
+                        var max = condition.Max(a => a.SoldPrice);
+                        var avg = Math.Round(condition.Sum(a => a.SoldPrice) / count, 2);
+                        rangeDataPoints.ElementAt(i).Add(new RangeDataPoint(date, new double[] { min, max, avg }));
+                    }
+                }
+            }
+
+            ViewBag.VolumeDataPoints = JsonConvert.SerializeObject(volumeDataPoints);
+            ViewBag.RangeDataPoints = JsonConvert.SerializeObject(rangeDataPoints);
 
             return View(viewModel);
         }

@@ -19,16 +19,6 @@ namespace NYBE.Controllers
             _context = context;
         }
 
-        // GET: /search/
-        public IActionResult Lists()
-        {
-            var view = new BookSearchViewModel();
-            view.schools = _context.Schools.Where(a => a.Status == 1).ToList();
-            view.courses = _context.Courses.ToList();
-
-            return View("_Layout", view);
-        }
-
         public string[] getSchools()
         {
             var schools = _context.Schools.Where(a => a.Status == 1).ToList();

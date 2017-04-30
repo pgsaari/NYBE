@@ -174,11 +174,86 @@ namespace NYBE.Models
             {
                 var transactions = new TransactionLog[]
                 {
-                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 102.55, "New", new DateTime(2016,5,29)),
+                    // ---- Same Condition ---- \\
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 102.55, "New", new DateTime(2016,5,10)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 96.45, "New", new DateTime(2016,5,10)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 98.35, "New", new DateTime(2016,5,10)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 105.03, "New", new DateTime(2016,5,10)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 101.67, "New", new DateTime(2016,5,10)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 100.34, "New", new DateTime(2016,5,10)),
+
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 100.00, "New", new DateTime(2016,5,11)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 101.34, "New", new DateTime(2016,5,11)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 99.34, "New", new DateTime(2016,5,11)),
+
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 98.47, "New", new DateTime(2016,5,12)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 100.67, "New", new DateTime(2016,5,12)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 103.45, "New", new DateTime(2016,5,12)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 93.34, "New", new DateTime(2016,5,12)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 95.86, "New", new DateTime(2016,5,12)),
+
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 104.21, "New", new DateTime(2016,5,13)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 102.34, "New", new DateTime(2016,5,13)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 100.61, "New", new DateTime(2016,5,13)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 103.23, "New", new DateTime(2016,5,13)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 99.94, "New", new DateTime(2016,5,13)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 96.01, "New", new DateTime(2016,5,13)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 89.34, "New", new DateTime(2016,5,13)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 97.75, "New", new DateTime(2016,5,13)),
+
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 108.50, "New", new DateTime(2016,5,14)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 106.60, "New", new DateTime(2016,5,14)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 102.93, "New", new DateTime(2016,5,14)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 101.63, "New", new DateTime(2016,5,14)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 100.43, "New", new DateTime(2016,5,14)),
+
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 103.94, "New", new DateTime(2016,5,15)),
+
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 101.34, "New", new DateTime(2016,5,16)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 100.56, "New", new DateTime(2016,5,16)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 96.63, "New", new DateTime(2016,5,16)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 99.02, "New", new DateTime(2016,5,16)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 103.43, "New", new DateTime(2016,5,16)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 109.73, "New", new DateTime(2016,5,16)),
+                    // -------- \\
+
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 88.15, "Excellent", new DateTime(2016,5,10)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 89.35, "Excellent", new DateTime(2016,5,11)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 82.15, "Excellent", new DateTime(2016,5,12)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 84.05, "Excellent", new DateTime(2016,5,13)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 90.12, "Excellent", new DateTime(2016,5,14)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 89.34, "Excellent", new DateTime(2016,5,15)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 87.84, "Excellent", new DateTime(2016,5,16)),
+
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 79.15, "Good", new DateTime(2016,5,10)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 74.63, "Good", new DateTime(2016,5,11)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 70.00, "Good", new DateTime(2016,5,12)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 72.75, "Good", new DateTime(2016,5,13)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 70.05, "Good", new DateTime(2016,5,14)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 77.45, "Good", new DateTime(2016,5,15)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 75.50, "Good", new DateTime(2016,5,16)),
+
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 53.12, "Fair", new DateTime(2016,5,10)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 50.03, "Fair", new DateTime(2016,5,11)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 42.75, "Fair", new DateTime(2016,5,12)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 45.16, "Fair", new DateTime(2016,5,13)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 46.99, "Fair", new DateTime(2016,5,14)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 49.73, "Fair", new DateTime(2016,5,15)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 48.00, "Fair", new DateTime(2016,5,16)),
+
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 33.12, "Bad", new DateTime(2016,5,10)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 28.34, "Bad", new DateTime(2016,5,11)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 26.75, "Bad", new DateTime(2016,5,12)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 35.95, "Bad", new DateTime(2016,5,13)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 10.65, "Bad", new DateTime(2016,5,14)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 27.94, "Bad", new DateTime(2016,5,15)),
+                    new TransactionLog(user.Id, user2.Id, 5, 5, 0, 30.11, "Bad", new DateTime(2016,5,16)),
+
+
                     new TransactionLog(user.Id, user2.Id, 6, 2, 0, 43.22, "Good", new DateTime(2016, 8, 13)),
                     new TransactionLog(user2.Id, user.Id, 7, 2, 0, 67.12, "Fair", new DateTime(2017, 1, 13)),
                     new TransactionLog(user2.Id, admin.Id, 8, 3, 0, 12.99, "Bad", new DateTime(2012, 12, 21)),
-                    new TransactionLog(user2.Id, user.Id, 9, 4, 0, 150.00, "Excellent", DateTime.Now)
+                    new TransactionLog(user2.Id, user.Id, 9, 4, 0, 150.00, "Excellent", DateTime.Now),
                 };
                 foreach(TransactionLog tran in transactions)
                 {
