@@ -271,7 +271,7 @@ namespace NYBE.Models
                         int seller = r.Next(0, users.Count);
                         double price = r.NextDouble() * (maxPrice - (minPrice)) + minPrice;
                         var courseId = r.Next(1, course.Count + 1);
-                        var listing = new BookListing(i, users[seller].Id, courseId, condition[c], price, r.Next(2));
+                        var listing = new BookListing(i, users[seller].Id, courseId, condition[c], Math.Round(price, 2), r.Next(2));
                         context.BookListings.Add(listing);
                         if (!context.BookToCourses.Where(a => a.BookID == i && a.CourseID == courseId).Any())
                         {
