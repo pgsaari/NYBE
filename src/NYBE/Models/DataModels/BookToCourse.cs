@@ -7,6 +7,14 @@ namespace NYBE.Models
 {
     public class BookToCourse
     {
+        public BookToCourse() { }
+
+        public BookToCourse(int bookID, int courseID)
+        {
+            BookID = bookID;
+            CourseID = courseID;
+        }
+
         public int ID { get; set; }
         public int BookID { get; set; }
         public int CourseID { get; set; }

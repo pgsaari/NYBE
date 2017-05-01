@@ -159,7 +159,7 @@
                 }
                 else
                 {
-                    <h5 class="text-center">No Books to Sell!</h5>
+                    <h5 class="text-center">@(Model.ownProfile ? "No Books to Sell!" : "Currently not selling any books.")</h5>
                 }
             </div>
         </div>
@@ -278,7 +278,7 @@
                 }
                 else
                 {
-                    <h5 class="text-center">No Books to Buy!</h5>
+                    <h5 class="text-center">@(Model.ownProfile ? "No Books to Buy!" : "Currently not buying any books.")</h5>
                 }
             </div>
         </div>

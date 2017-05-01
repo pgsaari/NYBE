@@ -102,7 +102,7 @@ namespace NYBE
             DbInitializer.Initialize(context);
 
             // seed dummy users to the db
-            DbInitializer.SeedUsers(app.ApplicationServices).Wait();
+            DbInitializer.SeedUsers(context, app.ApplicationServices).Wait();
 
             // seed relationships between entities and users
             DbInitializer.SeedRelationships(context, app.ApplicationServices);
