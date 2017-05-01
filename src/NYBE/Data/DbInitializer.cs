@@ -260,7 +260,7 @@ namespace NYBE.Models
                 Random r = new Random();
                 DateTime date = new DateTime(2017, 5, 1);
                 var course = context.Courses.ToList();
-                for (int i = 1; i < bookCount + 1; i++)
+                for (int i = 12; i < bookCount + 1; i++)
                 {
                     int basePrice = r.Next(10, 301);
                     double maxPrice = basePrice + (r.Next(0, (basePrice / 2))) + r.NextDouble();
@@ -288,7 +288,7 @@ namespace NYBE.Models
             if (!context.TransactionLogs.Any())
             {
                 Random r = new Random();
-                for (int i = 1; i < bookCount + 1; i++)
+                for (int i = 12; i < bookCount + 1; i++)
                 {
                     int basePrice = r.Next(10, 301);
                     DateTime startDate = new DateTime(2017, 4, 1);
