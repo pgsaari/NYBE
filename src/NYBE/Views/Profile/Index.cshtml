@@ -383,7 +383,27 @@
                                                         string token = Convert.ToBase64String(time.Concat(logid).Concat(key).ToArray());
                                                         <a asp-controller="Transaction" asp-action="Survey" asp-route-id="@listing.ID" asp-route-token="@token" asp-route-buyerId="@x.BuyerID" class="btn btn-success">Complete</a>
                                                     }
-                                                    <a asp-controller="Transaction" asp-action="Cancel" asp-route-id="@x.ID" class="btn btn-danger">Cancel</a>
+                                                    <button class="btn btn-danger" data-toggle="modal" data-target="#cancelModal">Cancel</button>
+                                                </div>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="cancelModal" role="dialog">
+                                                    <div class="modal-dialog text-center">
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header alert-danger">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <h4 class="modal-title">Cancel Confirmation</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Are you sure you want to cancel this transaction with <b>@x.Seller.FirstName @x.Seller.LastName</b>?</p>
+                                                                <p>You'll have to buy it again!</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Not Sure</button>
+                                                                <a asp-controller="Transaction" asp-action="Cancel" asp-route-id="@x.ID" class="btn btn-success">Yes</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
